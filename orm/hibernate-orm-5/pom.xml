@@ -2,16 +2,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-test-case-template</artifactId>
+	<groupId>org.hibernate.testcasetemplate</groupId>
+	<artifactId>test-case-template-hibernate-orm5</artifactId>
 	<version>1.0.0.Final</version>
-	<name>Hibernate Test Case Template</name>
+	<name>Hibernate ORM 5 Test Case Template</name>
 
 	<properties>
-    <version.com.h2database>1.3.176</version.com.h2database>
-    <version.junit>4.11</version.junit>
-    <version.org.hibernate>4.3.10.Final</version.org.hibernate>
-    <version.org.slf4j>1.7.2</version.org.slf4j>
+		<version.com.h2database>1.3.176</version.com.h2database>
+		<version.junit>4.11</version.junit>
+		<version.org.hibernate>5.0.0.Final</version.org.hibernate>
+		<version.org.slf4j>1.7.2</version.org.slf4j>
 	</properties>
 
 	<dependencies>
@@ -25,6 +25,11 @@
 			<artifactId>hibernate-testing</artifactId>
 			<version>${version.org.hibernate}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
+			<version>${version.org.hibernate}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -36,11 +41,11 @@
 			<artifactId>junit</artifactId>
 			<version>${version.junit}</version>
 		</dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>${version.org.slf4j}</version>
-    </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${version.org.slf4j}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -50,8 +55,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 		</plugins>
