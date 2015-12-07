@@ -19,6 +19,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -30,7 +31,7 @@ import org.junit.Test;
  * What's even better?  Fork hibernate-orm itself, add your test case directly to a module's unit tests, then
  * submit it as a PR!
  */
-public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
+public abstract class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your entities here.
 	@Override
@@ -65,6 +66,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
+	@Ignore
 	public void hhh123Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
@@ -73,4 +75,121 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 		tx.commit();
 		s.close();
 	}
+
+    /**
+     * Execute the given logic in a transactional context.
+     * The Session and the Transaction are automatically managed.
+     *
+     * @param executable unit of logic
+     * @param <T> result type
+     * @return result
+     */
+    protected <T> T doInTransaction(TransactionExecutable<T> executable) {
+        T result = null;
+        Session session = null;
+        Transaction txn = null;
+        try {
+            session = sessionFactory().openSession();
+            executable.beforeTransactionCompletion();
+            txn = session.beginTransaction();
+
+            result = executable.execute(session);
+            txn.commit();
+        } catch (RuntimeException e) {
+            if ( txn != null ) txn.rollback();
+            throw e;
+        } finally {
+            executable.afterTransactionCompletion();
+            if (session != null) {
+                session.close();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Execute the given logic in a transactional context.
+     * The Session and the Transaction are automatically managed.
+     *
+     * @param executable unit of logic
+     */
+    protected void doInTransaction(TransactionVoidExecutable executable) {
+        Session session = null;
+        Transaction txn = null;
+        try {
+            session = sessionFactory().openSession();
+            executable.beforeTransactionCompletion();
+            txn = session.beginTransaction();
+
+            executable.execute(session);
+            txn.commit();
+        } catch (RuntimeException e) {
+            if ( txn != null ) txn.rollback();
+            throw e;
+        } finally {
+            executable.afterTransactionCompletion();
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    /**
+     * Executable unit that may return a result.
+     * @param <T> result type
+     */
+    @FunctionalInterface
+    protected interface Executable<T> {
+        /**
+         * Execute against the given Session
+         * @param session Hibernate session
+         * @return result
+         */
+        T execute(Session session);
+    }
+
+    /**
+     * Executable unit that doesn't return a result.
+     */
+    @FunctionalInterface
+    protected interface VoidExecutable {
+        /**
+         * Execute against the given Session
+         * @param session Hibernate session
+         */
+        void execute(Session session);
+    }
+
+    @FunctionalInterface
+    protected interface TransactionExecutable<T> extends Executable<T> {
+        /**
+         * Before transaction completion callback
+         */
+        default void beforeTransactionCompletion() {
+
+        }
+
+        /**
+         * After transaction completion callback
+         */
+        default void afterTransactionCompletion() {
+
+        }
+    }
+
+    protected interface TransactionVoidExecutable extends VoidExecutable {
+        /**
+         * Before transaction completion callback
+         */
+        default void beforeTransactionCompletion() {
+
+        }
+
+        /**
+         * After transaction completion callback
+         */
+        default void afterTransactionCompletion() {
+
+        }
+    }
 }
