@@ -19,7 +19,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
-
+import org.hibernate.test.Foo;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
 
@@ -34,21 +34,11 @@ import org.junit.Test;
  */
 public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
-	// Add your entities here.
-	@Override
-	protected Class[] getAnnotatedClasses() {
-		return new Class[] {
-//				Foo.class,
-//				Bar.class
-		};
-	}
-
 	// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
 	@Override
 	protected String[] getMappings() {
 		return new String[] {
-//				"Foo.hbm.xml",
-//				"Bar.hbm.xml"
+				"Foo.hbm.xml"
 		};
 	}
 	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
@@ -64,7 +54,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
 		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, Boolean.TRUE.toString() );
+		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 	}
 
 	// Add your tests, using standard JUnit.
@@ -73,7 +63,12 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+		
+		Foo foo = new Foo();
+		foo.setId(1);
+		s.save(foo);
+		
+		
 		tx.commit();
 		s.close();
 	}
