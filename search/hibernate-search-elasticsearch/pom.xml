@@ -16,7 +16,6 @@
 
 		<version.elasticsearch-maven-plugin>2.2</version.elasticsearch-maven-plugin>
 		<version.org.elasticsearch>2.4.2</version.org.elasticsearch>
-		<version.jna>4.1.0</version.jna>
 		<version.io.takari.junit.takari-cpsuite>1.2.7</version.io.takari.junit.takari-cpsuite>
 	</properties>
 
@@ -184,13 +183,6 @@
 						<groupId>org.hibernate.testcasetemplate</groupId>
 						<artifactId>test-case-template-hibernate-search-elasticsearch</artifactId>
 						<version>${project.version}</version>
-					</dependency>
-
-					<!-- JNA isn't part of the ES fat JAR; Adding it so ES doesn't complain upon start-up -->
-					<dependency>
-						<groupId>net.java.dev.jna</groupId>
-						<artifactId>jna</artifactId>
-						<version>${version.jna}</version>
 					</dependency>
 				</dependencies>
 				<configuration>
