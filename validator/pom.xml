@@ -8,10 +8,10 @@
 	<name>Hibernate Validator Test Case Template</name>
 
 	<properties>
-		<version.org.hibernate.validator>5.2.4.Final</version.org.hibernate.validator>
-		<version.javax.el>2.2.4</version.javax.el>
-		<version.junit>4.11</version.junit>
-		<version.org.slf4j>1.7.2</version.org.slf4j>
+		<version.org.hibernate.validator>5.3.4.Final</version.org.hibernate.validator>
+		<version.javax.el>3.0.1-b08</version.javax.el>
+		<version.junit>4.12</version.junit>
+		<version.org.slf4j>1.7.22</version.org.slf4j>
 	</properties>
 
 	<dependencies>
@@ -27,12 +27,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>javax.el-api</artifactId>
-			<version>${version.javax.el}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.web</groupId>
+			<groupId>org.glassfish</groupId>
 			<artifactId>javax.el</artifactId>
 			<version>${version.javax.el}</version>
 		</dependency>
@@ -54,7 +49,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.6.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
