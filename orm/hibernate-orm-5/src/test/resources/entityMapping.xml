@@ -2,7 +2,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="TestSuite.orm.manual.relationship.self_join">
     <class entity-name="cemployees" table="Employees">
-        <tuplizer class="org.hibernate.bugs.SampleTuplizer" entity-mode="dynamic-map"/>
+        <tuplizer class="org.hibernate.bugs.SampleTestTuplizer" entity-mode="dynamic-map"/>
         <id column="EmployeeID" name="EmployeeID" type="integer">
             <generator class="native"/>
         </id>
