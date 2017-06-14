@@ -46,6 +46,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected String[] getMappings() {
 		return new String[] {
+				"entityMapping.xml"
 //				"Foo.hbm.xml",
 //				"Bar.hbm.xml"
 		};
@@ -53,7 +54,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
 	@Override
 	protected String getBaseForMappings() {
-		return "org/hibernate/test/";
+		return "";
 	}
 
 	// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.

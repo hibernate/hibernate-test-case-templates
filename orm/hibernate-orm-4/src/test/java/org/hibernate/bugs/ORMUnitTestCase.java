@@ -19,7 +19,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
-
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
 
@@ -47,6 +46,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected String[] getMappings() {
 		return new String[] {
+                "entityMapping.xml"
 //				"Foo.hbm.xml",
 //				"Bar.hbm.xml"
 		};
@@ -54,8 +54,8 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
 	@Override
 	protected String getBaseForMappings() {
-		return "org/hibernate/test/";
-	}
+        return "";
+    }
 
 	// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
 	@Override
@@ -64,8 +64,8 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
 		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, Boolean.TRUE.toString() );
-	}
+        //configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
+    }
 
 	// Add your tests, using standard JUnit.
 	@Test
