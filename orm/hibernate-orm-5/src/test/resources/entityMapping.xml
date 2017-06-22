@@ -1,0 +1,31 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="TestSuite.orm.manual.relationship.self_join">
+    <class entity-name="cemployees" table="Employees">
+        <tuplizer class="org.hibernate.bugs.SampleTestTuplizer" entity-mode="dynamic-map"/>
+        <id column="EmployeeID" name="EmployeeID" type="integer">
+            <generator class="native"/>
+        </id>
+        <property column="LastName" name="LastName" type="string"/>
+        <property column="FirstName" name="FirstName" type="string"/>
+        <property column="Title" name="Title" type="string"/>
+        <property column="TitleOfCourtesy" name="TitleOfCourtesy" type="string"/>
+        <property column="BirthDate" name="BirthDate" type="date"/>
+        <property column="HireDate" name="HireDate" type="date"/>
+        <property column="Address" name="Address" type="string"/>
+        <property column="City" name="City" type="string"/>
+        <property column="Region" name="Region" type="string"/>
+        <property column="PostalCode" name="PostalCode" type="string"/>
+        <property column="Country" name="Country" type="string"/>
+        <property column="HomePhone" name="HomePhone" type="string"/>
+        <property column="Extension" name="Extension" type="string"/>
+        <property column="Photo" name="Photo" type="binary"/>
+        <property column="Notes" name="Notes" type="string"/>
+        <many-to-one column="ReportsTo" entity-name="cemployees" name="ReportsToObj"/>
+        <property column="PhotoPath" name="PhotoPath" type="string"/>
+        <bag cascade="all-delete-orphan" name="ReporteesArr">
+            <key column="ReportsTo"/>
+            <one-to-many entity-name="cemployees"/>
+        </bag>
+    </class>
+</hibernate-mapping>
