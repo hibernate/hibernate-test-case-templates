@@ -12,3 +12,5 @@ can then directly commit it, without having to mold it in first.  What's even be
 add your test case directly to a module's unit tests (using the template class), then submit it as a PR!
 * ORMStandaloneTestCase: This template is standalone and will look familiar.  It simply uses a run-of-the-mill ORM setup.
 Although it's perfectly acceptable as a reproducer, lean towards ORMUnitTestCase whenever possible.
+
+**For a detailed step-by-step tutorial about how you should be using our test case templates check out the [following article]((http://in.relation.to/2016/01/14/hibernate-jpa-test-case-template/)**.
