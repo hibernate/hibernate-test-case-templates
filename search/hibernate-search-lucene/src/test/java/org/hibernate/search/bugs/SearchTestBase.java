@@ -10,9 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 
 public abstract class SearchTestBase {
-	
+
 	private SessionFactory sessionFactory;
-	
+
 	@Before
 	public void setUp() {
 		StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
@@ -31,14 +31,16 @@ public abstract class SearchTestBase {
 		final SessionFactoryBuilder sfb = metadata.getSessionFactoryBuilder();
 		this.sessionFactory = sfb.build();
 	}
-	
+
 	@After
 	public void tearDown() {
-		this.sessionFactory.close();
+		if ( this.sessionFactory != null ) {
+			this.sessionFactory.close();
+		}
 	}
 
 	protected abstract Class<?>[] getAnnotatedClasses();
-	
+
 	protected SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
