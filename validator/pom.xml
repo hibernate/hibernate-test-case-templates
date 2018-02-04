@@ -8,7 +8,7 @@
 	<name>Hibernate Validator Test Case Template</name>
 
 	<properties>
-		<version.org.hibernate.validator>6.0.5.Final</version.org.hibernate.validator>
+		<version.org.hibernate.validator>6.0.7.Final</version.org.hibernate.validator>
 		<version.javax.el>3.0.1-b08</version.javax.el>
 		<version.junit>4.12</version.junit>
 		<version.org.slf4j>1.7.22</version.org.slf4j>
