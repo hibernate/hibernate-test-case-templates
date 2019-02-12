@@ -1,32 +1,17 @@
 package org.hibernate.validator.bugs;
 
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.bugs.constraints.Magic;
 
+import javax.validation.GroupSequence;
+import javax.validation.Valid;
+
+@GroupSequence({ YourAnnotatedBean.class, Magic.class})
 public class YourAnnotatedBean {
 
-	@NotNull
-	private Long id;
+	@Valid
+	private AnotherBean bean;
 
-	private String name;
-
-	protected YourAnnotatedBean() {
+	public void setBean(AnotherBean bean) {
+		this.bean = bean;
 	}
-
-	public YourAnnotatedBean(Long id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 }
