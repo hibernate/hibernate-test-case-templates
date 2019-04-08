@@ -19,9 +19,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * This template demonstrates how to develop a test case for Hibernate ORM, using the Java Persistence API.
+ * This test demonstrates HHH-13360.
  */
-public class JPAUnitTestCase {
+public class AttributeConverterWithSQLDateUnitTestCase {
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -35,10 +35,8 @@ public class JPAUnitTestCase {
 		entityManagerFactory.close();
 	}
 
-	// Entities are auto-discovered, so just add them anywhere on class-path
-	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh13360Test() throws Exception {
 		final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
