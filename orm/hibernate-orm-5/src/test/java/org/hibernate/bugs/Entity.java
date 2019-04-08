@@ -5,8 +5,6 @@ import java.sql.Date;
 import javax.persistence.Convert;
 import javax.persistence.Id;
 
-import org.joda.time.LocalDate;
-
 @javax.persistence.Entity
 public class Entity {
 
@@ -14,7 +12,7 @@ public class Entity {
     private Long id;
 
     @Convert(converter = LocalDateConverter.class)
-    private LocalDate localDate;
+    private String localDate;
 
     private java.sql.Date sqlDate;
 
@@ -26,11 +24,11 @@ public class Entity {
         this.id = id;
     }
 
-    public LocalDate getLocalDate() {
+    public String getLocalDate() {
         return localDate;
     }
 
-    public void setLocalDate(LocalDate localDate) {
+    public void setLocalDate(String localDate) {
         this.localDate = localDate;
     }
 
