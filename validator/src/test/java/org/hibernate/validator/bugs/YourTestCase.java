@@ -9,6 +9,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import org.hibernate.validator.testutil.DummyTraversableResolver;
 import org.hibernate.validator.testutil.TestForIssue;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,20 +20,28 @@ public class YourTestCase {
 
 	@BeforeClass
 	public static void setUp() {
-		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+
+		ValidatorFactory factory = Validation.byDefaultProvider()
+											 .configure()
+											 // I need caching traversable resolver
+											 .traversableResolver(new DummyTraversableResolver())
+											 .buildValidatorFactory();
+
+
 		validator = factory.getValidator();
+
 	}
 
 	@Test
-	@TestForIssue(jiraKey = "HV-NNNNN") // Please fill in the JIRA key of your issue
+	@TestForIssue(jiraKey = "HV-1692") // Please fill in the JIRA key of your issue
 	public void testYourBug() {
-		YourAnnotatedBean yourEntity1 = new YourAnnotatedBean( null, "example" );
+		YourAnnotatedBean yourEntity1 = new YourAnnotatedBean( );
+		AnotherBean anotherBean = new AnotherBean();
+		anotherBean.setYourAnnotatedBean(yourEntity1);
+		yourEntity1.setBean(anotherBean);
 
-		Set<ConstraintViolation<YourAnnotatedBean>> constraintViolations = validator.validate( yourEntity1 );
-		assertEquals( 1, constraintViolations.size() );
-		assertEquals(
-				"must not be null",
-				constraintViolations.iterator().next().getMessage() );
+		Set<ConstraintViolation<YourAnnotatedBean>> constraintViolations = validator.validate( yourEntity1);
+		assertEquals( 0, constraintViolations.size() );
 	}
 
 }
