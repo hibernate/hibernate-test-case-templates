@@ -8,7 +8,8 @@
 
         <description>Hibernate test case template Persistence Unit</description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-
+	<class>com.org.entity.E_Cart</class>
+        <class>com.org.entity.E_CartItem</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
 
         <properties>
