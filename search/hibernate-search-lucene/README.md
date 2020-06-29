@@ -1,8 +1,3 @@
-# Hibernate Test Case Templates: Hibernate Search with embedded Lucene
+# Content has moved
 
-This directory contains a test case template for Hibernate Search
-backed with an embedded Lucene engine.
-
-You can run the integration tests:
-* either using the command line with: `mvn verify`;
-* or directly from your IDE. 
+Refer to [search/hibernate-search-5/lucene](../hibernate-search-5/lucene) instead.
