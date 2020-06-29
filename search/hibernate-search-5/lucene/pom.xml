@@ -14,6 +14,9 @@
 		<version.com.h2database>1.4.200</version.com.h2database>
 		<version.junit>4.13</version.junit>
 		<version.org.slf4j>1.7.30</version.org.slf4j>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencies>

@@ -17,6 +17,9 @@
 
 		<version.elasticsearch-maven-plugin>2.2</version.elasticsearch-maven-plugin>
 		<version.org.elasticsearch>2.4.6</version.org.elasticsearch>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencies>
