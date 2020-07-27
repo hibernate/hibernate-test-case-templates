@@ -17,10 +17,19 @@ package org.hibernate.bugs;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.bugs.model.Comment;
+import org.hibernate.bugs.model.Post;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -37,8 +46,8 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				Post.class,
+				Comment.class
 		};
 	}
 
@@ -68,12 +77,71 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
-		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
-		Session s = openSession();
-		Transaction tx = s.beginTransaction();
-		// Do stuff...
-		tx.commit();
-		s.close();
+	public void testSubselectWithParamsInOrderBy() throws Exception {
+		createData(openSession());
+		reproduce(openSession());
+	}
+
+	private void createData(Session session) {
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+
+			Post post1 = new Post();
+			post1.setName("name1");
+			session.save(post1);
+
+			Post post2 = new Post();
+			post2.setName(null);
+			session.save(post2);
+
+			Comment comment1 = new Comment();
+			comment1.setText("text1");
+			comment1.setPost(post1);
+			session.save(comment1);
+
+
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+		}
+	}
+
+	private void reproduce(Session session) {
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaQuery<Post> query = builder.createQuery(Post.class);
+			Root<Post> root = query.from(Post.class);
+
+			//Order order = builder.desc(root.get("name"));
+			//Order order = builder.desc(builder.coalesce(root.get("name"), builder.literal("default_name")));
+			Order order = builder.desc(builder.coalesce(root.get("name"), "default_name"));
+			query.orderBy(order);
+
+			query.select(root);
+			Query<Post> q = session.createQuery(query);
+			List<Post> posts = q.getResultList();
+
+			for (Post post : posts) {
+				System.out.println(post.getName());
+				System.out.println(post.getComments());
+			}
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+		}
 	}
 }
