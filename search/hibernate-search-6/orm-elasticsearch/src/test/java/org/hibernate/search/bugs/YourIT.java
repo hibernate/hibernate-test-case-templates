@@ -1,6 +1,6 @@
 package org.hibernate.search.bugs;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -37,8 +37,10 @@ public class YourIT extends SearchTestBase {
 					.where( f -> f.match().field( "name" ).matching( "smith" ) )
 					.fetchHits( 20 );
 
-			assertEquals( 1, hits.size() );
-			assertEquals( (Long) 1L, hits.get( 0 ).getId() );
+			assertThat( hits )
+					.hasSize( 1 )
+					.element( 0 ).extracting( YourAnnotatedEntity::getId )
+					.isEqualTo( 1L );
 		}
 	}
 
