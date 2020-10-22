@@ -4,6 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.search.mapper.orm.Search;
@@ -15,33 +20,41 @@ public class YourIT extends SearchTestBase {
 
 	@Override
 	public Class<?>[] getAnnotatedClasses() {
-		return new Class<?>[]{ YourAnnotatedEntity.class };
+		return new Class<?>[]{SubjectEntity.class, UntypedDataEntity.class, PersonEntity.class, MetaData.class,};
 	}
 
 	@Test
 	public void testYourBug() {
-		try ( Session s = getSessionFactory().openSession() ) {
-			YourAnnotatedEntity yourEntity1 = new YourAnnotatedEntity( 1L, "Jane Smith" );
-			YourAnnotatedEntity yourEntity2 = new YourAnnotatedEntity( 2L, "John Doe" );
-	
-			Transaction tx = s.beginTransaction();
-			s.persist( yourEntity1 );
-			s.persist( yourEntity2 );
-			tx.commit();
+			try ( Session s = getSessionFactory().openSession() ) {
+				SubjectEntity yourEntity1 = new SubjectEntity( "string","Hibernate" );
+				PersonEntity yourEntity2 = new PersonEntity("string", "John","adress","zip","country");			
+				MetaData md = new MetaData();
+				md.addData(yourEntity1);
+				md.addData(yourEntity2);	
+				Transaction tx = s.beginTransaction();
+				s.persist( md );
+				tx.commit();
+			}
+
+			try ( Session session = getSessionFactory().openSession() ) {
+				SearchSession searchSession = Search.session( session );
+
+				List<UntypedDataEntity> hits = searchSession.search( UntypedDataEntity.class )
+						.where(f -> f.bool()
+				        		.must(f.match().fields( "subject" ).matching( "Hibernate"))
+				        		.must(f.match().fields( "name" ).matching( "John")))
+				        .fetchHits(20);
+				System.out.println("#############################################");
+				for(UntypedDataEntity e : hits) {
+					System.out.println(e.toString());
+				}
+				System.out.println("##############################################");
+				
+				assertThat( hits )
+						.hasSize( 1 )
+						.element( 0 ).extracting( UntypedDataEntity::getId )
+						.isEqualTo( 1 );
+			}
 		}
-
-		try ( Session session = getSessionFactory().openSession() ) {
-			SearchSession searchSession = Search.session( session );
-
-			List<YourAnnotatedEntity> hits = searchSession.search( YourAnnotatedEntity.class )
-					.where( f -> f.match().field( "name" ).matching( "smith" ) )
-					.fetchHits( 20 );
-
-			assertThat( hits )
-					.hasSize( 1 )
-					.element( 0 ).extracting( YourAnnotatedEntity::getId )
-					.isEqualTo( 1L );
-		}
-	}
 
 }
