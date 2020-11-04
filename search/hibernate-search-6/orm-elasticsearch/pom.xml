@@ -9,8 +9,8 @@
 	<description>Test case template for Hibernate Search in Hibernate ORM with an Elasticsearch backend</description>
 
 	<properties>
-		<version.org.hibernate.search>6.0.0.Beta11</version.org.hibernate.search>
-		<version.org.hibernate>5.4.22.Final</version.org.hibernate>
+		<version.org.hibernate.search>6.0.0.CR1</version.org.hibernate.search>
+		<version.org.hibernate>5.4.23.Final</version.org.hibernate>
 
 		<version.com.h2database>1.4.200</version.com.h2database>
 		<version.junit>4.13.1</version.junit>
@@ -18,7 +18,7 @@
 		<version.org.slf4j>1.7.30</version.org.slf4j>
 
 		<version.elasticsearch-maven-plugin>6.15</version.elasticsearch-maven-plugin>
-		<version.org.elasticsearch>7.9.0</version.org.elasticsearch>
+		<version.org.elasticsearch>7.9.2</version.org.elasticsearch>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
