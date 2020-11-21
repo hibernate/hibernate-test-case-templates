@@ -21,7 +21,6 @@ public class AssetAssetTypeAttribute {
     @Column(name = "asset_type_attribute_id")
     private Long assetTypeAttributeId;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "asset_id", referencedColumnName = "id"),
@@ -29,7 +28,6 @@ public class AssetAssetTypeAttribute {
     })
     private Asset asset;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(name = "asset_type_attribute_id", referencedColumnName = "id", insertable = false, updatable = false)
     private AssetTypeAttribute assetTypeAttribute;
