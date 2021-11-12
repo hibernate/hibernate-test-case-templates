@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+    version="1.0">
+
+    <!-- NOTE: Explicitly setting 'access="FIELD"' allows this test to pass -->
+    <entity class="org.hibernate.bugs.hhh14910.model.xml.XMLEmbedMultiTableEnt">
+        <secondary-table name="XSEC_TABLEEMB">
+            <primary-key-join-column name="id" />
+        </secondary-table>
+        <attributes>
+            <id name="id"></id>
+            <basic name="name"></basic>
+            <embedded name="embeddedObj">
+                <attribute-override name="street">
+                    <column table="XSEC_TABLEEMB" />
+                </attribute-override>
+                <attribute-override name="city">
+                    <column table="XSEC_TABLEEMB" />
+                </attribute-override>
+                <attribute-override name="state">
+                    <column table="XSEC_TABLEEMB" />
+                </attribute-override>
+                <attribute-override name="zip">
+                    <column table="XSEC_TABLEEMB" />
+                </attribute-override>
+            </embedded>
+        </attributes>
+    </entity>
+
+    <!-- NOTE: Explicitly setting 'access="FIELD"' allows this test to pass -->
+    <embeddable class="org.hibernate.bugs.hhh14910.model.xml.XMLMTEmbeddable">
+        <attributes>
+            <basic name="street"></basic>
+            <basic name="city"></basic>
+            <basic name="state"></basic>
+            <basic name="zip"></basic>
+        </attributes>
+    </embeddable>
+</entity-mappings>
