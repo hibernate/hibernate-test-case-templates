@@ -9,13 +9,13 @@
 	<description>Test case template for Hibernate Search in Hibernate ORM with a Lucene backend</description>
 
 	<properties>
-		<version.org.hibernate.search>6.0.7.Final</version.org.hibernate.search>
-		<version.org.hibernate>5.4.32.Final</version.org.hibernate>
+		<version.org.hibernate.search>6.1.0.Final</version.org.hibernate.search>
+		<version.org.hibernate>5.6.5.Final</version.org.hibernate>
 
 		<version.com.h2database>1.4.200</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
-		<version.org.assertj.assertj-core>3.15.0</version.org.assertj.assertj-core>
-		<version.org.slf4j>1.7.30</version.org.slf4j>
+		<version.org.assertj.assertj-core>3.22.0</version.org.assertj.assertj-core>
+		<version.org.slf4j>1.7.33</version.org.slf4j>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
