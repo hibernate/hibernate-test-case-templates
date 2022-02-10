@@ -13,7 +13,7 @@
 
 		<version.com.h2database>1.4.200</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
-		<version.org.slf4j>1.7.30</version.org.slf4j>
+		<version.org.slf4j>1.7.33</version.org.slf4j>
 
 		<version.elasticsearch-maven-plugin>5.7</version.elasticsearch-maven-plugin>
 		<version.org.elasticsearch>5.6.9</version.org.elasticsearch>
