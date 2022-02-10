@@ -11,7 +11,7 @@
 		<version.org.hibernate.validator>6.2.0.Final</version.org.hibernate.validator>
 		<version.javax.el>3.0.1-b09</version.javax.el>
 		<version.junit>4.13.2</version.junit>
-		<version.org.slf4j>1.7.22</version.org.slf4j>
+		<version.org.slf4j>1.7.33</version.org.slf4j>
 	</properties>
 
 	<dependencies>
