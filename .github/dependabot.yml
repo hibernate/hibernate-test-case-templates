@@ -29,8 +29,6 @@ updates:
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.hibernate.*:*"
         update-types: [ "version-update:semver-major" ]
-      - dependency-name: "com.h2database:h2"
-        update-types: [ "version-update:semver-major" ]
   - package-ecosystem: "maven"
     directory: "/validator"
     schedule:
