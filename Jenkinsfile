@@ -7,7 +7,7 @@ pipeline {
         maven 'Apache Maven 3.8'
     }
     options {
-        disableConcurrentBuilds()
+        disableConcurrentBuilds(abortPrevious: true)
     }
     stages {
         stage('Build') {
