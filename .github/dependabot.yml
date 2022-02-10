@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+      # Test case templates generally target a specific major version: we don't want to update those automatically.
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
