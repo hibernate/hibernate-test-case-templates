@@ -1,11 +1,98 @@
 version: 2
 updates:
   - package-ecosystem: "maven"
-    directory: "/"
+    directory: "/orm/hibernate-orm-4"
     schedule:
       interval: "daily"
     ignore:
-      # Test case templates generally target a specific major version: we don't want to update those automatically.
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "com.h2database:h2"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: "maven"
+    directory: "/orm/hibernate-orm-5"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: "maven"
+    directory: "/envers/envers-5"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "com.h2database:h2"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: "maven"
+    directory: "/validator"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: "maven"
+    directory: "/search/hibernate-search-5/lucene"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "com.h2database:h2"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate:hibernate-core"
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
+  - package-ecosystem: "maven"
+    directory: "/search/hibernate-search-5/elasticsearch-2"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "com.h2database:h2"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate:hibernate-core"
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
+  - package-ecosystem: "maven"
+    directory: "/search/hibernate-search-5/elasticsearch-5"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "com.h2database:h2"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate:hibernate-core"
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
+  - package-ecosystem: "maven"
+    directory: "/search/hibernate-search-6/orm-elasticsearch"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: "maven"
+    directory: "/search/hibernate-search-6/orm-lucene"
+    schedule:
+      interval: "daily"
+    ignore:
       - dependency-name: "org.hibernate:*"
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.hibernate.*:*"
