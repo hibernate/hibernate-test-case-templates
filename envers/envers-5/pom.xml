@@ -8,7 +8,7 @@
     <name>Hibernate Envers 5 Test Case Template</name>
 
     <properties>
-        <version.com.h2database>1.4.193</version.com.h2database>
+        <version.com.h2database>1.4.200</version.com.h2database>
         <version.junit>4.13.2</version.junit>
         <version.org.hibernate>5.2.8.Final</version.org.hibernate>
         <version.org.slf4j>1.7.24</version.org.slf4j>
