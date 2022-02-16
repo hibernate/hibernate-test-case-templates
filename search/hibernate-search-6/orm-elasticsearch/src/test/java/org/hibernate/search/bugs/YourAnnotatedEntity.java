@@ -1,41 +1,49 @@
 package org.hibernate.search.bugs;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @Indexed
 public class YourAnnotatedEntity {
 
-	@Id
-	@DocumentId
-	private Long id;
+  @Id
+  @DocumentId
+  private Long id;
 
-	@FullTextField(analyzer = "nameAnalyzer")
-	private String name;
+  @FullTextField(analyzer = "nameAnalyzer")
+  private String name;
 
-	protected YourAnnotatedEntity() {
-	}
+  @OneToOne
+  @JoinColumn(name = "child_id")
+  @IndexedEmbedded(includeEmbeddedObjectId = true)
+  ChildEntity childEntity;
 
-	public YourAnnotatedEntity(Long id, String name) {
-		this.id = id;
-		this.name = name;
-	}
+  protected YourAnnotatedEntity() {
+  }
 
-	public Long getId() {
-		return id;
-	}
+  public YourAnnotatedEntity(Long id, String name) {
+    this.id = id;
+    this.name = name;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
 }
