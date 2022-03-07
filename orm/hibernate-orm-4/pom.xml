@@ -5,7 +5,7 @@
 	<groupId>org.hibernate.testcasetemplate</groupId>
 	<artifactId>test-case-template-hibernate-orm4</artifactId>
 	<version>1.0.0.Final</version>
-	<name>Hibernate ORM 4 Test Case Template</name>
+	<name>Hibernate ORM 4 Test for HHH-15110</name>
 
 	<properties>
 		<version.com.h2database>1.4.200</version.com.h2database>
