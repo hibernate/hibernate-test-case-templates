@@ -9,7 +9,7 @@ import java.util.List;
 @Table(name = "TEST_USER")
 public class User implements Serializable {
     private Long userId;
-    private List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments;
 
     @Id
     @Column(name = "USER_ID")

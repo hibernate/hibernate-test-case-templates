@@ -8,10 +8,7 @@ import javax.persistence.Query;
 import org.hibernate.bugs.hhh15110.model.Comment;
 import org.hibernate.bugs.hhh15110.model.Post;
 import org.hibernate.bugs.hhh15110.model.User;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.Date;
 
@@ -61,7 +58,7 @@ public class JPAUnitTestCase {
 	}
 
 	@Test
-	public void subqueryEqualsObject_fails() {
+	public void subqueryEqualsObject() {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		String jpqlUpdatePost1ViaUser1 = "UPDATE Post postAlias " +
@@ -79,14 +76,12 @@ public class JPAUnitTestCase {
 		entityManager.getTransaction().commit();
 		//assert that post1 has a new SomeDate value but not post2
 		Assert.assertEquals(someDateValue,entityManager.find(Post.class,POST_1_ID).getSomeDate());
-		/// this test should be
-		// Assert.assertNull(entityManager.find(Post.class,POST_2_ID).getSomeDate());
-		Assert.assertEquals(someDateValue,entityManager.find(Post.class,POST_2_ID).getSomeDate());
+		Assert.assertNull(entityManager.find(Post.class,POST_2_ID).getSomeDate());
 		entityManager.close();
 	}
 
 	@Test
-	public void subqueryEqualsIdField_success() {
+	public void subqueryEqualsIdField() {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		String jpqlUpdatePost1ViaUser1 = "UPDATE Post postAlias " +
@@ -107,4 +102,43 @@ public class JPAUnitTestCase {
 		Assert.assertNull(entityManager.find(Post.class,POST_2_ID).getSomeDate());
 		entityManager.close();
 	}
+
+	@Test
+	public void selectWithsubqueryEqualsObject() {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		String jpqlUpdatePost1ViaUser1 = "SELECT postAlias " +
+				" FROM Post postAlias "+
+				"WHERE EXISTS " +
+				"(SELECT commentAlias " +
+				"FROM Comment commentAlias " +
+				"WHERE commentAlias.user.userId = :userIdParam " +
+				"AND commentAlias.post = postAlias)";
+		Query query = entityManager.createQuery(jpqlUpdatePost1ViaUser1);
+		query.setParameter("userIdParam",USER_ID_VALUE);
+		Assert.assertEquals(1,query.getResultList().size());
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+
+	@Test
+	@Ignore ("fatto così da errore perché saltano le FK di Comment")
+	public void deleteWithSubqueryEqualsObject() {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		String jpqlUpdatePost1ViaUser1 = "DELETE Post postAlias " +
+				"WHERE EXISTS " +
+				"(SELECT commentAlias " +
+				"FROM Comment commentAlias " +
+				"WHERE commentAlias.user.userId = :userIdParam " +
+				"AND commentAlias.post = postAlias)";
+		Query query = entityManager.createQuery(jpqlUpdatePost1ViaUser1);
+		query.setParameter("userIdParam",USER_ID_VALUE);
+		query.executeUpdate();
+		entityManager.getTransaction().commit();
+		Assert.assertNull(entityManager.find(Post.class,POST_1_ID));
+		Assert.assertNotNull(entityManager.find(Post.class,POST_2_ID));
+		entityManager.close();
+	}
+
 }
