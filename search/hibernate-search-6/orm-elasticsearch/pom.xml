@@ -9,7 +9,7 @@
 	<description>Test case template for Hibernate Search in Hibernate ORM with an Elasticsearch backend</description>
 
 	<properties>
-		<version.org.hibernate.search>6.1.1.Final</version.org.hibernate.search>
+		<version.org.hibernate.search>6.1.2.Final</version.org.hibernate.search>
 		<version.org.hibernate>5.6.7.Final</version.org.hibernate>
 
 		<version.com.h2database>2.1.210</version.com.h2database>
