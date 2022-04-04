@@ -1,19 +1,6 @@
 version: 2
 updates:
   - package-ecosystem: "maven"
-    directory: "/orm/hibernate-orm-4"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.slf4j:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "com.h2database:h2"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
     directory: "/orm/hibernate-orm-5"
     schedule:
       interval: "daily"
