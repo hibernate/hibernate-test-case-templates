@@ -25,7 +25,29 @@ updates:
       - dependency-name: "org.hibernate.*:*"
         update-types: [ "version-update:semver-major" ]
   - package-ecosystem: "maven"
+    directory: "/orm/hibernate-orm-6"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.apache.maven.plugins:*"
+      - dependency-name: "org.slf4j:*"
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: "maven"
     directory: "/envers/envers-5"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "org.apache.maven.plugins:*"
+      - dependency-name: "org.slf4j:*"
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: "maven"
+    directory: "/envers/envers-6"
     schedule:
       interval: "daily"
     ignore:

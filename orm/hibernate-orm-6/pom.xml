@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.hibernate.testcasetemplate</groupId>
-	<artifactId>test-case-template-hibernate-orm5</artifactId>
+	<artifactId>test-case-template-hibernate-orm6</artifactId>
 	<version>1.0.0.Final</version>
-	<name>Hibernate ORM 5 Test Case Template</name>
+	<name>Hibernate ORM 6 Test Case Template</name>
 
 	<properties>
 		<version.com.h2database>2.1.210</version.com.h2database>
