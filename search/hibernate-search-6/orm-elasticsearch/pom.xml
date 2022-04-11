@@ -12,7 +12,7 @@
 		<version.org.hibernate.search>6.1.4.Final</version.org.hibernate.search>
 		<version.org.hibernate>5.6.7.Final</version.org.hibernate>
 
-		<version.com.h2database>2.1.210</version.com.h2database>
+		<version.com.h2database>2.1.212</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
 		<version.org.assertj.assertj-core>3.22.0</version.org.assertj.assertj-core>
 		<version.org.slf4j>1.7.33</version.org.slf4j>
