@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <Appenders>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss,SSS} %-5p [%c] - %m%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Logger name="org.hibernate.stat" level="debug"/>
+    <Logger name="org.hibernate.SQL" level="debug"/>
+    
+    <Logger name="org.hibernate" level="info" />
+    <Root level="info">
+      <AppenderRef ref="STDOUT"/>
+    </Root>
+  </Loggers>
+</Configuration>

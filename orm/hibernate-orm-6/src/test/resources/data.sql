@@ -1,0 +1,1 @@
+INSERT INTO ChessGame(id, version, playerwhite_id, playerblack_id) VALUES (1, 0, 1, 2);
