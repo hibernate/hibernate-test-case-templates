@@ -17,7 +17,7 @@
 		<version.org.assertj.assertj-core>3.23.1</version.org.assertj.assertj-core>
 		<version.org.slf4j>1.7.33</version.org.slf4j>
 
-		<version.elasticsearch-maven-plugin>6.22</version.elasticsearch-maven-plugin>
+		<version.elasticsearch-maven-plugin>6.23</version.elasticsearch-maven-plugin>
 		<version.org.elasticsearch>7.16.3</version.org.elasticsearch>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
