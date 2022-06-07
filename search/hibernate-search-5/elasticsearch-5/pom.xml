@@ -15,7 +15,7 @@
 		<version.junit>4.13.2</version.junit>
 		<version.org.slf4j>1.7.33</version.org.slf4j>
 
-		<version.elasticsearch-maven-plugin>6.22</version.elasticsearch-maven-plugin>
+		<version.elasticsearch-maven-plugin>6.23</version.elasticsearch-maven-plugin>
 		<version.org.elasticsearch>5.6.9</version.org.elasticsearch>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
