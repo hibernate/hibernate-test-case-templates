@@ -89,6 +89,8 @@ updates:
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.elasticsearch:*"
         update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.elasticsearch.*:*"
+        update-types: [ "version-update:semver-major" ]
   - package-ecosystem: "maven"
     directory: "/search/hibernate-search-5/elasticsearch-5"
     schedule:
@@ -105,6 +107,8 @@ updates:
       - dependency-name: "org.hibernate:hibernate-core"
         update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
       - dependency-name: "org.elasticsearch:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.elasticsearch.*:*"
         update-types: [ "version-update:semver-major" ]
   - package-ecosystem: "maven"
     directory: "/search/hibernate-search-6/orm-elasticsearch"
