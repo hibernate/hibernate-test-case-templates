@@ -20,7 +20,10 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Objects;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -33,47 +36,79 @@ import org.junit.Test;
  */
 public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
-	// Add your entities here.
-	@Override
-	protected Class[] getAnnotatedClasses() {
-		return new Class[] {
-//				Foo.class,
-//				Bar.class
-		};
-	}
+    // Add your entities here.
+    @Override
+    protected Class[] getAnnotatedClasses() {
+        return new Class[]{
+                Event.class,
+                Organizer.class
+        };
+    }
 
-	// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
-	@Override
-	protected String[] getMappings() {
-		return new String[] {
+    // If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
+    @Override
+    protected String[] getMappings() {
+        return new String[]{
 //				"Foo.hbm.xml",
 //				"Bar.hbm.xml"
-		};
-	}
-	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
-	@Override
-	protected String getBaseForMappings() {
-		return "org/hibernate/test/";
-	}
+        };
+    }
 
-	// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
-	@Override
-	protected void configure(Configuration configuration) {
-		super.configure( configuration );
+    // If those mappings reside somewhere other than resources/org/hibernate/test, change this.
+    @Override
+    protected String getBaseForMappings() {
+        return "org/hibernate/test/";
+    }
 
-		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
-		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
-	}
+    // Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
+    @Override
+    protected void configure(Configuration configuration) {
+        super.configure(configuration);
 
-	// Add your tests, using standard JUnit.
-	@Test
-	public void hhh123Test() throws Exception {
-		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
-		Session s = openSession();
-		Transaction tx = s.beginTransaction();
-		// Do stuff...
-		tx.commit();
-		s.close();
-	}
+        configuration.setProperty(AvailableSettings.SHOW_SQL, Boolean.TRUE.toString());
+        configuration.setProperty(AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString());
+        //configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        Session s = openSession();
+        Transaction tx = s.beginTransaction();
+
+        var organizer = new Organizer(1L, "Test Organizer");
+        var event = new Event(1L, "Test Event", organizer);
+        var nullEvent = new Event(2L, "Null Event", null);
+        s.persist(organizer);
+        s.persist(event);
+        s.persist(nullEvent);
+
+        tx.commit();
+        s.close();
+    }
+
+    // Add your tests, using standard JUnit.
+    @Test
+    public void hhh15233Test() throws Exception {
+        // BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
+        Session s = openSession();
+        Transaction tx = s.beginTransaction();
+
+        var organizer = s.get(Organizer.class, 1L);
+        Objects.requireNonNull(organizer);
+
+        Event event = getEventByOrganizer(s, organizer);
+        log.info("Found event with organizer: " + event.getId());
+        event = getEventByOrganizer(s, null);
+        log.info("Found event with null organizer: " + event.getId());
+
+        tx.commit();
+        s.close();
+    }
+
+    private Event getEventByOrganizer(Session s, Organizer organizer) {
+        return s.createQuery("FROM Event e WHERE (:organizer IS NULL AND e.organizer IS NULL OR e.organizer = :organizer)", Event.class)
+                .setParameter("organizer", organizer)
+                .setMaxResults(1)
+                .uniqueResult();
+    }
 }
