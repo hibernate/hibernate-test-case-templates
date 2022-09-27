@@ -10,7 +10,7 @@
 
 	<properties>
 		<version.org.hibernate.search>6.1.7.Final</version.org.hibernate.search>
-		<version.org.hibernate>5.6.11.Final</version.org.hibernate>
+		<version.org.hibernate>5.6.12.Final</version.org.hibernate>
 
 		<version.com.h2database>2.1.214</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
