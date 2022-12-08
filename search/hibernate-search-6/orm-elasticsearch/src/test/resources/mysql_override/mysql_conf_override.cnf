@@ -1,0 +1,19 @@
+[mysqld]
+lower_case_table_names = 1
+user = mysql
+datadir = /var/lib/mysql
+port   		= 3306
+#socket 		= /tmp/mysql.sock
+skip-external-locking
+key_buffer_size = 16K
+max_allowed_packet = 1M
+table_open_cache = 4
+sort_buffer_size = 64K
+read_buffer_size = 256K
+read_rnd_buffer_size = 256K
+net_buffer_length = 2K
+skip-host-cache
+skip-name-resolve
+
+# Uncomment the following if you are using InnoDB tables
+innodb_data_file_path = ibdata1:10M:autoextend
