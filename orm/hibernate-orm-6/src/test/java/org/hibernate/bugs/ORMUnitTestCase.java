@@ -15,19 +15,33 @@
  */
 package org.hibernate.bugs;
 
+import java.util.Collection;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToMany;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
  * Although ORMStandaloneTestCase is perfectly acceptable as a reproducer, usage of this class is much preferred.
  * Since we nearly always include a regression test with bug fixes, providing your reproducer using this method
  * simplifies the process.
- *
+ * <p>
  * What's even better?  Fork hibernate-orm itself, add your test case directly to a module's unit tests, then
  * submit it as a PR!
  */
@@ -37,23 +51,8 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				TestEntity.class
 		};
-	}
-
-	// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
-	@Override
-	protected String[] getMappings() {
-		return new String[] {
-//				"Foo.hbm.xml",
-//				"Bar.hbm.xml"
-		};
-	}
-	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
-	@Override
-	protected String getBaseForMappings() {
-		return "org/hibernate/test/";
 	}
 
 	// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
@@ -68,12 +67,79 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
-		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
+	public void persisterTest() throws Exception {
+		// persist entity
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+
+		TestEntity testEntity = new TestEntity();
+		testEntity.setName( "test" );
+		session.persist( testEntity );
+
+		tx.commit();
+		s.close();
+
+		// retrieve entity
+		s = openSession();
+		tx = s.beginTransaction();
+
+		TestEntity result = s.createQuery( "from TestEntity", TestEntity.class ).getSingleResult();
+		assertEquals( "test", result.getName() );
+
 		tx.commit();
 		s.close();
 	}
+
+
+	@Entity(name = "TestEntity")
+	public static class TestEntity extends AbstractTreeableEntity<TestEntity> {
+	}
+
+	@MappedSuperclass
+	public abstract static class AbstractTreeableEntity<T extends AbstractTreeableEntity<T>> {
+		@Id
+		@GeneratedValue
+		private Long id;
+
+		protected String name;
+
+		@ManyToOne(fetch = FetchType.LAZY)
+		protected T parent;
+
+		@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "parent")
+		protected Collection<T> children;
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public T getParent() {
+			return parent;
+		}
+
+		public void setParent(T parent) {
+			this.parent = parent;
+		}
+
+		public Collection<T> getChildren() {
+			return children;
+		}
+
+		public void setChildren(Collection<T> children) {
+			this.children = children;
+		}
+	}
+
 }
