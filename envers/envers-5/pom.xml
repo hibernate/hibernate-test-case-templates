@@ -11,7 +11,6 @@
         <version.com.h2database>2.1.214</version.com.h2database>
         <version.junit>4.13.2</version.junit>
         <version.org.hibernate>5.6.14.Final</version.org.hibernate>
-        <version.org.slf4j>1.7.33</version.org.slf4j>
     </properties>
 
     <dependencies>
@@ -35,11 +34,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${version.junit}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${version.org.slf4j}</version>
         </dependency>
     </dependencies>
 
