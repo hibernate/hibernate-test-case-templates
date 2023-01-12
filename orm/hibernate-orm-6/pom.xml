@@ -25,6 +25,13 @@
 			<version>${version.org.hibernate}</version>
 		</dependency>
 
+		<!-- OracleDialect needs Oracle Driver -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<version>21.8.0.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
