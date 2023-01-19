@@ -15,6 +15,7 @@
  */
 package org.hibernate.bugs;
 
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
@@ -32,14 +33,10 @@ import org.junit.Test;
  * submit it as a PR!
  */
 public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
-
 	// Add your entities here.
 	@Override
 	protected Class[] getAnnotatedClasses() {
-		return new Class[] {
-//				Foo.class,
-//				Bar.class
-		};
+		return new Class[]{TestEntity.class};
 	}
 
 	// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
@@ -68,11 +65,18 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh16034Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+		String jpql = "SELECT te \n" +
+									" FROM TestEntity te" +
+									" WHERE te.archivedDate IS NOT NULL" +
+									" ORDER BY CASE WHEN (CURRENT_DATE BETWEEN te.postingActivationDate AND te.postingDeactivationDate AND te.publishable = TRUE) THEN 1 ELSE 0 END DESC, te.id ASC";
+
+		TypedQuery<TestEntity> typedQuery = s.createQuery(jpql, TestEntity.class);
+		typedQuery.setMaxResults(10);
+		typedQuery.getResultList();
 		tx.commit();
 		s.close();
 	}
