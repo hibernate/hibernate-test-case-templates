@@ -10,10 +10,16 @@
 	<properties>
 		<version.com.h2database>2.1.214</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
-		<version.org.hibernate>6.1.6.Final</version.org.hibernate>
+		<version.org.hibernate>6.2.0.CR1</version.org.hibernate>
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11 -->
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<version>21.8.0.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
