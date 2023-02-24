@@ -1,4 +1,4 @@
-package package org.hibernate.bugs;
+package  org.hibernate.bugs;
 
 import org.hibernate.annotations.*;
 
