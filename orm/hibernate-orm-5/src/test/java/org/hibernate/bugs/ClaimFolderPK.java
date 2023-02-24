@@ -1,9 +1,5 @@
-package com.zurichna.claim.entity.test;
+package org.hibernate.bugs;
 
-import com.zurichna.claim.entity.validation.common.ValidClaimNumber;
-import com.zurichna.claim.entity.validation.common.ValidProductionCode;
-import com.zurichna.claim.entity.validation.validatorgroups.PrimaryClaimNumberValidationGroup;
-import com.zurichna.claim.status.Remark;
 import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.Column;
@@ -17,11 +13,11 @@ public class ClaimFolderPK {
 	@Column(updatable = false, name = "DB_PARTN_NBR")
 	protected String partitionNumber;
 
-	@ValidProductionCode(groups = PrimaryClaimNumberValidationGroup.class)
+	
 	@Column(updatable = false, name = "PROD_TRNG_CD")
 	protected String productionOrTrainingCode;
 
-	@ValidClaimNumber(groups = PrimaryClaimNumberValidationGroup.class)
+
 	@Column(updatable = false, name = "CLM_NBR")
 	protected String claimNumber;
 	
