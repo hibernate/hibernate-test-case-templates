@@ -1,6 +1,5 @@
-package com.zurichna.claim.entity.test;
+package  org.hibernate.bugs;
 
-import com.zurichna.claim.entity.ClaimantFolderEntity;
 import org.hibernate.annotations.LazyGroup;
 import org.hibernate.annotations.LazyToOne;
 import org.hibernate.annotations.LazyToOneOption;
