@@ -1,4 +1,4 @@
-package com.zurichna.claim.entity.test;
+package  org.hibernate.bugs;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
