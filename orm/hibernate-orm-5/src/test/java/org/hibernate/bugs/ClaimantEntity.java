@@ -1,7 +1,5 @@
-package com.zurichna.claim.entity.test;
+package package org.hibernate.bugs;
 
-import com.zurichna.claim.entity.Injury;
-import com.zurichna.claim.entity.claim.ClaimPartyRoleEntity;
 import org.hibernate.annotations.*;
 
 import javax.persistence.*;
