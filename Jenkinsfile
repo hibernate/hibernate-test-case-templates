@@ -16,9 +16,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            zulipNotification smartNotification: 'disabled', stream: 'hibernate-infra', topic: 'activity'
-        }
-    }
 }
