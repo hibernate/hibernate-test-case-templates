@@ -10,7 +10,7 @@
 
 	<properties>
 		<version.org.hibernate.search>6.1.8.Final</version.org.hibernate.search>
-		<version.org.hibernate>5.6.15.Final</version.org.hibernate>
+		<version.org.hibernate>6.2.1.Final</version.org.hibernate>
 
 		<version.com.h2database>2.1.214</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
@@ -23,8 +23,23 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate.search</groupId>
-			<artifactId>hibernate-search-mapper-orm</artifactId>
+			<artifactId>hibernate-search-mapper-orm-orm6</artifactId>
 			<version>${version.org.hibernate.search}</version>
+			<exclusions>
+				<!-- Search targets ORM 6.1 by default, fix that... -->
+				<exclusion>
+					<groupId>jakarta.persistence</groupId>
+					<artifactId>jakarta.persistence-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate.orm</groupId>
+					<artifactId>hibernate-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate.common</groupId>
+					<artifactId>hibernate-commons-annotations</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.search</groupId>
@@ -33,14 +48,19 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>${version.org.hibernate}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-testing</artifactId>
 			<version>${version.org.hibernate}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.14.2</version>
 		</dependency>
 
 		<dependency>
@@ -67,8 +87,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.10.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>17</release>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
