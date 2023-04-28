@@ -37,8 +37,8 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				EntityWithAny.class,
+				ObjectAny.class
 		};
 	}
 
@@ -68,11 +68,18 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh16532Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+		EntityWithAny entity = new EntityWithAny();
+		entity.name = "test hhh16532";
+		entity.objectAny = new ObjectAny();
+		s.persist(entity);
+		s.flush();
+		s.clear();
+		entity.name = "test hhh16532 Modified";
+		s.merge(entity);
 		tx.commit();
 		s.close();
 	}
