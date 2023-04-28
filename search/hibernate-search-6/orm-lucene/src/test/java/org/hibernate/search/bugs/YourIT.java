@@ -1,13 +1,9 @@
 package org.hibernate.search.bugs;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.List;
+import java.util.Locale;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.search.mapper.orm.Search;
-import org.hibernate.search.mapper.orm.session.SearchSession;
 
 import org.junit.Test;
 
@@ -15,33 +11,40 @@ public class YourIT extends SearchTestBase {
 
 	@Override
 	public Class<?>[] getAnnotatedClasses() {
-		return new Class<?>[]{ YourAnnotatedEntity.class };
+		return new Class<?>[]{ AbstractEntity.class, TextId.class, Article.class, Manufacturer.class };
 	}
 
 	@Test
 	public void testYourBug() {
+		System.out.println("Initializing...");
+		Integer manufacturerId;
 		try ( Session s = getSessionFactory().openSession() ) {
-			YourAnnotatedEntity yourEntity1 = new YourAnnotatedEntity( 1L, "Jane Smith" );
-			YourAnnotatedEntity yourEntity2 = new YourAnnotatedEntity( 2L, "John Doe" );
-	
 			Transaction tx = s.beginTransaction();
-			s.persist( yourEntity1 );
-			s.persist( yourEntity2 );
+			Manufacturer manufacturer = new Manufacturer(
+					new TextId( Locale.ROOT, new String[] {
+							"manufacturer-foo", "manufacturer-bar"
+					} ),
+					"manufacturer-name" );
+			Article article1 = new Article( manufacturer );
+			Article article2 = new Article( manufacturer );
+			s.persist( manufacturer );
+			manufacturerId = manufacturer.getId();
+			s.persist( article1 );
+			s.persist( article2 );
+			manufacturer.getArticles().add( article1 );
+			manufacturer.getArticles().add( article2 );
 			tx.commit();
 		}
+		System.out.println("Initialized.");
 
-		try ( Session session = getSessionFactory().openSession() ) {
-			SearchSession searchSession = Search.session( session );
-
-			List<YourAnnotatedEntity> hits = searchSession.search( YourAnnotatedEntity.class )
-					.where( f -> f.match().field( "name" ).matching( "smith" ) )
-					.fetchHits( 20 );
-
-			assertThat( hits )
-					.hasSize( 1 )
-					.element( 0 ).extracting( YourAnnotatedEntity::getId )
-					.isEqualTo( 1L );
+		System.out.println("Updating...");
+		try ( Session s = getSessionFactory().openSession() ) {
+			Transaction tx = s.beginTransaction();
+			Manufacturer manufacturer = s.find( Manufacturer.class, manufacturerId );
+			manufacturer.setName( "newname" );
+			tx.commit();
 		}
+		System.out.println("Updated");
 	}
 
 }
