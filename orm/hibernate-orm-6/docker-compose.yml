@@ -1,0 +1,11 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5432:5432"
+    environment:
+      - "POSTGRES_PASSWORD=postgres"
