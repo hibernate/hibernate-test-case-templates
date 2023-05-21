@@ -31,6 +31,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -106,16 +107,21 @@ public class ORMUnitTestCaseHhh16360H2 extends BaseCoreFunctionalTestCase {
         configuration.setProperty(AvailableSettings.JAKARTA_HBM2DDL_DATABASE_ACTION, Action.CREATE_DROP.getExternalHbm2ddlName());
     }
 
-    // Add your tests, using standard JUnit.
-    @Test
-    public void testDate() throws Exception {
-        StringWriter updateScript = new StringWriter();
-
+    private Map<String, Object> createUpdateProperties(Writer updateScript) {
         Map<String, Object> properties = new HashMap<>(sessionFactory().getProperties());
         properties.put(AvailableSettings.JAKARTA_HBM2DDL_DATABASE_ACTION, Action.NONE);
         properties.put(AvailableSettings.JAKARTA_HBM2DDL_SCRIPTS_ACTION, Action.UPDATE);
         properties.put(AvailableSettings.JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET, updateScript);
         properties.put(AvailableSettings.JAKARTA_HBM2DDL_CREATE_SCHEMAS, false);
+        return properties;
+    }
+
+    // Add your tests, using standard JUnit.
+    @Test
+    public void testDate() throws Exception {
+        StringWriter updateScript = new StringWriter();
+
+        Map<String, Object> properties = createUpdateProperties(updateScript);
 
         Metadata metadata = new MetadataSources(serviceRegistry())
                 .addAnnotatedClass(EntityWithDate.class)
@@ -139,11 +145,7 @@ public class ORMUnitTestCaseHhh16360H2 extends BaseCoreFunctionalTestCase {
     public void testVarchar() throws Exception {
         StringWriter updateScript = new StringWriter();
 
-        Map<String, Object> properties = new HashMap<>(sessionFactory().getProperties());
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_DATABASE_ACTION, Action.NONE);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_SCRIPTS_ACTION, Action.UPDATE);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET, updateScript);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_CREATE_SCHEMAS, false);
+        Map<String, Object> properties = createUpdateProperties(updateScript);
 
         Metadata metadata = new MetadataSources(serviceRegistry())
                 .addAnnotatedClass(EntityWithVarchar.class)
@@ -167,11 +169,7 @@ public class ORMUnitTestCaseHhh16360H2 extends BaseCoreFunctionalTestCase {
     public void testDouble() throws Exception {
         StringWriter updateScript = new StringWriter();
 
-        Map<String, Object> properties = new HashMap<>(sessionFactory().getProperties());
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_DATABASE_ACTION, Action.NONE);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_SCRIPTS_ACTION, Action.UPDATE);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET, updateScript);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_CREATE_SCHEMAS, false);
+        Map<String, Object> properties = createUpdateProperties(updateScript);
 
         Metadata metadata = new MetadataSources(serviceRegistry())
                 .addAnnotatedClass(EntityWithDouble.class)
@@ -191,15 +189,13 @@ public class ORMUnitTestCaseHhh16360H2 extends BaseCoreFunctionalTestCase {
         Assert.assertEquals("UpdateScript after HDM2DDL=create should be empty.", expected, actual);
     }
 
+
+
     @Test
     public void testText() throws Exception {
         StringWriter updateScript = new StringWriter();
 
-        Map<String, Object> properties = new HashMap<>(sessionFactory().getProperties());
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_DATABASE_ACTION, Action.NONE);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_SCRIPTS_ACTION, Action.UPDATE);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_SCRIPTS_CREATE_TARGET, updateScript);
-        properties.put(AvailableSettings.JAKARTA_HBM2DDL_CREATE_SCHEMAS, false);
+        Map<String, Object> properties = createUpdateProperties(updateScript);
 
         Metadata metadata = new MetadataSources(serviceRegistry())
                 .addAnnotatedClass(EntityWithText.class)
