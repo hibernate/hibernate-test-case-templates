@@ -1,8 +1,6 @@
 package org.hibernate.bugs;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,6 +30,8 @@ public class JPAUnitTestCase {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		// Do stuff...
+		TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(xref) from org.hibernate.bugs.IEntityA xref", Long.class);
+		Long result = query.getSingleResult();
 		entityManager.getTransaction().commit();
 		entityManager.close();
 	}
