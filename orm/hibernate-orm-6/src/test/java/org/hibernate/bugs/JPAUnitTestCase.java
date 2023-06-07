@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import org.hibernate.model.Folder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class JPAUnitTestCase {
 
 	@After
 	public void destroy() {
-		entityManagerFactory.close();
+//		entityManagerFactory.close();
 	}
 
 	// Entities are auto-discovered, so just add them anywhere on class-path
@@ -31,6 +32,9 @@ public class JPAUnitTestCase {
 	public void hhh123Test() throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
+		Folder folder = new Folder();
+		entityManager.persist(folder);
+
 		// Do stuff...
 		entityManager.getTransaction().commit();
 		entityManager.close();
