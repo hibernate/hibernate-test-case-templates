@@ -8,7 +8,7 @@
     <name>Hibernate Envers 6 Test Case Template</name>
 
     <properties>
-        <version.com.h2database>2.1.214</version.com.h2database>
+        <version.com.h2database>2.2.220</version.com.h2database>
         <version.junit>4.13.2</version.junit>
         <version.org.hibernate>6.2.6.Final</version.org.hibernate>
     </properties>
