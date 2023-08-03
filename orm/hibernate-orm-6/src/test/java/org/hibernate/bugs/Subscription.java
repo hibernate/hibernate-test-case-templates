@@ -3,7 +3,6 @@ package org.hibernate.bugs;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -56,9 +55,6 @@ public class Subscription implements Serializable {
   @Column(name = "subscription_id")
   private String subscriptionId;
 
-  @Column(name = "subscription_number")
-  private String subscriptionNumber;
-
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "sku")
   private Offering offering;
@@ -66,28 +62,12 @@ public class Subscription implements Serializable {
   @Column(name = "org_id")
   private String orgId;
 
-  @Column(name = "quantity")
-  private long quantity;
-
   @Id
   @Column(name = "start_date")
   private OffsetDateTime startDate;
 
   @Column(name = "end_date")
   private OffsetDateTime endDate;
-
-  @Column(name = "billing_provider_id")
-  private String billingProviderId;
-
-  @Column(name = "billing_account_id")
-  private String billingAccountId;
-
-  @Column(name = "account_number")
-  private String accountNumber;
-
-//  @Column(name = "billing_provider")
-//  @Convert(converter = BillingProvider.EnumConverter.class)
-//  private BillingProvider billingProvider;
 
   @OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL, orphanRemoval = true)
   @Builder.Default
@@ -110,30 +90,18 @@ public class Subscription implements Serializable {
     Subscription sub = (Subscription) o;
 
     return Objects.equals(subscriptionId, sub.getSubscriptionId())
-        && Objects.equals(subscriptionNumber, sub.getSubscriptionNumber())
         && Objects.equals(orgId, sub.getOrgId())
-        && Objects.equals(quantity, sub.getQuantity())
         && Objects.equals(startDate, sub.getStartDate())
-        && Objects.equals(endDate, sub.getEndDate())
-        && Objects.equals(billingProviderId, sub.getBillingProviderId())
-        && Objects.equals(billingAccountId, sub.getBillingAccountId())
-        && Objects.equals(accountNumber, sub.getAccountNumber());
-//        && Objects.equals(billingProvider, sub.getBillingProvider());
+        && Objects.equals(endDate, sub.getEndDate());
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
         subscriptionId,
-        subscriptionNumber,
         orgId,
-        quantity,
         startDate,
-        endDate,
-        billingProviderId,
-        billingAccountId,
-        accountNumber);
-//        billingProvider);
+        endDate);
   }
 
   /** Composite ID class for Subscription entities. */
