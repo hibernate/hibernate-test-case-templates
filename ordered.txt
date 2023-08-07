@@ -1,0 +1,26 @@
+QUERY PLAN
+Hash Left Join  (cost=8561.69..17116.92 rows=49966 width=1344) (actual time=11.492..19.339 rows=7711 loops=1)
+  Hash Cond: ((s1_0.sku)::text = (o1_0.sku)::text)
+  ->  Hash Left Join  (cost=7059.45..15044.51 rows=3336 width=678) (actual time=11.185..17.058 rows=3336 loops=1)
+        Hash Cond: ((s1_0.start_date = s4_0.start_date) AND ((s1_0.subscription_id)::text = (s4_0.subscription_id)::text))
+        ->  Hash Left Join  (cost=2388.05..10346.02 rows=3336 width=648) (actual time=2.109..6.933 rows=3336 loops=1)
+              Hash Cond: ((s1_0.start_date = s2_0.start_date) AND ((s1_0.subscription_id)::text = (s2_0.subscription_id)::text))
+              ->  Seq Scan on subscription s1_0  (cost=0.00..7930.98 rows=3336 width=607) (actual time=0.011..3.700 rows=3336 loops=1)
+                    Filter: ((org_id)::text = '16775631'::text)
+                    Rows Removed by Filter: 22
+              ->  Hash  (cost=2340.02..2340.02 rows=3202 width=41) (actual time=2.088..2.089 rows=3202 loops=1)
+                    Buckets: 4096  Batches: 1  Memory Usage: 278kB
+                    ->  Seq Scan on subscription_measurements s2_0  (cost=0.00..2340.02 rows=3202 width=41) (actual time=0.285..1.299 rows=3202 loops=1)
+        ->  Hash  (cost=4621.36..4621.36 rows=3336 width=30) (actual time=9.065..9.065 rows=3336 loops=1)
+              Buckets: 4096  Batches: 1  Memory Usage: 235kB
+              ->  Seq Scan on subscription_product_ids s4_0  (cost=0.00..4621.36 rows=3336 width=30) (actual time=0.763..8.326 rows=3336 loops=1)
+  ->  Hash  (cost=1496.62..1496.62 rows=449 width=674) (actual time=0.299..0.300 rows=55 loops=1)
+        Buckets: 1024  Batches: 1  Memory Usage: 19kB
+        ->  Hash Right Join  (cost=243.90..1496.62 rows=449 width=674) (actual time=0.087..0.280 rows=55 loops=1)
+              Hash Cond: ((p1_0.sku)::text = (o1_0.sku)::text)
+              ->  Seq Scan on sku_oid p1_0  (cost=0.00..1070.72 rows=69272 width=14) (actual time=0.038..0.216 rows=26 loops=1)
+              ->  Hash  (cost=243.52..243.52 rows=30 width=660) (actual time=0.045..0.046 rows=30 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 14kB
+                    ->  Index Scan using offering_pkey on offering o1_0  (cost=0.26..243.52 rows=30 width=660) (actual time=0.009..0.034 rows=30 loops=1)
+Planning Time: 1.082 ms
+Execution Time: 19.642 ms
