@@ -86,7 +86,7 @@ class JPAUnitTestCase {
       // by subscription_id and the bug does not manifest.
       "FROM Subscription s WHERE orgId = :orgId ORDER BY random()",
   })
-  void testFetch(String jpql) {
+  void testHhh17040(String jpql) {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     int productIdCount = 10;
