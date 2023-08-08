@@ -1,12 +1,9 @@
-# Hibernate Test Case Templates
+#Not expected behavior for Instant that become TIMESTAMP_UTC
+We have Oracle as database, version 19.x set in Timezone GMT+1.
+We are running hibernate with TimeZone Europe/Stockholm set.
 
-When creating a bug report for any project within the Hibernate family, it's extremely helpful (and, frankly, required)
-to have an adequate test case available.  This is obviously important to make reproducing the issue as easy as
-possible.  But it's also vital longer-term.  Nearly every bug fix should include a regression test, which frequently is based
-on the original reproducer (sometimes, it's the reproducer, verbatim).
+For this test I added another persistence config for an oracle database. I do hope you have one available for your tests, because I cannot provide you with a database.
 
-To help create useful test cases, we're opening up this repo with various templates.  Please see the READMEs in each
-project's subdir for more info.
-
-As always, this is open source for a reason!  If these templates can be improved in any way, please let us know (either
-through our JIRA instance or through GitHub Issues).  Better yet, send us a pull request!
+Saving and Getting dateValues does not work as expected. 
+If you set the "hibernate.type.preferred_instant_jdbc_type" to TIMESTAMP, then test will run OK. 
+If you keep it to default, that is TIMESTAMP_UTC, test will fail, no entity will be found.
