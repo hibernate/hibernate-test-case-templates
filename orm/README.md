@@ -1,4 +1,4 @@
-# Not expected behavior for Instant that become TIMESTAMP_UTC
+# Not expected behavior for Instant/TIMESTAMP_UTC
 
 We have Oracle as database, version 19.x set in Timezone GMT+1
 We are running hibernate with TimeZone Europe/Stockholm set. 
