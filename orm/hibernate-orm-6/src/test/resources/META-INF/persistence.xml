@@ -20,7 +20,7 @@
 
             <property name="hibernate.connection.pool_size" value="5"/>
 
-            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
 
@@ -49,6 +49,7 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm"/>
 
+            <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
             <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
             <!-- An oracle database in version 19.x, with GMT+2 as timezone is what we have (SELECT DBTIMEZONE FROM DUAL;) -->
             <property name="hibernate.connection.url" value="jdbc:oracle:thin:@your-own database"/>
@@ -61,10 +62,9 @@
 
              <property name="hibernate.show_sql" value="false"/>
              <property name="hibernate.format_sql" value="false"/>
-             <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+             <property name="hibernate.hbm2ddl.auto" value="update"/>
 
              <property name="hibernate.max_fetch_depth" value="5"/>
-            <!-- <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/> -->
             <property name="hibernate.cache.region_prefix" value="hibernate.test"/>
             <property name="hibernate.cache.region.factory_class"
                       value="org.hibernate.testing.cache.CachingRegionFactory"/>

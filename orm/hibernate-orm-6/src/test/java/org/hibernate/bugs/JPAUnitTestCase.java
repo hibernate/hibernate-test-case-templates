@@ -37,26 +37,22 @@ public class JPAUnitTestCase {
 	@Test
 	public void testTimestampUTC() throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		try {
-			entityManager.getTransaction().begin();
+		entityManager.getTransaction().begin();
 
-			Instant dateTime = Instant.now().minus(70, ChronoUnit.MINUTES);
-			InstantEntity e = new InstantEntity();
-			e.setDateValue(dateTime);
-			entityManager.persist(e);
-			entityManager.flush();
-			entityManager.clear();
+		Instant dateTime = Instant.now().minus(70, ChronoUnit.MINUTES);
+		InstantEntity e = new InstantEntity();
+		e.setDateValue(dateTime);
+		entityManager.persist(e);
+		entityManager.flush();
+		entityManager.clear();
 
-			Query query = entityManager.createNamedQuery("InstantEntity.findBetween", InstantEntity.class);
-			query.setParameter("from", Instant.now().minus(2, ChronoUnit.HOURS));
-			query.setParameter("to", Instant.now().minus(1, ChronoUnit.HOURS));
-			List resultList = query.getResultList();
+		Query query = entityManager.createNamedQuery("InstantEntity.findBetween", InstantEntity.class);
+		query.setParameter("from", Instant.now().minus(2, ChronoUnit.HOURS));
+		query.setParameter("to", Instant.now().minus(1, ChronoUnit.HOURS));
+		List<?> resultList = query.getResultList();
 
-			Assertions.assertThat(resultList.size()).isEqualTo(1);
-		}finally {
-			entityManager.getTransaction().rollback();
-			entityManager.close();
-		}
-
+		Assertions.assertThat(resultList.size()).isEqualTo(1);
+		entityManager.getTransaction().rollback();
+		entityManager.close();
 	}
 }
