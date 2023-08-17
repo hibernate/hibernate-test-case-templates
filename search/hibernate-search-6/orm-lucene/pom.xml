@@ -9,7 +9,7 @@
 	<description>Test case template for Hibernate Search in Hibernate ORM with a Lucene backend</description>
 
 	<properties>
-		<version.org.hibernate.search>6.2.0.Final</version.org.hibernate.search>
+		<version.org.hibernate.search>6.2.1.Final</version.org.hibernate.search>
 		<version.org.hibernate>5.6.15.Final</version.org.hibernate>
 
 		<version.com.h2database>2.2.220</version.com.h2database>
