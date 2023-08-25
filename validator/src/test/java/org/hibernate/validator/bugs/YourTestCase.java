@@ -2,6 +2,8 @@ package org.hibernate.validator.bugs;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -24,15 +26,34 @@ public class YourTestCase {
 	}
 
 	@Test
-	@TestForIssue(jiraKey = "HV-NNNNN") // Please fill in the JIRA key of your issue
+	@TestForIssue(jiraKey = "HV-1831") // Please fill in the JIRA key of your issue
 	public void testYourBug() {
-		YourAnnotatedBean yourEntity1 = new YourAnnotatedBean( null, "example" );
+		List<FirstChildBean> firstChildren = createFirstChildren();
 
-		Set<ConstraintViolation<YourAnnotatedBean>> constraintViolations = validator.validate( yourEntity1 );
-		assertEquals( 1, constraintViolations.size() );
-		assertEquals(
-				"must not be null",
-				constraintViolations.iterator().next().getMessage() );
+		ParentAnnotatedBean yourEntity1 = new ParentAnnotatedBean( "parent-bean", firstChildren );
+
+		Set<ConstraintViolation<ParentAnnotatedBean>> constraintViolations = validator.validate( yourEntity1 );
+		assertEquals( 0, constraintViolations.size() );
+	}
+
+	private List<FirstChildBean> createFirstChildren() {
+		List<FirstChildBean> firstChildren = new ArrayList<>();
+
+		for(int i = 0; i < 50; i++) {
+			firstChildren.add(new FirstChildBean("foo" + i, createSecondChildren()));
+		}
+
+		return firstChildren;
+	}
+
+	private List<SecondChildBean> createSecondChildren() {
+		List<SecondChildBean> secondChildren = new ArrayList<>();
+
+		for(int i = 0; i < 10; i++) {
+			secondChildren.add(new SecondChildBean("foo" + i, "bar" + i));
+		}
+
+		return secondChildren;
 	}
 
 }
