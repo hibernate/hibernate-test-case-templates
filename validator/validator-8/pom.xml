@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.hibernate.testcasetemplate</groupId>
-	<artifactId>test-case-template-hibernate-validator</artifactId>
+	<artifactId>test-case-template-hibernate-validator8</artifactId>
 	<version>1.0.0.Final</version>
 	<name>Hibernate Validator Test Case Template</name>
 
