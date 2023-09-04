@@ -1,124 +1,20 @@
 version: 2
 updates:
   - package-ecosystem: "maven"
-    directory: "/orm/hibernate-orm-5"
+    directory: "/"
     schedule:
       interval: "daily"
     ignore:
       - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
-    directory: "/orm/hibernate-orm-6"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
-    directory: "/envers/envers-5"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
-    directory: "/envers/envers-6"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
-    directory: "/validator"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
-    directory: "/search/hibernate-search-5/lucene"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
       - dependency-name: "com.h2database:h2"
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.hibernate:hibernate-core"
         update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
-  - package-ecosystem: "maven"
-    directory: "/search/hibernate-search-5/elasticsearch-2"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
       - dependency-name: "org.hibernate:*"
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.hibernate.*:*"
         update-types: [ "version-update:semver-major" ]
-      - dependency-name: "com.h2database:h2"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate:hibernate-core"
-        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
       - dependency-name: "com.github.alexcojocaru:elasticsearch-maven-plugin"
         update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.elasticsearch:*"
-        update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.elasticsearch.*:*"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
-    directory: "/search/hibernate-search-5/elasticsearch-5"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "com.h2database:h2"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate:hibernate-core"
-        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
-      - dependency-name: "org.elasticsearch:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.elasticsearch.*:*"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
-    directory: "/search/hibernate-search-6/orm-elasticsearch"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
-        update-types: [ "version-update:semver-major" ]
-  - package-ecosystem: "maven"
-    directory: "/search/hibernate-search-6/orm-lucene"
-    schedule:
-      interval: "daily"
-    ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
         update-types: [ "version-update:semver-major" ]
