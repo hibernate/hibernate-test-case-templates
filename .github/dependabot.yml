@@ -16,5 +16,7 @@ updates:
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "com.github.alexcojocaru:elasticsearch-maven-plugin"
         update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.elasticsearch:*"
+        update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.elasticsearch.*:*"
         update-types: [ "version-update:semver-major" ]
