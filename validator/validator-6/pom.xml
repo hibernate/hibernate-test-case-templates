@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.hibernate.testcasetemplate</groupId>
-	<artifactId>test-case-template-hibernate-validator6</artifactId>
+	<artifactId>test-case-template-hibernate-validator-6</artifactId>
 	<version>1.0.0.Final</version>
-	<name>Hibernate Validator Test Case Template</name>
+	<name>Hibernate Validator 6 Test Case Template</name>
 
 	<properties>
 		<version.org.hibernate.validator>6.2.5.Final</version.org.hibernate.validator>

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.hibernate.testcasetemplate</groupId>
-    <artifactId>test-case-template-hibernate-envers6</artifactId>
+    <artifactId>test-case-template-hibernate-envers-6</artifactId>
     <version>1.0.0.Final</version>
     <name>Hibernate Envers 6 Test Case Template</name>
 

@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.hibernate.testcasetemplate</groupId>
-	<artifactId>test-case-template-hibernate-search-lucene</artifactId>
+	<artifactId>test-case-template-hibernate-search-5-lucene</artifactId>
 	<version>1.0.0.Final</version>
-	<name>Hibernate Search with Lucene Test Case Template</name>
+	<name>Hibernate Search 5 with Lucene Test Case Template</name>
 
 	<properties>
 		<version.org.hibernate.search>5.11.12.Final</version.org.hibernate.search>

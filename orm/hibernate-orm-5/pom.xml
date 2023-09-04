@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.hibernate.testcasetemplate</groupId>
-	<artifactId>test-case-template-hibernate-orm5</artifactId>
+	<artifactId>test-case-template-hibernate-orm-5</artifactId>
 	<version>1.0.0.Final</version>
 	<name>Hibernate ORM 5 Test Case Template</name>
 
