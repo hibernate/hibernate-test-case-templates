@@ -3,10 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.hibernate.testcasetemplate</groupId>
-	<artifactId>test-case-template-hibernate-search-orm-lucene</artifactId>
+	<artifactId>test-case-template-hibernate-search-6-orm-lucene</artifactId>
 	<version>1.0.0.Final</version>
-	<name>Test case template - Hibernate Search - within Hibernate ORM - Lucene backend</name>
-	<description>Test case template for Hibernate Search in Hibernate ORM with a Lucene backend</description>
+	<name>Hibernate Search 6 with Hibernate ORM and Lucene Test Case Template</name>
 
 	<properties>
 		<version.org.hibernate.search>6.2.1.Final</version.org.hibernate.search>
