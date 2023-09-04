@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.hibernate.testcasetemplate</groupId>
+  <artifactId>hibernate-testcasetemplate-aggregator</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Hibernate Test Case Templates - Aggregator POM</name>
+  <description>An aggregator POM to build all test case templates in one command, or to simplify configuration of dependabot</description>
+  <modules>
+    <module>orm/hibernate-orm-5</module>
+    <module>orm/hibernate-orm-6</module>
+    <module>envers/envers-5</module>
+    <module>envers/envers-6</module>
+    <module>search/hibernate-search-5/elasticsearch-2</module>
+    <module>search/hibernate-search-5/elasticsearch-5</module>
+    <module>search/hibernate-search-5/lucene</module>
+    <module>search/hibernate-search-6/orm-elasticsearch</module>
+    <module>search/hibernate-search-6/orm-lucene</module>
+  </modules>
+</project>

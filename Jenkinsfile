@@ -12,7 +12,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "./ci/build-all.sh"
+                sh "mvn -B -q clean package -DskipTests=true"
+            }
+        }
+        stage('Test') {
+            steps {
+                sh "mvn -B verify"
             }
         }
     }
