@@ -40,7 +40,7 @@ public class ORMStandaloneTestCase {
 	// Add your tests, using standard JUnit.
 
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh17225Test() throws Exception {
         Session session = sf.openSession();
         Transaction tx = session.beginTransaction();
 //        Main main = new Main();
