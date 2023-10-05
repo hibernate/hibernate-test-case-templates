@@ -3,10 +3,17 @@ package org.hibernate.bugs;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matcher;
+import org.hibernate.HibernateException;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.matchers.JUnitMatchers;
+import org.junit.rules.ExpectedException;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using the Java Persistence API.
@@ -14,6 +21,9 @@ import org.junit.Test;
 public class JPAUnitTestCase {
 
 	private EntityManagerFactory entityManagerFactory;
+
+	@Rule
+	public ExpectedException exceptionRule = ExpectedException.none();
 
 	@Before
 	public void init() {
@@ -31,7 +41,9 @@ public class JPAUnitTestCase {
 	public void hhh123Test() throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
-		// Do stuff...
+		exceptionRule.expect(PersistenceException.class);
+		exceptionRule.expectMessage(CoreMatchers.containsString("More than one row with the given identifier was found"));
+		EntityA a = entityManager.find(EntityA.class, 1L);
 		entityManager.getTransaction().commit();
 		entityManager.close();
 	}
