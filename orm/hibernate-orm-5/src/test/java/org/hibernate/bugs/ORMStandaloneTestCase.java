@@ -53,7 +53,7 @@ public class ORMStandaloneTestCase {
         session.clear();
         Transaction newTx = session.beginTransaction();
         List<Long> result = session.createQuery(
-                "select related.id from Main m right join m.related as related where related is not null",
+                "select related.id from Main m right join m.related as related where related.id = 1",
                 Long.class).getResultList();
         Assertions.assertEquals(1, result.get(0));
         newTx.commit();
