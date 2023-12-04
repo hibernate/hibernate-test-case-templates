@@ -15,12 +15,20 @@
  */
 package org.hibernate.bugs;
 
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.bugs.modal.OrganizationEntity;
+import org.hibernate.bugs.modal.OrganizationMemberEntity;
+import org.hibernate.bugs.modal.OrganizationMemberPO;
+import org.hibernate.bugs.modal.UserEntity;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.JdbcSettings;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -37,8 +45,9 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				UserEntity.class,
+				OrganizationEntity.class,
+				OrganizationMemberEntity.class
 		};
 	}
 
@@ -63,16 +72,21 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
 		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
+		configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
+		configuration.setProperty( "hibernate.hbm2ddl.auto", "create" );
+		configuration.setProperty(JdbcSettings.DIALECT, "org.hibernate.dialect.H2Dialect" );
 	}
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh17511Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
 		// Do stuff...
+		TypedQuery<OrganizationMemberPO> query = s.createQuery("SELECT NEW org.hibernate.bugs.modal.OrganizationMemberPO(om.id, om.userId, om.organizationId,organization.name,organization.displayPath,om.primary) FROM OrganizationMemberEntity om INNER JOIN OrganizationEntity organization ON organization.id = om.organizationId WHERE om.userId =:userId", OrganizationMemberPO.class);
+		query.setParameter("userId", 1L);
+        List<OrganizationMemberPO> list=query.getResultList();
 		tx.commit();
 		s.close();
 	}
