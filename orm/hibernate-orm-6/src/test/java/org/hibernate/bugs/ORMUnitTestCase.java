@@ -68,7 +68,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
      * </pre>
      */
     @Test
-    public void ProxyAsQueryParameterTest() {
+    public void proxyAsQueryParameterTest() {
         Session s = openSession();
         Transaction tx = s.beginTransaction();
 
@@ -84,7 +84,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
         Foo fooProxy = session.getReference(Foo.class, id);
 
-        Bar loadedBar = (Bar) session.createQuery("SELECT b FROM Bar b WHERE b.foo = ?1")
+        Bar loadedBar = session.createQuery("SELECT b FROM Bar b WHERE b.foo = ?1", Bar.class)
                 // replacing with Hibernate.unproxy(fooProxy) works, but we don't want to initialize the proxy
                 .setParameter(1, fooProxy)
                 .getSingleResult();
