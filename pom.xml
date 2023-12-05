@@ -18,6 +18,8 @@
     <module>search/hibernate-search-5/lucene</module>
     <module>search/hibernate-search-6/orm-elasticsearch</module>
     <module>search/hibernate-search-6/orm-lucene</module>
+    <module>search/hibernate-search-7/orm-elasticsearch</module>
+    <module>search/hibernate-search-7/orm-lucene</module>
     <module>validator/validator-6</module>
     <module>validator/validator-8</module>
   </modules>
