@@ -4,6 +4,9 @@ This directory contains test case templates, useful for reporting bugs against H
 
 Here's a running list of what's available:
 
+* `hibernate-search-7`: test case templates for Hibernate Search 7
+  * `hibernate-search-7/orm-lucene`: a test case template for Hibernate Search 7 in Hibernate ORM backed by an embedded Lucene instance.
+  * `hibernate-search-7/orm-elasticsearch`: a test case template for Hibernate Search 7 in Hibernate ORM backed by an Elasticsearch cluster.
 * `hibernate-search-6`: test case templates for Hibernate Search 6
   * `hibernate-search-6/orm-lucene`: a test case template for Hibernate Search 6 in Hibernate ORM backed by an embedded Lucene instance.
   * `hibernate-search-6/orm-elasticsearch`: a test case template for Hibernate Search 6 in Hibernate ORM backed by an Elasticsearch cluster.
