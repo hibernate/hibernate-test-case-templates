@@ -26,9 +26,11 @@
 
             <property name="hibernate.max_fetch_depth" value="5"/>
 
+<!--
             <property name="hibernate.cache.region_prefix" value="hibernate.test"/>
             <property name="hibernate.cache.region.factory_class"
                       value="org.hibernate.testing.cache.CachingRegionFactory"/>
+-->
 
             <!--NOTE: hibernate.jdbc.batch_versioned_data should be set to false when testing with Oracle-->
             <property name="hibernate.jdbc.batch_versioned_data" value="true"/>
@@ -36,6 +38,14 @@
             <property name="jakarta.persistence.validation.mode" value="NONE"/>
             <property name="hibernate.service.allow_crawling" value="false"/>
             <property name="hibernate.session.events.log" value="true"/>
+
+            <!-- cache properties -->
+            <property name="hibernate.cache.region.factory_class" value="jcache"/>
+            <property name="hibernate.javax.cache.provider" value="org.ehcache.jsr107.EhcacheCachingProvider"/>
+            <property name="hibernate.javax.cache.uri" value="ehcache.xml"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+
         </properties>
 
     </persistence-unit>
