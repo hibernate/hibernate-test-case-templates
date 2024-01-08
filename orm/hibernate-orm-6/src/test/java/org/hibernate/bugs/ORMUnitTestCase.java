@@ -16,11 +16,20 @@
 package org.hibernate.bugs;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.junit.Assert;
 import org.junit.Test;
+import org.testcontainers.containers.OracleContainer;
+import org.testcontainers.utility.DockerImageName;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -33,12 +42,21 @@ import org.junit.Test;
  */
 public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
+	@Entity
+	@Table(name = "MY_OBJ")
+	private static class AaaTestEntity {
+
+		@Id
+		@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MY_OBJ_SEQ")
+		@Column(name = "ID")
+		private Long primaryKey;
+	}
+
 	// Add your entities here.
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				AaaTestEntity.class
 		};
 	}
 
@@ -60,10 +78,18 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected void configure(Configuration configuration) {
 		super.configure( configuration );
+		OracleContainer oracleContainer = new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe:18-slim"));
+		oracleContainer.start();
+
+		configuration.setProperty( "hibernate.connection.driver_class", oracleContainer.getDriverClassName());
+		configuration.setProperty( "hibernate.dialect", "org.hibernate.dialect.OracleDialect");
+		configuration.setProperty( "hibernate.connection.url", oracleContainer.getJdbcUrl());
+		configuration.setProperty( "hibernate.connection.username", oracleContainer.getUsername());
+		configuration.setProperty( "hibernate.connection.password", oracleContainer.getPassword());
 
 		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
 		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
+		configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 	}
 
 	// Add your tests, using standard JUnit.
@@ -71,9 +97,21 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	public void hhh123Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
-		Transaction tx = s.beginTransaction();
-		// Do stuff...
-		tx.commit();
+		// check that my entity table exists
+		s.createNativeQuery("select * from MY_OBJ").getResultList();
+
+		// check that a non-existing table throws an exception
+		Assert.assertThrows(RuntimeException.class, () -> {
+			s.createNativeQuery("select * from MY_OBJ_NOT_EXISTING").getResultList();
+		});
+
+
+		// I would expect the HTE_* table to not exist, since I have a simple entity
+		// however HTE_MY_OBJ exists and fails the test
+		Assert.assertThrows(RuntimeException.class, () -> {
+			s.createNativeQuery("select * from HTE_MY_OBJ").getResultList();
+		});
+
 		s.close();
 	}
 }
