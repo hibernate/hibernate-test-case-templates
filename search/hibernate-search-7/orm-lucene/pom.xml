@@ -12,8 +12,8 @@
 		<version.org.hibernate.orm>6.4.3.Final</version.org.hibernate.orm>
 
 		<version.com.h2database>2.2.224</version.com.h2database>
-		<version.junit-jupiter>5.10.1</version.junit-jupiter>
-		<version.org.assertj.assertj-core>3.25.2</version.org.assertj.assertj-core>
+		<version.junit-jupiter>5.10.2</version.junit-jupiter>
+		<version.org.assertj.assertj-core>3.25.3</version.org.assertj.assertj-core>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
