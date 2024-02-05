@@ -11,7 +11,7 @@ updates:
           - "io.quarkiverse*"
       orm:
         patterns:
-          - "org.hibernate.orm:*"
+          - "org.hibernate.orm*:*"
       search:
         patterns:
           - "org.hibernate.search:*"
