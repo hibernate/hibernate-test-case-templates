@@ -1,6 +1,5 @@
 version: 2
 updates:
-  # Primary dependencies, updated daily
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -22,21 +21,13 @@ updates:
       reactive:
         patterns:
           - "org.hibernate.reactive:*"
-    ignore:
-      - dependency-name: "org.hibernate*"
-        update-types: [ "version-update:semver-major" ]
-  # Secondary dependencies, updated less frequently
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    groups:
       maven-plugins:
         patterns:
           - "*maven*plugin*"
           - "org.apache.maven*:*"
         exclude-patterns:
           - "io.quarkus*"
+          - "org.hibernate*"
       test:
         patterns:
           - "org.junit*"
@@ -44,9 +35,8 @@ updates:
           - "com.h2database:*"
           - "org.assertj:*"
     ignore:
-      - dependency-name: "io.quarkus*"
-      - dependency-name: "io.quarkiverse*"
       - dependency-name: "org.hibernate*"
+        update-types: [ "version-update:semver-major" ]
       - dependency-name: "com.h2database:h2"
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "com.github.alexcojocaru:elasticsearch-maven-plugin"
