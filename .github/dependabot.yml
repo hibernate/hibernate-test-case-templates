@@ -1,18 +1,53 @@
 version: 2
 updates:
+  # Primary dependencies, updated daily
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      quarkus:
+        patterns:
+          - "io.quarkus*"
+          - "io.quarkiverse*"
+      orm:
+        patterns:
+          - "org.hibernate.orm:*"
+      search:
+        patterns:
+          - "org.hibernate.search:*"
+      validator:
+        patterns:
+          - "org.hibernate.validator:*"
+      reactive:
+        patterns:
+          - "org.hibernate.reactive:*"
     ignore:
-      - dependency-name: "org.apache.maven.plugins:*"
+      - dependency-name: "org.hibernate*"
+        update-types: [ "version-update:semver-major" ]
+  # Secondary dependencies, updated less frequently
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      maven-plugins:
+        patterns:
+          - "*maven*plugin*"
+          - "org.apache.maven*:*"
+        exclude-patterns:
+          - "io.quarkus*"
+      test:
+        patterns:
+          - "org.junit*"
+          - "org.apache.logging*"
+          - "com.h2database:*"
+          - "org.assertj:*"
+    ignore:
+      - dependency-name: "io.quarkus*"
+      - dependency-name: "io.quarkiverse*"
+      - dependency-name: "org.hibernate*"
       - dependency-name: "com.h2database:h2"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate:hibernate-core"
-        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
-      - dependency-name: "org.hibernate:*"
-        update-types: [ "version-update:semver-major" ]
-      - dependency-name: "org.hibernate.*:*"
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "com.github.alexcojocaru:elasticsearch-maven-plugin"
         update-types: [ "version-update:semver-major" ]
