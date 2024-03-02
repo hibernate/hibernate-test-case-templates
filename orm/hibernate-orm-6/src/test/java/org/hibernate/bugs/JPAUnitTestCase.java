@@ -3,7 +3,6 @@ package org.hibernate.bugs;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

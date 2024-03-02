@@ -15,8 +15,6 @@
  */
 package org.hibernate.bugs;
 
-import java.util.Locale;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
@@ -25,11 +23,12 @@ import org.hibernate.id.SequenceMismatchStrategy;
 import org.hibernate.id.enhanced.StandardOptimizerDescriptor;
 import org.hibernate.loader.BatchFetchStyle;
 import org.hibernate.query.NullPrecedence;
-
 import org.hibernate.testing.bytecode.enhancement.BytecodeEnhancerRunner;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Locale;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
