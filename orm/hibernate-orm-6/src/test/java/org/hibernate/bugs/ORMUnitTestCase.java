@@ -17,10 +17,14 @@ package org.hibernate.bugs;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.bugs.model.Entity;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.SelectionQuery;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -37,8 +41,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				Entity.class
 		};
 	}
 
@@ -63,16 +66,18 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
 		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
+        configuration.setProperty( "hibernate.hbm2ddl.auto", "create" );
 		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 	}
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void HHH17835Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+        SelectionQuery<?> selectionQuery = session.createSelectionQuery("SELECT MIN(booleanValue) FROM Entity", null);
+        assertDoesNotThrow(() -> selectionQuery.list());
 		tx.commit();
 		s.close();
 	}
