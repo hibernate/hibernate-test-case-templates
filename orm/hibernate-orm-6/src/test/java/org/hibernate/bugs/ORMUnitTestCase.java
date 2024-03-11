@@ -66,7 +66,6 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
 		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-        configuration.setProperty( "hibernate.hbm2ddl.auto", "create" );
 		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 	}
 
