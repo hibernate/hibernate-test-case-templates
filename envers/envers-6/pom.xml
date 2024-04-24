@@ -10,19 +10,29 @@
     <properties>
         <version.com.h2database>2.2.224</version.com.h2database>
         <version.junit>4.13.2</version.junit>
-        <version.org.hibernate>6.4.4.Final</version.org.hibernate>
+        <version.org.hibernate.orm>6.4.4.Final</version.org.hibernate.orm>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-platform</artifactId>
+                <version>${version.org.hibernate.orm}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-envers</artifactId>
-            <version>${version.org.hibernate}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-testing</artifactId>
-            <version>${version.org.hibernate}</version>
         </dependency>
 
         <dependency>
