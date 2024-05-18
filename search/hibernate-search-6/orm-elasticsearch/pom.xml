@@ -8,12 +8,12 @@
 	<name>Hibernate Search 6 with Hibernate ORM and Elasticsearch Test Case Template</name>
 
 	<properties>
-		<version.org.hibernate.search>6.2.2.Final</version.org.hibernate.search>
+		<version.org.hibernate.search>6.2.4.Final</version.org.hibernate.search>
 		<version.org.hibernate>5.6.15.Final</version.org.hibernate>
 
 		<version.com.h2database>2.2.224</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
-		<version.org.assertj.assertj-core>3.24.2</version.org.assertj.assertj-core>
+		<version.org.assertj.assertj-core>3.25.3</version.org.assertj.assertj-core>
 
 		<version.elasticsearch-maven-plugin>6.26</version.elasticsearch-maven-plugin>
 		<version.org.elasticsearch>7.16.3</version.org.elasticsearch>
@@ -73,7 +73,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.0</version>
+				<version>3.13.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -82,7 +82,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
+				<version>3.2.5</version>
 				<configuration>
 					<!-- In case someone mistakenly uses the *Test suffix instead of *IT,
 					     make sure it is not run before we start Elasticsearch -->
@@ -92,7 +92,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.22.2</version>
+				<version>3.2.5</version>
 				<executions>
 					<execution>
 						<goals>
