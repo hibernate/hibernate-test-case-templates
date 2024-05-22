@@ -15,10 +15,23 @@
  */
 package org.hibernate.bugs;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.bugs.entity.AbsOne;
+import org.hibernate.bugs.entity.AbsTwo;
+import org.hibernate.bugs.entity.AbsThree;
+import org.hibernate.bugs.entity.One;
+import org.hibernate.bugs.entity.Two;
+import org.hibernate.bugs.entity.Three;
+import org.hibernate.bugs.entity.Four;
+import org.hibernate.bytecode.enhance.spi.interceptor.LazyAttributeLoadingInterceptor;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.id.SequenceMismatchStrategy;
@@ -29,6 +42,7 @@ import org.hibernate.query.NullPrecedence;
 import org.hibernate.testing.bytecode.enhancement.BytecodeEnhancerRunner;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,8 +58,13 @@ public class QuarkusLikeORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class<?>[] getAnnotatedClasses() {
 		return new Class<?>[] {
-//				Foo.class,
-//				Bar.class
+				AbsOne.class,
+				AbsTwo.class,
+				AbsThree.class,
+				One.class,
+				Two.class,
+				Three.class,
+				Four.class
 		};
 	}
 
@@ -72,14 +91,94 @@ public class QuarkusLikeORMUnitTestCase extends BaseCoreFunctionalTestCase {
 		// configuration.setProperty( AvailableSettings.SOME_CONFIGURATION_PROPERTY, "SOME_VALUE" );
 	}
 
-	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void parameterizedGetterMustFireLazyLoad() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
+		final var insertedOne = insertSomeDataToDb();
+
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+
+		final var one1 = s.find(One.class, insertedOne.getId());
+		final var two1 = one1.getTwo(); //this doesn't fire $$_hibernate_interceptor, so null is returned
+		final var three1 = two1.getThree();
+		final var four1 = three1.getFour();
+
 		tx.commit();
 		s.close();
+	}
+
+	@Test
+	public void nonParameterizedGetterFromAbstractClassMustFireLazyLoad() throws Exception {
+		final var insertedOne = insertSomeDataToDb();
+
+		Session s = openSession();
+		Transaction tx = s.beginTransaction();
+
+		final var one1 = s.find(One.class, insertedOne.getId());
+		final var two1 = one1.getTwo();
+		final var absTwoStringProp = two1.getAbsTwoStringProp(); //this fires lazy load, so next line will not return null
+		final var three1 = two1.getThree();
+		final var threeStringProp = three1.getAbsThreeStringProp();  //this fires lazy load, three1.getFour() will not return null
+		final var four1 = three1.getFour();
+		final var fourConcrete = four1.getFourConcreteProp();
+
+		tx.commit();
+		s.close();
+	}
+
+	@Test
+	public void anotherWayToSeeIfInterceptorGetsTriggered() throws InvocationTargetException, IllegalAccessException {
+		final var one = new One();
+
+		AtomicInteger numberOfInvocationsOfReadObject = new AtomicInteger(0);
+		final var mockInterceptor = new LazyAttributeLoadingInterceptor(null, null, Set.of(), null)
+		{
+			@Override
+			public Object readObject(Object obj, String name, Object oldValue) {
+				numberOfInvocationsOfReadObject.incrementAndGet();
+				return null;
+			}
+		};
+
+		final var $$_hibernateSetInterceptor = Arrays.stream(one.getClass().getMethods()).filter(m -> m.getName().equals("$$_hibernate_setInterceptor")).findFirst().orElseThrow();
+		$$_hibernateSetInterceptor.invoke(one, mockInterceptor);
+
+		one.getOneConcreteProp();
+		one.getAbsOneStringProp();
+		one.getTwo();
+
+		Assertions.assertEquals(3, numberOfInvocationsOfReadObject.get()); //one.getTwo() does not trigger it.
+	}
+
+	private One insertSomeDataToDb() {
+		Session s = openSession();
+		Transaction tx = s.beginTransaction();
+
+		final var one = new One();
+		final var two = new Two();
+		final var three = new Three();
+		final var four = new Four();
+
+		one.setTwo(two);
+		two.getOnes().add(one);
+		two.setThree(three);
+		three.getTwos().add(two);
+		three.setFour(four);
+		four.getThrees().add(three);
+
+		one.setOneConcreteProp("oneConcrete");
+		one.setAbsOneStringProp("oneAbs");
+		two.setAbsTwoStringProp("twoAbs");
+		two.setTwoConcreteProp("twoConcrete");
+		three.setAbsThreeStringProp("threeAbs");
+		three.setThreeConcreteProp("threeConcrete");
+		four.setFourConcreteProp("fourConcrete");
+
+		s.persist(one);
+		s.flush();
+		tx.commit();
+		s.close();
+		return one;
 	}
 }
