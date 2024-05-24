@@ -33,47 +33,61 @@ import org.junit.Test;
  */
 public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
-	// Add your entities here.
-	@Override
-	protected Class[] getAnnotatedClasses() {
-		return new Class[] {
-//				Foo.class,
-//				Bar.class
-		};
-	}
+    // Add your entities here.
+    @Override
+    protected Class[] getAnnotatedClasses() {
+        return new Class[] { Policy.class, PolicyRisk.class, PolicyGroup.class, PolicyGroupRisk.class };
+    }
 
-	// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
-	@Override
-	protected String[] getMappings() {
-		return new String[] {
-//				"Foo.hbm.xml",
-//				"Bar.hbm.xml"
-		};
-	}
-	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
-	@Override
-	protected String getBaseForMappings() {
-		return "org/hibernate/test/";
-	}
+    // If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
+    @Override
+    protected String[] getMappings() {
+        return new String[] {
+                        //				"Foo.hbm.xml",
+                        //				"Bar.hbm.xml"
+        };
+    }
 
-	// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
-	@Override
-	protected void configure(Configuration configuration) {
-		super.configure( configuration );
+    // If those mappings reside somewhere other than resources/org/hibernate/test, change this.
+    @Override
+    protected String getBaseForMappings() {
+        return "org/hibernate/test/";
+    }
 
-		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
-		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
-	}
+    // Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
+    @Override
+    protected void configure(Configuration configuration) {
+        super.configure(configuration);
 
-	// Add your tests, using standard JUnit.
-	@Test
-	public void hhh123Test() throws Exception {
-		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
-		Session s = openSession();
-		Transaction tx = s.beginTransaction();
-		// Do stuff...
-		tx.commit();
-		s.close();
-	}
+        configuration.setProperty(AvailableSettings.SHOW_SQL, Boolean.TRUE.toString());
+        configuration.setProperty(AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString());
+        //configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
+    }
+
+    // Add your tests, using standard JUnit.
+    @Test
+    public void hhh18166Test() throws Exception {
+        // BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
+        Session s = openSession();
+        Transaction tx = s.beginTransaction();
+        // Do stuff...
+
+        PolicyGroup policyGroup = new PolicyGroup();
+        s.persist(policyGroup);
+
+        Policy policy = new Policy(policyGroup);
+
+        policyGroup.addPolicy(policy);
+
+        PolicyGroupRisk policyGroupRisk = new PolicyGroupRisk(policyGroup);
+        policyGroup.addGroupRisk(policyGroupRisk);
+
+        PolicyRisk policyRisk = new PolicyRisk(policy, policyGroupRisk);
+        policy.addRisk(policyRisk);
+        s.persist(policy);
+
+        this.log.info("About to commit");
+        tx.commit();
+        s.close();
+    }
 }
