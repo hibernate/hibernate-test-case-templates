@@ -13,7 +13,7 @@
 
 		<version.com.h2database>2.2.224</version.com.h2database>
 		<version.junit-jupiter>5.10.2</version.junit-jupiter>
-		<version.org.assertj.assertj-core>3.25.3</version.org.assertj.assertj-core>
+		<version.org.assertj.assertj-core>3.26.0</version.org.assertj.assertj-core>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
