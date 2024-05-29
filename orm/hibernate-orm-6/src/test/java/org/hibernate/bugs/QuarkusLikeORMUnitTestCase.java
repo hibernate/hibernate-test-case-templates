@@ -25,7 +25,6 @@ import org.hibernate.id.SequenceMismatchStrategy;
 import org.hibernate.id.enhanced.StandardOptimizerDescriptor;
 import org.hibernate.loader.BatchFetchStyle;
 import org.hibernate.query.NullPrecedence;
-
 import org.hibernate.testing.bytecode.enhancement.BytecodeEnhancerRunner;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
@@ -44,8 +43,8 @@ public class QuarkusLikeORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class<?>[] getAnnotatedClasses() {
 		return new Class<?>[] {
-//				Foo.class,
-//				Bar.class
+			Book.class,
+			BookNote.class
 		};
 	}
 
@@ -78,7 +77,13 @@ public class QuarkusLikeORMUnitTestCase extends BaseCoreFunctionalTestCase {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+
+		Book book = new Book();
+		book.setIsbn("9786543210123");
+		
+		session.merge(book);
+		session.flush();
+		
 		tx.commit();
 		s.close();
 	}
