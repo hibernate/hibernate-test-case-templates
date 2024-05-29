@@ -15,12 +15,17 @@
  */
 package org.hibernate.bugs;
 
+import jakarta.persistence.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
+
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -37,6 +42,7 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
+				MyEntity.class
 //				Foo.class,
 //				Bar.class
 		};
@@ -68,12 +74,47 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh18182Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+
+		// given
+		s.createNativeQuery("insert into t_entity values (1)")
+				.executeUpdate();
+		s.createNativeQuery("insert into t_properties values (1, 'key1', 'value1'),  (1, 'key2', null)")
+				.executeUpdate();
+
+		// when
+		var entity = s.get(MyEntity.class, 1);
+		entity.properties.put("key2", "value2");
+		s.persist(entity);
+
 		tx.commit();
+
+		// then
+		var actualProperties = s.get(MyEntity.class, 1).properties;
+
+		assertEquals(2, actualProperties.size());
+		assertEquals("value1", actualProperties.get("key1"));
+		assertEquals("value2", actualProperties.get("key2"));
+
 		s.close();
 	}
+
+	@Entity
+	@Table(name = "t_entity")
+	public static class MyEntity {
+
+		@Id
+		Long id;
+
+		@ElementCollection(fetch = FetchType.EAGER)
+		@CollectionTable(name = "t_properties")
+		@Column(name = "property_value")
+		@MapKeyColumn(name = "property_key")
+		Map<String, String> properties;
+
+	}
+
 }
