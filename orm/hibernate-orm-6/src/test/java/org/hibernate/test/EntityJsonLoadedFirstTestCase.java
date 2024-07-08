@@ -6,6 +6,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.entities.EntityArray;
 import org.hibernate.entities.EntityJSON;
+import org.hibernate.entities.EntityPlain;
+import org.hibernate.mapping.PersistentClass;
+import org.hibernate.type.Type;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,6 +34,7 @@ public class EntityJsonLoadedFirstTestCase {
 		// Add your entities here.
 			.addAnnotatedClass( EntityJSON.class )
 			.addAnnotatedClass( EntityArray.class )
+			.addAnnotatedClass( EntityPlain.class )
 			.buildMetadata();
 
 		sf = metadata.buildSessionFactory();
@@ -37,16 +42,37 @@ public class EntityJsonLoadedFirstTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh17680TestFailsForListString() throws Exception {
-		var entityArray_listString = metadata.getEntityBinding(EntityArray.class.getName()).getProperty("listString").getType();
-		var entityJSON_listString = metadata.getEntityBinding(EntityJSON.class.getName()).getProperty("listString").getType();
-		assert entityArray_listString != entityJSON_listString;
+	public void hhh17680Test() throws Exception {
+		var modelEntityArray = metadata.getEntityBinding(EntityArray.class.getName());
+		var modelEntityJson = metadata.getEntityBinding(EntityJSON.class.getName());
+		var modelEntityPlain = metadata.getEntityBinding(EntityPlain.class.getName());
+
+		// Entities with JdbcTypes JSON and ARRAY should have different types
+		Assert.assertNotEquals(
+				"Entity with JdbcType ARRAY and entity with JdbcType JSON should have the different types",
+				getPropertyType(modelEntityArray, "listString"),
+				getPropertyType(modelEntityJson, "listString")
+		);
+		Assert.assertNotEquals(
+				"Entity with JdbcType ARRAY and entity with JdbcType JSON should have the different types",
+				getPropertyType(modelEntityArray, "listInteger"),
+				getPropertyType(modelEntityJson, "listInteger")
+		);
+
+		//
+		Assert.assertEquals(
+				"Entity with JdbcType ARRAY and entity without JdbcType should have the same types",
+				getPropertyType(modelEntityArray, "listString"),
+				getPropertyType(modelEntityPlain, "listString")
+		);
+		Assert.assertEquals(
+				"Entity with JdbcType ARRAY and entity without JdbcType should have the same types",
+				getPropertyType(modelEntityArray, "listInteger"),
+				getPropertyType(modelEntityPlain, "listInteger")
+		);
 	}
 
-	@Test
-	public void hhh17680TestFailsForListInteger() throws Exception {
-		var entityArray_listInteger = metadata.getEntityBinding(EntityArray.class.getName()).getProperty("listInteger").getType();
-		var entityJSON_listInteger = metadata.getEntityBinding(EntityJSON.class.getName()).getProperty("listInteger").getType();
-		assert entityArray_listInteger != entityJSON_listInteger;
+	private Type getPropertyType(PersistentClass model, String property) {
+		return model.getProperty(property).getType();
 	}
 }

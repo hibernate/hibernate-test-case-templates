@@ -17,7 +17,7 @@ import org.junit.Test;
  * This template demonstrates how to develop a standalone test case for Hibernate ORM.  Although this is perfectly
  * acceptable as a reproducer, usage of ORMUnitTestCase is preferred!
  */
-public class EntityArrayLoadedFirstTestCase {
+public class EntityPlainLoadedFirstTestCase {
 
 	private Metadata metadata;
 	private SessionFactory sf;
@@ -32,9 +32,9 @@ public class EntityArrayLoadedFirstTestCase {
 
 		metadata = new MetadataSources( srb.build() )
 		// Add your entities here.
-			.addAnnotatedClass( EntityArray.class )
-			.addAnnotatedClass( EntityJSON.class )
 			.addAnnotatedClass( EntityPlain.class )
+			.addAnnotatedClass( EntityJSON.class )
+			.addAnnotatedClass( EntityArray.class )
 			.buildMetadata();
 
 		sf = metadata.buildSessionFactory();
@@ -50,8 +50,8 @@ public class EntityArrayLoadedFirstTestCase {
 		// Entities with JdbcTypes JSON and ARRAY should have different types
 		Assert.assertNotEquals(
 				"Entity with JdbcType ARRAY and entity with JdbcType JSON should have the different types",
-				getPropertyType(modelEntityArray, "listString"),
-				getPropertyType(modelEntityJson, "listString")
+			getPropertyType(modelEntityArray, "listString"),
+			getPropertyType(modelEntityJson, "listString")
 		);
 		Assert.assertNotEquals(
 				"Entity with JdbcType ARRAY and entity with JdbcType JSON should have the different types",
