@@ -15,10 +15,10 @@
  */
 package org.hibernate.bugs;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Locale;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.id.SequenceMismatchStrategy;
@@ -44,8 +44,7 @@ public class QuarkusLikeORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class<?>[] getAnnotatedClasses() {
 		return new Class<?>[] {
-//				Foo.class,
-//				Bar.class
+				Score.class
 		};
 	}
 
@@ -60,13 +59,16 @@ public class QuarkusLikeORMUnitTestCase extends BaseCoreFunctionalTestCase {
 		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 
 		// Other settings that will make your test case run under similar configuration that Quarkus is using by default:
-		configuration.setProperty( AvailableSettings.PREFERRED_POOLED_OPTIMIZER, StandardOptimizerDescriptor.POOLED_LO.getExternalName() );
+		configuration.setProperty(
+				AvailableSettings.PREFERRED_POOLED_OPTIMIZER, StandardOptimizerDescriptor.POOLED_LO.getExternalName() );
 		configuration.setProperty( AvailableSettings.DEFAULT_BATCH_FETCH_SIZE, "16" );
 		configuration.setProperty( AvailableSettings.BATCH_FETCH_STYLE, BatchFetchStyle.PADDED.toString() );
 		configuration.setProperty( AvailableSettings.QUERY_PLAN_CACHE_MAX_SIZE, "2048" );
-		configuration.setProperty( AvailableSettings.DEFAULT_NULL_ORDERING, NullPrecedence.NONE.toString().toLowerCase( Locale.ROOT) );
+		configuration.setProperty(
+				AvailableSettings.DEFAULT_NULL_ORDERING, NullPrecedence.NONE.toString().toLowerCase( Locale.ROOT ) );
 		configuration.setProperty( AvailableSettings.IN_CLAUSE_PARAMETER_PADDING, "true" );
-		configuration.setProperty( AvailableSettings.SEQUENCE_INCREMENT_SIZE_MISMATCH_STRATEGY, SequenceMismatchStrategy.NONE.toString() );
+		configuration.setProperty(
+				AvailableSettings.SEQUENCE_INCREMENT_SIZE_MISMATCH_STRATEGY, SequenceMismatchStrategy.NONE.toString() );
 
 		// Add your own settings that are a part of your quarkus configuration:
 		// configuration.setProperty( AvailableSettings.SOME_CONFIGURATION_PROPERTY, "SOME_VALUE" );
@@ -76,10 +78,21 @@ public class QuarkusLikeORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Test
 	public void hhh123Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
-		Session s = openSession();
-		Transaction tx = s.beginTransaction();
-		// Do stuff...
-		tx.commit();
-		s.close();
+		inTransaction( session -> {
+			session.persist( new Score( "foo", 1L ) );
+			session.persist( new Score( "foo", 2L ) );
+			session.persist( new Score( "bar", 2L ) );
+			session.persist( new Score( "bar", 3L ) );
+		} );
+
+		inTransaction( session -> {
+			var total = session.createQuery( "select s.name, sum(s.points) from Score s group by s.name", Score.class )
+					.getResultList();
+			assertThat( total ).usingRecursiveFieldByFieldElementComparator()
+					.containsExactlyInAnyOrder(
+							new Score( "foo", 3L ),
+							new Score( "bar", 5L )
+					);
+		} );
 	}
 }
