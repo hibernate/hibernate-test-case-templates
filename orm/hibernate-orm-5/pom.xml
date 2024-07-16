@@ -8,7 +8,7 @@
 	<name>Hibernate ORM 5 Test Case Template</name>
 
 	<properties>
-		<version.com.h2database>2.2.224</version.com.h2database>
+		<version.com.h2database>2.3.230</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
 		<version.org.hibernate>5.6.15.Final</version.org.hibernate>
 	</properties>
