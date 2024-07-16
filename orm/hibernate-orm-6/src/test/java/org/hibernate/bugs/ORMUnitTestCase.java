@@ -15,6 +15,9 @@
  */
 package org.hibernate.bugs;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
@@ -37,8 +40,9 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				BaseEntity.class,
+				EntityA.class,
+				EntityB.class
 		};
 	}
 
@@ -66,14 +70,50 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 	}
 
+	@Override
+	protected void prepareTest() throws Exception {
+		inTransaction( s -> {
+			s.createMutationQuery( "delete from EntityB" ).executeUpdate();
+			s.createMutationQuery( "delete from EntityA" ).executeUpdate();
+		} );
+
+		inTransaction( s -> {
+			EntityA entityA = new EntityA();
+			entityA.name = "First Entity";
+			entityA.columnAEntityA = 10L;
+			entityA.columnBEntityA = 11L;
+			s.persist( entityA );
+
+			EntityB entityB = new EntityB();
+			entityB.name = "Second Entity";
+			entityB.columnAEntityB = 10L;
+			entityB.columnBEntityB = 11L;
+			s.persist( entityB );
+		} );
+	}
+
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
-		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
-		Session s = openSession();
-		Transaction tx = s.beginTransaction();
-		// Do stuff...
-		tx.commit();
-		s.close();
+	public void findBothEntities() throws Exception {
+		inTransaction( s -> {
+			EntityA foundEntityA = s.createSelectionQuery( "from EntityA", EntityA.class ).getSingleResult();
+
+			assertNotNull( foundEntityA );
+			assertEquals( "First Entity", foundEntityA.name );
+			assertNotNull( foundEntityA.entityB );
+			assertEquals( "Second Entity", foundEntityA.entityB.name );
+		} );
+	}
+
+	@Test
+	public void findBothEntitiesInReverse() throws Exception {
+		inTransaction( s -> {
+			EntityB foundEntityB = s.createSelectionQuery( "from EntityB", EntityB.class ).getSingleResult();
+
+			assertNotNull( foundEntityB );
+			assertEquals( "Second Entity", foundEntityB.name );
+			assertNotNull( foundEntityB.entityA );
+			assertEquals( "First Entity", foundEntityB.entityA.name );
+		} );
 	}
 }
