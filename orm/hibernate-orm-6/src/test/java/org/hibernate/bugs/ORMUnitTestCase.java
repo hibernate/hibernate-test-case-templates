@@ -15,10 +15,15 @@
  */
 package org.hibernate.bugs;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.TenantId;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
 import org.junit.Test;
 
@@ -35,10 +40,9 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your entities here.
 	@Override
-	protected Class[] getAnnotatedClasses() {
+	protected Class<?>[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+			TestEntity.class
 		};
 	}
 
@@ -63,17 +67,72 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
 		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
+		configuration.setProperty( AvailableSettings.MULTI_TENANT_IDENTIFIER_RESOLVER, TenantIdentifierResolver.class.getName() );
 		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 	}
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
-		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
+	public void testMergeWithTenantId() {
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+		TestEntity entity = new TestEntity();
+		entity.name = "test";
+		s.persist(entity);
 		tx.commit();
 		s.close();
+		s = openSession();
+		tx = s.beginTransaction();
+		entity = s.find(TestEntity.class, entity.id);
+		entity.name = "test2";
+		tx.commit(); // generated update SQL doesn't contains `where tenant = ?`
+		s.close();
+	}
+
+	@Test
+	public void testRemoveWithTenantId() {
+		Session s = openSession();
+		Transaction tx = s.beginTransaction();
+		TestEntity entity = new TestEntity();
+		entity.name = "test";
+		s.persist(entity);
+		tx.commit();
+		s.close();
+		s = openSession();
+		tx = s.beginTransaction();
+		entity = s.find(TestEntity.class, entity.id);
+		s.remove(entity);
+		tx.commit(); // generated delete SQL doesn't contains `where tenant = ?`
+		s.close();
+	}
+
+	@Entity(name = "TestEntity")
+	static class TestEntity {
+		@Id
+		@GeneratedValue
+		Long id;
+
+		String name;
+
+		@TenantId
+		String tenant;
+	}
+
+	public static class TenantIdentifierResolver implements CurrentTenantIdentifierResolver<String> {
+
+		@Override
+		public String resolveCurrentTenantIdentifier() {
+			return "test";
+		}
+
+		@Override
+		public boolean validateExistingCurrentSessions() {
+			return false;
+		}
+
+		@Override
+		public boolean isRoot(String tenantId) {
+			return "root".equals(tenantId);
+		}
 	}
 }
