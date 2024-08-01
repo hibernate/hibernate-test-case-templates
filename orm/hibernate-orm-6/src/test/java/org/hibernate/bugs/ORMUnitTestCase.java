@@ -37,8 +37,9 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				Parent.class,
+				Child1.class,
+				Child2.class
 		};
 	}
 
@@ -70,10 +71,20 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Test
 	public void hhh123Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
-		Session s = openSession();
-		Transaction tx = s.beginTransaction();
-		// Do stuff...
-		tx.commit();
-		s.close();
+		inTransaction( session -> {
+			Parent parent = new Parent();
+			parent.setId(1L);
+			parent.setName("old name");
+
+			session.persist(parent);
+		} );
+
+		inTransaction( session -> {
+			Parent parent = new Parent();
+			parent.setId(1L);
+			parent.setName("new name");
+
+			session.merge(parent);
+		} );
 	}
 }
