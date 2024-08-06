@@ -15,11 +15,14 @@
  */
 package org.hibernate.bugs;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -37,8 +40,9 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				Level1.class,
+				Level2.class,
+				Level3.class,
 		};
 	}
 
@@ -68,10 +72,64 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh18436Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
+		Level1 root = new Level1(1L);
+
+		Level2 child1 = new Level2(root, 1L);
+		Level2 child2 = new Level2(root,2L);
+		Level2 child3 = new Level2(root,3L);
+
+		new Level3(child2,1L);
+
+		s.persist(root);
+		s.flush();
+		s.clear();
+
+		Level1 loadedWithoutEntityGraph = s.find(Level1.class, 1L);
+
+		long i = 1;
+		for (Level2 child : loadedWithoutEntityGraph.getChilds()) {
+			Assert.assertEquals("Childs not in expected order", Long.valueOf(i), child.getId());
+			i++;
+		}
+
+		tx.commit();
+		s.close();
+	}
+
+	// Add your tests, using standard JUnit.
+	@Test
+	public void hhh18436TestEntitygraph() throws Exception {
+		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
+		Session s = openSession();
+		Transaction tx = s.beginTransaction();
+		Level1 root = new Level1(1L);
+
+		Level2 child1 = new Level2(root, 1L);
+		Level2 child2 = new Level2(root,2L);
+		Level2 child3 = new Level2(root,3L);
+
+		new Level3(child2,1L);
+
+		s.persist(root);
+		s.flush();
+		s.clear();
+
+		// Hints
+		Map<String, Object> hints = new HashMap<>();
+		hints.put("jakarta.persistence.loadgraph", s.getEntityGraph("level1_loadAll"));
+
+		Level1 loadedWithEntityGraph = s.find(Level1.class, 1L, hints);
+
+		long i = 1;
+		for (Level2 child : loadedWithEntityGraph.getChilds()) {
+			Assert.assertEquals("Childs not in expected order", Long.valueOf(i), child.getId());
+			i++;
+		}
+
 		// Do stuff...
 		tx.commit();
 		s.close();
