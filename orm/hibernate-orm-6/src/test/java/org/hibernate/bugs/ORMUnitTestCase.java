@@ -15,6 +15,10 @@
  */
 package org.hibernate.bugs;
 
+import com.example.domain.Car;
+import com.example.domain.Owner;
+import com.example.domain.Truck;
+import com.example.domain.Vehicle;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
@@ -33,46 +37,38 @@ import org.junit.Test;
  */
 public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
-	// Add your entities here.
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+				Owner.class,
+				Vehicle.class,
+				Car.class,
+				Truck.class,
 		};
 	}
 
-	// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
-	@Override
-	protected String[] getMappings() {
-		return new String[] {
-//				"Foo.hbm.xml",
-//				"Bar.hbm.xml"
-		};
-	}
-	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
-	@Override
-	protected String getBaseForMappings() {
-		return "org/hibernate/test/";
-	}
-
-	// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
 	@Override
 	protected void configure(Configuration configuration) {
 		super.configure( configuration );
 
 		configuration.setProperty( AvailableSettings.SHOW_SQL, Boolean.TRUE.toString() );
 		configuration.setProperty( AvailableSettings.FORMAT_SQL, Boolean.TRUE.toString() );
-		//configuration.setProperty( AvailableSettings.GENERATE_STATISTICS, "true" );
 	}
 
-	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
-		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
+	public void hhh18470Test() throws Exception {
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
-		// Do stuff...
+
+		// Create owner and vehicles (car, truck).
+		// Note that this succeeds even through the logged warning.
+		Owner owner = new Owner("Alice");
+		s.persist(owner);
+		Car car = new Car(owner);
+		s.persist(car);
+		Truck truck = new Truck(owner);
+		s.persist(truck);
+
 		tx.commit();
 		s.close();
 	}
