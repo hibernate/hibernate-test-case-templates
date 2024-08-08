@@ -7,9 +7,6 @@ import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-/**
- * Common customer items useful in all contexts where a customer is used.
- */
 @MappedSuperclass
 public class BaseBEntity {
 
