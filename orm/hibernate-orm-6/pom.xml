@@ -10,7 +10,12 @@
 	<properties>
 		<version.com.h2database>2.3.230</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
-		<version.org.hibernate.orm>6.5.2.Final</version.org.hibernate.orm>
+
+		<!-- Logs a warning: 'Constraint "FK6YUR207VBEQI0PEKMKLX698ND" already exists' -->
+		<version.org.hibernate.orm>6.5.0.Final</version.org.hibernate.orm>
+
+		<!-- Older versions do not log a warning -->
+		<!--<version.org.hibernate.orm>6.4.10.Final</version.org.hibernate.orm>-->
 	</properties>
 
 	<dependencyManagement>
