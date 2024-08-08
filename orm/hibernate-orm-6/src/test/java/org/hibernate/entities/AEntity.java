@@ -15,7 +15,7 @@ public class AEntity {
 
     @OneToOne
     @JoinColumn(name = "b_entity_id", updatable = false, insertable = false)
-    private B2Entity b_entity; // default customer => owner
+    private B2Entity b_entity;
 
     @Column(name = "b_entity_id")
     private Long b_entity_id;
