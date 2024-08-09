@@ -10,7 +10,7 @@
 	<properties>
 		<version.com.h2database>2.3.230</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
-		<version.org.hibernate.orm>6.5.2.Final</version.org.hibernate.orm>
+		<version.org.hibernate.orm>6.6.0.Final</version.org.hibernate.orm>
 	</properties>
 
 	<dependencyManagement>
