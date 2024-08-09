@@ -9,7 +9,7 @@
 
 	<properties>
 		<version.org.hibernate.search>7.1.1.Final</version.org.hibernate.search>
-		<version.org.hibernate.orm>6.5.2.Final</version.org.hibernate.orm>
+		<version.org.hibernate.orm>6.6.0.Final</version.org.hibernate.orm>
 
 		<version.com.h2database>2.3.230</version.com.h2database>
 		<version.junit-jupiter>5.10.3</version.junit-jupiter>
