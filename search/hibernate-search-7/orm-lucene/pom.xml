@@ -8,7 +8,7 @@
 	<name>Hibernate Search 7 with Hibernate ORM and Lucene Test Case Template</name>
 
 	<properties>
-		<version.org.hibernate.search>7.1.1.Final</version.org.hibernate.search>
+		<version.org.hibernate.search>7.2.0.Final</version.org.hibernate.search>
 		<version.org.hibernate.orm>6.6.0.Final</version.org.hibernate.orm>
 
 		<version.com.h2database>2.3.230</version.com.h2database>
