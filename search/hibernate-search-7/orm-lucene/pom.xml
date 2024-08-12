@@ -10,6 +10,8 @@
 	<properties>
 		<version.org.hibernate.search>7.2.0.Final</version.org.hibernate.search>
 		<version.org.hibernate.orm>6.6.0.Final</version.org.hibernate.orm>
+		<!-- Once ORM upgrade JBoss Logging to 3.6+ this can be removed -->
+		<version.jboss-logging>3.6.0.Final</version.jboss-logging>
 
 		<version.com.h2database>2.3.230</version.com.h2database>
 		<version.junit-jupiter>5.10.3</version.junit-jupiter>
@@ -46,6 +48,15 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<!--
+			Need to force the version of jboss logging that is compatible with both Search and ORM.
+			ORM manages the JBoss Logging in its BOM, and Search is using a newer version already
+		 -->
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>${version.jboss-logging}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate.search</groupId>
 			<artifactId>hibernate-search-mapper-orm</artifactId>
