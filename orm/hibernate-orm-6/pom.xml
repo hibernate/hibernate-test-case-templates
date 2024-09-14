@@ -8,7 +8,8 @@
 	<name>Hibernate ORM 6 Test Case Template</name>
 
 	<properties>
-		<version.com.h2database>2.3.232</version.com.h2database>
+		<version.org.testcontainers>1.16.3</version.org.testcontainers>
+		<version.pgjdbc>42.7.4</version.pgjdbc>
 		<version.junit-jupiter>5.11.0</version.junit-jupiter>
 		<version.org.hibernate.orm>6.6.0.Final</version.org.hibernate.orm>
 		<version.org.assertj.assertj-core>3.26.3</version.org.assertj.assertj-core>
@@ -30,6 +31,13 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>1.20.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -43,10 +51,17 @@
 			<artifactId>hibernate-testing</artifactId>
 		</dependency>
 
+
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>${version.com.h2database}</version>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${version.pgjdbc}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
