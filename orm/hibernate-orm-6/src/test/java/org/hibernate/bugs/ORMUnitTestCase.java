@@ -15,8 +15,12 @@
  */
 package org.hibernate.bugs;
 
-import org.hibernate.cfg.AvailableSettings;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+
+import org.hibernate.bugs.model.Currency;
+import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
@@ -35,36 +39,28 @@ import org.junit.jupiter.api.Test;
  */
 @DomainModel(
 		annotatedClasses = {
-				// Add your entities here.
-				// Foo.class,
-				// Bar.class
-		},
-		// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
-		xmlMappings = {
-				// "org/hibernate/test/Foo.hbm.xml",
-				// "org/hibernate/test/Bar.hbm.xml"
+				Currency.class
 		}
 )
 @ServiceRegistry(
-		// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
 		settings = {
-				// For your own convenience to see generated queries:
 				@Setting(name = AvailableSettings.SHOW_SQL, value = "true"),
-				@Setting(name = AvailableSettings.FORMAT_SQL, value = "true"),
-				// @Setting( name = AvailableSettings.GENERATE_STATISTICS, value = "true" ),
-
-				// Add your own settings that are a part of your quarkus configuration:
-				// @Setting( name = AvailableSettings.SOME_CONFIGURATION_PROPERTY, value = "SOME_VALUE" ),
 		}
 )
-@SessionFactory
+@SessionFactory(exportSchema = false)
 class ORMUnitTestCase {
 
-	// Add your tests, using standard JUnit 5.
 	@Test
-	void hhh123Test(SessionFactoryScope scope) throws Exception {
+	void hhh18618Test(SessionFactoryScope scope) throws Exception {
 		scope.inTransaction( session -> {
-			// Do stuff...
+			List<Integer> numbers = List.of(840, 978);
+			List<Currency> currencies = session.createQuery(
+							"FROM Currency "
+							+ "WHERE array_contains(:numbers, number)",
+							Currency.class)
+							.setParameter("numbers", numbers.toArray(Integer[]::new))
+							.getResultList();
+			assertEquals(2, currencies.size());
 		} );
 	}
 }
