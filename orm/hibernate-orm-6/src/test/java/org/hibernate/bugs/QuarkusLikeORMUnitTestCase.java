@@ -33,9 +33,7 @@ import org.junit.jupiter.api.Test;
  */
 @DomainModel(
 		annotatedClasses = {
-				// Add your entities here, e.g.:
-				// Foo.class,
-				// Bar.class
+				Parent.class, Child.class
 		}
 )
 @ServiceRegistry(
@@ -66,8 +64,23 @@ class QuarkusLikeORMUnitTestCase {
 	// Add your tests, using standard JUnit.
 	@Test
 	void hhh123Test(SessionFactoryScope scope) throws Exception {
+		long childId = 1L;
 		scope.inTransaction( session -> {
-			// Do stuff...
+			var parent = new Parent();
+			parent.setId( 2L );
+			session.persist( parent );
+
+			var child = new Child();
+			child.setId( childId );
+			child.setParent( parent );
+			parent.getChildren().add( child );
+			session.persist( child );
+		} );
+		scope.inTransaction( session -> {
+			Child child = session.get( Child.class, childId );
+			Long parentId = child.getParent().getId();
+			session.delete( child );
+			session.get( Parent.class, parentId );
 		} );
 	}
 }
