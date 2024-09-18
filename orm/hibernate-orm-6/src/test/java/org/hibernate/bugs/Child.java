@@ -1,9 +1,12 @@
 package org.hibernate.bugs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderColumn;
 
 @Entity
 public class Child {
@@ -11,8 +14,9 @@ public class Child {
 	@Id
 	private Long id;
 
-	@ManyToOne
-	private Parent parent;
+	@OneToMany(mappedBy = "child")
+	@OrderColumn
+	List<ManyToMany> children = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -22,11 +26,11 @@ public class Child {
 		this.id = id;
 	}
 
-	public Parent getParent() {
-		return parent;
+	public List<ManyToMany> getChildren() {
+		return children;
 	}
 
-	public void setParent(Parent parent) {
-		this.parent = parent;
+	public void setChildren(List<ManyToMany> children) {
+		this.children = children;
 	}
 }

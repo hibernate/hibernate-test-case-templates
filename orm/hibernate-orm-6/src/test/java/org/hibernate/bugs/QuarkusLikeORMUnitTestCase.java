@@ -15,6 +15,8 @@
  */
 package org.hibernate.bugs;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.hibernate.cfg.AvailableSettings;
 
 import org.hibernate.testing.bytecode.enhancement.extension.BytecodeEnhanced;
@@ -33,7 +35,7 @@ import org.junit.jupiter.api.Test;
  */
 @DomainModel(
 		annotatedClasses = {
-				Parent.class, Child.class
+				Parent.class, Child.class, ManyToMany.class
 		}
 )
 @ServiceRegistry(
@@ -66,21 +68,27 @@ class QuarkusLikeORMUnitTestCase {
 	void hhh123Test(SessionFactoryScope scope) throws Exception {
 		long childId = 1L;
 		scope.inTransaction( session -> {
-			var parent = new Parent();
-			parent.setId( 2L );
-			session.persist( parent );
-
-			var child = new Child();
-			child.setId( childId );
-			child.setParent( parent );
-			parent.getChildren().add( child );
-			session.persist( child );
+			Parent p = new Parent();
+			p.setId( 1L );
+			Child c = new Child();
+			c.setId( 2L );
+			ManyToMany m = new ManyToMany();
+			m.setId( 3L );
+			m.setParent( p );
+			m.setChild( c );
+			p.getChildren().add( m );
+			c.getChildren().add( m );
+			session.persist( p );
+			session.persist( c );
+			session.persist( m );
 		} );
+		ManyToMany m = scope.fromTransaction( session -> session.get( ManyToMany.class, 3L ) );
+		assertThat( m ).isNotNull();
 		scope.inTransaction( session -> {
-			Child child = session.get( Child.class, childId );
-			Long parentId = child.getParent().getId();
-			session.delete( child );
-			session.get( Parent.class, parentId );
+			session.remove( m );
+			Parent p = session.get( Parent.class, 1 );
+			Child c = session.get( Child.class, 2 );
+			System.out.println( "id=" + p.getId() + " c.id=" + c.getId() );
 		} );
 	}
 }
