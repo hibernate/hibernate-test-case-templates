@@ -4,7 +4,7 @@ pipeline {
     }
     tools {
         jdk 'OpenJDK 11 Latest'
-        maven 'Apache Maven 3.8'
+        maven 'Apache Maven 3.9'
     }
     options {
         disableConcurrentBuilds(abortPrevious: true)
