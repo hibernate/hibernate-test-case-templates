@@ -20,20 +20,9 @@
 			<version>${version.org.hibernate}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-testing</artifactId>
-			<version>${version.org.hibernate}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${version.com.h2database}</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${version.junit}</version>
 		</dependency>
 
 		<!-- Not necessary for ORM 5.2 and above -->
@@ -46,6 +35,19 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 			<version>${version.org.hibernate}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-testing</artifactId>
+			<version>${version.org.hibernate}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
