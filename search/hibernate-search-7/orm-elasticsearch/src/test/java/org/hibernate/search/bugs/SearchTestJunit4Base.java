@@ -22,10 +22,11 @@ public abstract class SearchTestJunit4Base extends BaseCoreFunctionalTestCase {
 	protected void configureMore(Configuration configuration) {
 	}
 
-	@AfterClassOnce
-	public void tearDown() {
+	@Override
+	protected void releaseSessionFactory() {
 		try ( SearchBackendContainer esToClose = this.elasticsearchContainer; ) {
-			// Nothing to do: we just want resources to get closed.
+			super.releaseSessionFactory();
 		}
 	}
+
 }
