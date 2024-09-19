@@ -38,7 +38,9 @@ updates:
       - dependency-name: "org.hibernate.orm.tooling:hibernate-enhance-maven-plugin"
       - dependency-name: "org.hibernate:hibernate-core"
         update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
-      - dependency-name: "org.hibernate*"
+      - dependency-name: "org.hibernate:*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.hibernate.*:*"
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "com.h2database:h2"
         update-types: [ "version-update:semver-major" ]
