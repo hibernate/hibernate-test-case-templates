@@ -12,14 +12,31 @@
 		<version.org.hibernate>5.4.33</version.org.hibernate>
 
 		<version.com.h2database>2.3.232</version.com.h2database>
-		<version.junit>4.13.2</version.junit>
-
-		<version.elasticsearch-maven-plugin>6.26</version.elasticsearch-maven-plugin>
-		<version.org.elasticsearch>5.6.9</version.org.elasticsearch>
+		<version.junit-jupiter>5.11.0</version.junit-jupiter>
+		<version.org.assertj.assertj-core>3.26.3</version.org.assertj.assertj-core>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>1.20.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${version.junit-jupiter}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -63,9 +80,34 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${version.junit}</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.vintage</groupId>
+			<artifactId>junit-vintage-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${version.org.assertj.assertj-core}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>elasticsearch</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -115,35 +157,6 @@
 								<include>**/*.java</include>
 							</includes>
 						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>com.github.alexcojocaru</groupId>
-				<artifactId>elasticsearch-maven-plugin</artifactId>
-				<version>${version.elasticsearch-maven-plugin}</version>
-				<configuration>
-					<clusterName>hsearchEsTestCluster</clusterName>
-					<version>${version.org.elasticsearch}</version>
-					<httpPort>9200</httpPort>
-					<pathConf>${project.basedir}/elasticsearch-maven-plugin/configuration/</pathConf>
-					<pathInitScript>${project.basedir}/elasticsearch-maven-plugin/init/init.script</pathInitScript>
-					<autoCreateIndex>false</autoCreateIndex>
-				</configuration>
-				<executions>
-					<execution>
-						<id>start-elasticsearch</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>runforked</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>stop-elasticsearch</id>
-						<phase>post-integration-test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>

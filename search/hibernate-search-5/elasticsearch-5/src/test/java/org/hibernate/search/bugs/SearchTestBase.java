@@ -5,20 +5,25 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.SessionFactoryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.spi.ServiceRegistryImplementor;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 public abstract class SearchTestBase {
-	
-	private SessionFactory sessionFactory;
-	
-	@Before
-	public void setUp() {
-		StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
-		ServiceRegistryImplementor serviceRegistry = (ServiceRegistryImplementor) registryBuilder.build();
 
-		MetadataSources ms = new MetadataSources( serviceRegistry );
+	private SessionFactory sessionFactory;
+	private SearchBackendContainer elasticsearchContainer;
+
+	@BeforeEach
+	public void setUp() {
+		elasticsearchContainer = new SearchBackendContainer();
+
+		StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
+		registryBuilder.applySetting(
+				"hibernate.search.default.elasticsearch.host",
+				elasticsearchContainer.setUp().getHttpHostAddress()
+		);
+		MetadataSources ms = new MetadataSources( registryBuilder.build() );
 		Class<?>[] annotatedClasses = getAnnotatedClasses();
 		if ( annotatedClasses != null ) {
 			for ( Class<?> entity : annotatedClasses ) {
@@ -31,14 +36,17 @@ public abstract class SearchTestBase {
 		final SessionFactoryBuilder sfb = metadata.getSessionFactoryBuilder();
 		this.sessionFactory = sfb.build();
 	}
-	
-	@After
+
+	@AfterEach
 	public void tearDown() {
-		this.sessionFactory.close();
+		try ( SearchBackendContainer esToClose = this.elasticsearchContainer;
+				SessionFactory sessionFactoryToClose = this.sessionFactory ) {
+			// Nothing to do: we just want resources to get closed.
+		}
 	}
 
 	protected abstract Class<?>[] getAnnotatedClasses();
-	
+
 	protected SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
