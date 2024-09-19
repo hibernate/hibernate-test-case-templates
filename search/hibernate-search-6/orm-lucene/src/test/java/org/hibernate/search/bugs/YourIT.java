@@ -9,13 +9,13 @@ import org.hibernate.Transaction;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class YourIT extends SearchTestBase {
 
 	@Override
 	public Class<?>[] getAnnotatedClasses() {
-		return new Class<?>[]{ YourAnnotatedEntity.class };
+		return new Class<?>[] { YourAnnotatedEntity.class };
 	}
 
 	@Test
@@ -23,7 +23,7 @@ public class YourIT extends SearchTestBase {
 		try ( Session s = getSessionFactory().openSession() ) {
 			YourAnnotatedEntity yourEntity1 = new YourAnnotatedEntity( 1L, "Jane Smith" );
 			YourAnnotatedEntity yourEntity2 = new YourAnnotatedEntity( 2L, "John Doe" );
-	
+
 			Transaction tx = s.beginTransaction();
 			s.persist( yourEntity1 );
 			s.persist( yourEntity2 );

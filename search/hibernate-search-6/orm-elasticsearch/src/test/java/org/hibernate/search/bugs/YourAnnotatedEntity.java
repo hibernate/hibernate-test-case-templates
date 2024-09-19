@@ -1,11 +1,11 @@
 package org.hibernate.search.bugs;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 @Indexed
