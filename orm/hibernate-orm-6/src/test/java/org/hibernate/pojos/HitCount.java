@@ -3,7 +3,6 @@ package org.hibernate.pojos;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -15,7 +14,7 @@ public class HitCount {
 
 	private String id = "123456789";
 	// private String partNumber = "12345";
-	private String userName = "testUser";
+	private String userName = "testuser";
 
 	private Catalogue catalogue = null;
 
