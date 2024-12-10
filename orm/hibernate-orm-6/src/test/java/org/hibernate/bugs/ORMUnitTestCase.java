@@ -15,14 +15,20 @@
  */
 package org.hibernate.bugs;
 
+import jakarta.persistence.*;
 import org.hibernate.cfg.AvailableSettings;
 
+import org.hibernate.testing.jdbc.SQLStatementInspector;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -35,14 +41,8 @@ import org.junit.jupiter.api.Test;
  */
 @DomainModel(
 		annotatedClasses = {
-				// Add your entities here.
-				// Foo.class,
-				// Bar.class
-		},
-		// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
-		xmlMappings = {
-				// "org/hibernate/test/Foo.hbm.xml",
-				// "org/hibernate/test/Bar.hbm.xml"
+				ORMUnitTestCase.Parent.class,
+				ORMUnitTestCase.Child.class
 		}
 )
 @ServiceRegistry(
@@ -51,7 +51,7 @@ import org.junit.jupiter.api.Test;
 				// For your own convenience to see generated queries:
 				@Setting(name = AvailableSettings.SHOW_SQL, value = "true"),
 				@Setting(name = AvailableSettings.FORMAT_SQL, value = "true"),
-				// @Setting( name = AvailableSettings.GENERATE_STATISTICS, value = "true" ),
+				@Setting(name = AvailableSettings.GENERATE_STATISTICS, value = "true"),
 
 				// Add your own settings that are a part of your quarkus configuration:
 				// @Setting( name = AvailableSettings.SOME_CONFIGURATION_PROPERTY, value = "SOME_VALUE" ),
@@ -60,11 +60,118 @@ import org.junit.jupiter.api.Test;
 @SessionFactory
 class ORMUnitTestCase {
 
+	@BeforeEach
+	public void setUp(SessionFactoryScope scope) {
+		scope.inTransaction(
+				session -> {
+					Child v = new Child();
+					v.setId("1");
+					v.setExternalId("1");
+					Parent tc = new Parent();
+					tc.setId(2L);
+					tc.setChild(v);
+					tc.setSomeFilter("some-value");
+
+					session.persist(v);
+					session.persist(tc);
+				});
+	}
+
+	@AfterEach
+	public void tearDown(SessionFactoryScope scope) {
+		scope.inTransaction(
+				session -> {
+					session.createQuery("delete from Parent ").executeUpdate();
+					session.createQuery("delete from Child").executeUpdate();
+				});
+	}
+
+
 	// Add your tests, using standard JUnit 5.
 	@Test
 	void hhh123Test(SessionFactoryScope scope) throws Exception {
-		scope.inTransaction( session -> {
-			// Do stuff...
-		} );
+		scope.inTransaction(session -> {
+			SQLStatementInspector statementInspector = scope.getCollectingStatementInspector();
+			statementInspector.clear();
+			final String queryString = "SELECT p from Parent p LEFT JOIN FETCH p.child c WHERE (c.externalId = :providedId or c.id = :providedId) and p.someFilter = :filterValue";
+			final Parent tc = session.createQuery(queryString, Parent.class)
+					.setParameter("providedId", "1")
+					.setParameter("filterValue", "some-value")
+					.getSingleResult();
+
+			assertNotNull(tc);
+
+			statementInspector.assertNumberOfOccurrenceInQueryNoSpace(0, "c1_0\\.id", 3);
+		});
+	}
+
+	@Entity(name = "Parent")
+	@Table(name = "parents", indexes = {
+			@Index(name = "child_id_idx", columnList = "child_id")
+	})
+	public static class Parent {
+
+		@Id
+		private Long id;
+
+		@Column(name = "some_filter", columnDefinition = "VARCHAR")
+		private String someFilter;
+
+		@ManyToOne(cascade = {CascadeType.PERSIST})
+		@JoinColumn(name = "child_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "children_fk"))
+		private Child child;
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getSomeFilter() {
+			return someFilter;
+		}
+
+		public void setSomeFilter(String someFilter) {
+			this.someFilter = someFilter;
+		}
+
+		public Child getChild() {
+			return child;
+		}
+
+		public void setChild(Child child) {
+			this.child = child;
+		}
+	}
+
+	@Entity(name = "Child")
+	@Table(name = "children", indexes = {
+			@Index(name = "external_id_idx", columnList = "external_id")
+	})
+	public static class Child {
+		@Id
+		@Column(name = "id", columnDefinition = "VARCHAR")
+		private String id;
+
+		@Column(name = "external_id", columnDefinition = "VARCHAR")
+		private String externalId;
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getExternalId() {
+			return externalId;
+		}
+
+		public void setExternalId(String externalId) {
+			this.externalId = externalId;
+		}
 	}
 }
