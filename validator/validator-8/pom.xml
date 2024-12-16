@@ -10,9 +10,21 @@
 	<properties>
 		<version.org.hibernate.validator>8.0.2.Final</version.org.hibernate.validator>
 		<version.org.glassfish.expressly>5.0.0</version.org.glassfish.expressly>
-		<version.junit>4.13.2</version.junit>
 		<version.log4j>2.24.3</version.log4j>
+		<version.junit-jupiter>5.11.3</version.junit-jupiter>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${version.junit-jupiter}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -33,9 +45,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${version.junit}</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 

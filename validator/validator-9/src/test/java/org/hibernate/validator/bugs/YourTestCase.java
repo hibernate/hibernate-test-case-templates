@@ -8,8 +8,8 @@ import java.util.Set;
 
 import org.hibernate.validator.testutil.TestForIssue;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -17,11 +17,11 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import jakarta.validation.constraints.NotNull;
 
-public class YourTestCase {
+class YourTestCase {
 
 	private static Validator validator;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUp() {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
@@ -29,7 +29,7 @@ public class YourTestCase {
 
 	@Test
 	@TestForIssue(jiraKey = "HV-NNNNN") // Please fill in the JIRA key of your issue
-	public void testYourBug() {
+	void testYourBug() {
 		YourAnnotatedBean yourEntity1 = new YourAnnotatedBean( null, "example" );
 
 		Set<ConstraintViolation<YourAnnotatedBean>> constraintViolations = validator.validate( yourEntity1 );
