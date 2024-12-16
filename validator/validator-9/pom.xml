@@ -14,7 +14,7 @@
 		<version.org.glassfish.expressly>6.0.0-M1</version.org.glassfish.expressly>
 		<version.log4j>2.24.3</version.log4j>
 		<version.assertj-core>3.26.3</version.assertj-core>
-		<version.junit-jupiter>5.11.3</version.junit-jupiter>
+		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 	</properties>
 
 	<dependencyManagement>
