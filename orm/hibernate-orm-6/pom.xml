@@ -9,7 +9,7 @@
 
 	<properties>
 		<version.com.h2database>2.3.232</version.com.h2database>
-		<version.junit-jupiter>5.11.3</version.junit-jupiter>
+		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 		<version.org.hibernate.orm>6.6.3.Final</version.org.hibernate.orm>
 		<version.org.assertj.assertj-core>3.26.3</version.org.assertj.assertj-core>
 	</properties>
