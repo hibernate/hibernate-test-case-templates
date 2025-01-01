@@ -13,7 +13,7 @@
 		<version.org.hibernate.validator>9.0.0.CR1</version.org.hibernate.validator>
 		<version.org.glassfish.expressly>6.0.0-M1</version.org.glassfish.expressly>
 		<version.log4j>2.24.3</version.log4j>
-		<version.assertj-core>3.27.0</version.assertj-core>
+		<version.assertj-core>3.27.1</version.assertj-core>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 	</properties>
 

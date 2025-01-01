@@ -11,7 +11,7 @@
 		<version.com.h2database>2.3.232</version.com.h2database>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 		<version.org.hibernate.orm>6.6.4.Final</version.org.hibernate.orm>
-		<version.org.assertj.assertj-core>3.27.0</version.org.assertj.assertj-core>
+		<version.org.assertj.assertj-core>3.27.1</version.org.assertj.assertj-core>
 	</properties>
 
 	<dependencyManagement>
