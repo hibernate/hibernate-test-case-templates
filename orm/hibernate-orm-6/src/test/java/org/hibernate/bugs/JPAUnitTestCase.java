@@ -1,5 +1,16 @@
 package org.hibernate.bugs;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.util.Map;
+import org.hibernate.annotations.TenantId;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +34,37 @@ class JPAUnitTestCase {
 	@AfterEach
 	void destroy() {
 		entityManagerFactory.close();
+	}
+
+	@Entity
+	@Table(name = "display_id")
+	public class DisplayIdBE {
+
+		@EmbeddedId
+		private DisplayIdKeyBE id;
+
+		@Column(name = "display_id_value", nullable = false)
+		private long displayIdValue;
+	}
+
+	public enum DisplayIdType {
+		TYPE1,
+		TYPE2
+	}
+
+	@Embeddable
+	public class DisplayIdKeyBE implements Serializable {
+
+		@TenantId
+		@Column(name = "tenant_id", nullable = false)
+		private Long tenantId;
+
+		@Column(name = "type", nullable = false)
+		@Enumerated(EnumType.STRING)
+		private DisplayIdType type;
+
+		// For Hibernate
+		protected DisplayIdKeyBE() {}
 	}
 
 	// Entities are auto-discovered, so just add them anywhere on class-path
