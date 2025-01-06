@@ -2,8 +2,10 @@ package org.hibernate.bugs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.bugs.model.Location;
 import org.hibernate.bugs.model.Point;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +15,16 @@ import jakarta.persistence.Persistence;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using the Java Persistence API.
  */
 class JPAUnitTestCase {
+
+	private static final Long LOCATION_ID = 123412L;
+	private static final String DOLLAR_QUOTE = "$asdas$";
+
 
 	private EntityManagerFactory entityManagerFactory;
 
@@ -39,24 +47,32 @@ class JPAUnitTestCase {
 
 		final String query = createNativeQuery();
 		entityManager.createNativeQuery(query).executeUpdate();
-		entityManager.getTransaction().commit();
 
+		final Location location = entityManager.find(Location.class, LOCATION_ID);
+		Assertions.assertEquals(LOCATION_ID, location.getId());
+		Assertions.assertNotNull(location.getPoint());
+
+		entityManager.getTransaction().commit();
 		entityManager.close();;
 	}
 
 	private String createNativeQuery() throws JsonProcessingException {
-		final String nativeQuery = "INSERT INTO location (point) " +
-				"VALUES (%s) " +
+		final String nativeQuery = "INSERT INTO location (id, point) " +
+				"VALUES (%s, %s) " +
 				"ON CONFLICT DO NOTHING;";
 
-		final String dollarQuotedGeoJsonValue = makeDollarQuotedValue();
-		return String.format(nativeQuery, dollarQuotedGeoJsonValue);
+		final String dollarQuotedGeoJsonValue = makeDollarQuotedPoint();
+		final String dollarQuotedId = makeDollarQuotedId();
+		return String.format(nativeQuery, dollarQuotedId, dollarQuotedGeoJsonValue);
 	}
 
-	private String makeDollarQuotedValue() throws JsonProcessingException {
-		final String dollarQuote = "$asdas$";
+	private String makeDollarQuotedPoint() throws JsonProcessingException {
 		final String postgisWrapper = "ST_SetSRID(ST_GeomFromGeoJSON(%s%s%s), 4326)";
-		return String.format(postgisWrapper, dollarQuote, makePoint(), dollarQuote);
+		return String.format(postgisWrapper, DOLLAR_QUOTE, makePoint(), DOLLAR_QUOTE);
+	}
+
+	private String makeDollarQuotedId() {
+		return DOLLAR_QUOTE.concat(String.valueOf(LOCATION_ID)).concat(DOLLAR_QUOTE);
 	}
 
 	private String makePoint() throws JsonProcessingException {
