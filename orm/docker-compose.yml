@@ -1,0 +1,22 @@
+services:
+  postgres:
+    container_name: postgres
+    hostname: postgres
+    image: postgis/postgis:16-3.5
+    environment:
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_DB: 'database'
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - nw
+networks:
+  nw:
+    driver: bridge
+
+volumes:
+  postgres:
