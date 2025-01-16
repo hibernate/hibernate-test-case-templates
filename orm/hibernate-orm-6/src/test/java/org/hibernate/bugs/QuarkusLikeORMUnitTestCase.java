@@ -17,6 +17,7 @@ package org.hibernate.bugs;
 
 import org.hibernate.cfg.AvailableSettings;
 
+import org.hibernate.testing.bytecode.enhancement.CustomEnhancementContext;
 import org.hibernate.testing.bytecode.enhancement.extension.BytecodeEnhanced;
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.ServiceRegistry;
@@ -61,6 +62,7 @@ import org.junit.jupiter.api.Test;
 )
 @SessionFactory
 @BytecodeEnhanced
+@CustomEnhancementContext(QuarkusLikeEnhancementContext.class)
 class QuarkusLikeORMUnitTestCase {
 
 	// Add your tests, using standard JUnit.
