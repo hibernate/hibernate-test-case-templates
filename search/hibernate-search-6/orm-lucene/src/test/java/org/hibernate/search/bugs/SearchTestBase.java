@@ -5,15 +5,15 @@ import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.SessionFactoryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.spi.ServiceRegistryImplementor;
-import org.junit.After;
-import org.junit.Before;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 public abstract class SearchTestBase {
 
 	private SessionFactory sessionFactory;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		StandardServiceRegistryBuilder registryBuilder = new StandardServiceRegistryBuilder();
 		MetadataSources ms = new MetadataSources( registryBuilder.build() );
@@ -30,10 +30,10 @@ public abstract class SearchTestBase {
 		this.sessionFactory = sfb.build();
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() {
-		if ( this.sessionFactory != null ) {
-			this.sessionFactory.close();
+		try ( SessionFactory sessionFactoryToClose = this.sessionFactory ) {
+			// Nothing to do: we just want resources to get closed.
 		}
 	}
 

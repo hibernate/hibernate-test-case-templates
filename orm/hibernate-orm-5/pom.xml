@@ -8,7 +8,7 @@
 	<name>Hibernate ORM 5 Test Case Template</name>
 
 	<properties>
-		<version.com.h2database>2.2.224</version.com.h2database>
+		<version.com.h2database>2.3.232</version.com.h2database>
 		<version.junit>4.13.2</version.junit>
 		<version.org.hibernate>5.6.15.Final</version.org.hibernate>
 	</properties>
@@ -20,20 +20,9 @@
 			<version>${version.org.hibernate}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-testing</artifactId>
-			<version>${version.org.hibernate}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${version.com.h2database}</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${version.junit}</version>
 		</dependency>
 
 		<!-- Not necessary for ORM 5.2 and above -->
@@ -47,6 +36,19 @@
 			<artifactId>hibernate-java8</artifactId>
 			<version>${version.org.hibernate}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-testing</artifactId>
+			<version>${version.org.hibernate}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -54,7 +56,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.0</version>
+				<version>3.13.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>

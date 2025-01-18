@@ -2,8 +2,8 @@
 
 This repo contains test case templates, useful for reporting bugs against Hibernate ORM.
 
-Here's a running list of what's available (there are two versions of each test case template, one is for Hibernate ORM 4,
-one for Hibernate ORM 5):
+Here's a running list of what's available (there are two versions of each test case template, one is for Hibernate ORM 5,
+one for Hibernate ORM 6):
 
 * ORMUnitTestCase: By far, this one's the most helpful.  ORM includes a built-in unit test framework that does much
 of the heavy lifting for you.  All that's required is your entities, logic, and any necessary settings.  Since we nearly

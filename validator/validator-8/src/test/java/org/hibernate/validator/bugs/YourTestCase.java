@@ -1,23 +1,24 @@
 package org.hibernate.validator.bugs;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Set;
+
+import org.hibernate.validator.testutil.TestForIssue;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
-import org.hibernate.validator.testutil.TestForIssue;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-public class YourTestCase {
+class YourTestCase {
 
 	private static Validator validator;
 
-	@BeforeClass
+	@BeforeAll
 	public static void setUp() {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
@@ -25,14 +26,15 @@ public class YourTestCase {
 
 	@Test
 	@TestForIssue(jiraKey = "HV-NNNNN") // Please fill in the JIRA key of your issue
-	public void testYourBug() {
+	void testYourBug() {
 		YourAnnotatedBean yourEntity1 = new YourAnnotatedBean( null, "example" );
 
 		Set<ConstraintViolation<YourAnnotatedBean>> constraintViolations = validator.validate( yourEntity1 );
 		assertEquals( 1, constraintViolations.size() );
 		assertEquals(
 				"must not be null",
-				constraintViolations.iterator().next().getMessage() );
+				constraintViolations.iterator().next().getMessage()
+		);
 	}
 
 }

@@ -8,11 +8,25 @@
 	<name>Hibernate Validator 6 Test Case Template</name>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<version.org.hibernate.validator>6.2.5.Final</version.org.hibernate.validator>
 		<version.javax.el>3.0.1-b12</version.javax.el>
-		<version.junit>4.13.2</version.junit>
-		<version.log4j>2.22.0</version.log4j>
+		<version.log4j>2.24.3</version.log4j>
+		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${version.junit-jupiter}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -33,9 +47,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${version.junit}</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 
@@ -52,7 +65,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.0</version>
+				<version>3.13.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>

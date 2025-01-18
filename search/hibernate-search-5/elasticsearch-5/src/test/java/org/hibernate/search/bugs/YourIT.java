@@ -1,6 +1,6 @@
 package org.hibernate.search.bugs;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -9,57 +9,37 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.hibernate.search.elasticsearch.ElasticsearchQueries;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.hibernate.search.query.engine.spi.QueryDescriptor;
-import org.hibernate.search.testsupport.TestForIssue;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class YourIT extends SearchTestBase {
 
 	@Override
 	public Class<?>[] getAnnotatedClasses() {
-		return new Class<?>[]{ YourAnnotatedEntity.class };
+		return new Class<?>[] { YourAnnotatedEntity.class };
 	}
 
 	@Test
-	@TestForIssue(jiraKey = "HSEARCH-NNNNN") // Please fill in the JIRA key of your issue
 	@SuppressWarnings("unchecked")
 	public void testYourBug() {
 		try ( Session s = getSessionFactory().openSession() ) {
-			YourAnnotatedEntity yourEntity1 = new YourAnnotatedEntity( 1L, "example" );
-			YourAnnotatedEntity yourEntity2 = new YourAnnotatedEntity( 2L, "test" );
-	
+			YourAnnotatedEntity yourEntity1 = new YourAnnotatedEntity( 1L, "Jane Smith" );
+			YourAnnotatedEntity yourEntity2 = new YourAnnotatedEntity( 2L, "John Doe" );
+
 			Transaction tx = s.beginTransaction();
 			s.persist( yourEntity1 );
 			s.persist( yourEntity2 );
 			tx.commit();
-	
-			FullTextSession session = Search.getFullTextSession( s );
-			QueryBuilder qb = session.getSearchFactory().buildQueryBuilder().forEntity( YourAnnotatedEntity.class ).get();
-			Query query = qb.keyword().onField( "name" ).matching( "example" ).createQuery();
-	
-			List<YourAnnotatedEntity> result = (List<YourAnnotatedEntity>) session.createFullTextQuery( query ).list();
-			assertEquals( 1, result.size() );
-			assertEquals( 1l, (long) result.get( 0 ).getId() );
 		}
-	}
 
-	@After
-	public void deleteTestData() {
 		try ( Session s = getSessionFactory().openSession() ) {
 			FullTextSession session = Search.getFullTextSession( s );
-			Transaction tx = s.beginTransaction();
-	
-			QueryDescriptor query = ElasticsearchQueries.fromJson( "{ 'query': { 'match_all' : {} } }" );
-			List<?> result = session.createFullTextQuery( query, YourAnnotatedEntity.class ).list();
-	
-			for ( Object entity : result ) {
-				session.delete( entity );
-			}
-	
-			tx.commit();
+			QueryBuilder qb = session.getSearchFactory().buildQueryBuilder().forEntity( YourAnnotatedEntity.class ).get();
+			Query query = qb.keyword().onField( "name" ).matching( "Jane Smith" ).createQuery();
+
+			List<YourAnnotatedEntity> result = (List<YourAnnotatedEntity>) session.createFullTextQuery( query ).list();
+			assertThat( result.size() ).isEqualTo( 1 );
+			assertThat( result.get( 0 ).getId() ).isEqualTo( 1L );
 		}
 	}
 
