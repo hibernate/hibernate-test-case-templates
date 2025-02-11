@@ -17,16 +17,16 @@ import java.util.Objects;
 import static org.hibernate.annotations.NotFoundAction.IGNORE;
 
 @Entity
-@Table(name = "ITEM")
-public class Item {
-    public Item() {
+@Table(name = "ITEM_WITH_IGNORE")
+public class ItemWithIgnore {
+    public ItemWithIgnore() {
     }
 
-    public Item(Long itemId) {
+    public ItemWithIgnore(Long itemId) {
         this.itemId = itemId;
     }
 
-    public Item(Long itemId, UnitReferenceCode unit) {
+    public ItemWithIgnore(Long itemId, UnitReferenceCode unit) {
         this.itemId = itemId;
         this.unit = unit;
     }
@@ -63,7 +63,7 @@ public class Item {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        final Item that = (Item) o;
+        final ItemWithIgnore that = (ItemWithIgnore) o;
         return Objects.equals(getItemId(), that.getItemId());
     }
 
