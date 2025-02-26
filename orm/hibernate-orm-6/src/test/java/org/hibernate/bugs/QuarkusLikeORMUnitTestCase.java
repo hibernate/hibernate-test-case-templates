@@ -15,6 +15,8 @@
  */
 package org.hibernate.bugs;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.hibernate.cfg.AvailableSettings;
 
 import org.hibernate.testing.bytecode.enhancement.CustomEnhancementContext;
@@ -34,9 +36,7 @@ import org.junit.jupiter.api.Test;
  */
 @DomainModel(
 		annotatedClasses = {
-				// Add your entities here, e.g.:
-				// Foo.class,
-				// Bar.class
+				MyEntity.class
 		}
 )
 @ServiceRegistry(
@@ -67,9 +67,24 @@ class QuarkusLikeORMUnitTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	void hhh123Test(SessionFactoryScope scope) throws Exception {
+	void hhh123Test(SessionFactoryScope scope) {
+		var entity = new MyEntity();
+		entity.setAnId( new MyEntityId( 1L ) );
+		entity.setData( "initial" );
+		var entityAfterFirstMerge = scope.fromTransaction( session -> {
+			return session.merge( entity );
+		} );
+
+		// This is unnecessary, but should be harmless... Unfortunately it causes dirty checking to misbehave.
+		entityAfterFirstMerge.setAnId( new MyEntityId( 1L ) );
+
 		scope.inTransaction( session -> {
-			// Do stuff...
+			entityAfterFirstMerge.setData( "updated" );
+			session.merge( entityAfterFirstMerge );
+		} );
+		scope.inTransaction( session -> {
+			var entityFromDb = session.find( MyEntity.class, new MyEntityId( 1L ) );
+			assertThat( entityFromDb.getData() ).isEqualTo( "updated" );
 		} );
 	}
 }
