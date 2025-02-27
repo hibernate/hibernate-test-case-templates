@@ -68,19 +68,18 @@ class QuarkusLikeORMUnitTestCase {
 	// Add your tests, using standard JUnit.
 	@Test
 	void hhh123Test(SessionFactoryScope scope) {
-		var entity = new MyEntity();
-		entity.setAnId( new MyEntityId( 1L ) );
-		entity.setData( "initial" );
-		var entityAfterFirstMerge = scope.fromTransaction( session -> {
-			return session.merge( entity );
-		} );
-
-		// This is unnecessary, but should be harmless... Unfortunately it causes dirty checking to misbehave.
-		entityAfterFirstMerge.setAnId( new MyEntityId( 1L ) );
-
 		scope.inTransaction( session -> {
-			entityAfterFirstMerge.setData( "updated" );
-			session.merge( entityAfterFirstMerge );
+			var entity = new MyEntity();
+			entity.setAnId( new MyEntityId( 1L ) );
+			entity.setData( "initial" );
+			session.persist( entity );
+
+			// This is unnecessary, but should be harmless...
+			// Unfortunately it causes dirty checking to misbehave.
+			// Comment it, and the test will pass.
+			entity.setAnId( new MyEntityId( 1L ) );
+
+			entity.setData( "updated" );
 		} );
 		scope.inTransaction( session -> {
 			var entityFromDb = session.find( MyEntity.class, new MyEntityId( 1L ) );
