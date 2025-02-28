@@ -32,6 +32,8 @@ class JPAUnitTestCase {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 		// Do stuff...
+
+
 		entityManager.getTransaction().commit();
 		entityManager.close();
 	}

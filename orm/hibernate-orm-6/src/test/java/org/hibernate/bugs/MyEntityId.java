@@ -6,34 +6,42 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class MyEntityId {
-	private long val;
+	private Long id;
+	private String subId; // 추가 필드
 
-	protected MyEntityId() {
+	public MyEntityId() {}
+
+	public MyEntityId(Long id, String subId) {
+		this.id = id;
+		this.subId = subId;
 	}
 
-	public MyEntityId(long val) {
-		this.val = val;
+	public Long getId() {
+		return id;
 	}
 
-	public long getVal() {
-		return val;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setVal(long val) {
-		this.val = val;
+	public String getSubId() {
+		return subId;
+	}
+
+	public void setSubId(String subId) {
+		this.subId = subId;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if ( o == null || getClass() != o.getClass() ) {
-			return false;
-		}
-		MyEntityId id = (MyEntityId) o;
-		return val == id.val;
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		MyEntityId that = (MyEntityId) o;
+		return Objects.equals(id, that.id) && Objects.equals(subId, that.subId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode( val );
+		return Objects.hash(id, subId);
 	}
 }

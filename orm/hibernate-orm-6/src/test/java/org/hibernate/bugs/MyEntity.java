@@ -5,9 +5,6 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class MyEntity {
-
-	// The name of this property must be (alphabetically) before the name of "data" to trigger the bug.
-	// Yes, it's weird.
 	@EmbeddedId
 	private MyEntityId anId;
 

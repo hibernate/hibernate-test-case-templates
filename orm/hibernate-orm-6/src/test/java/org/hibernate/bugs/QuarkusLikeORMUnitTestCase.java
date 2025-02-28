@@ -15,7 +15,8 @@
  */
 package org.hibernate.bugs;
 
-import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.hibernate.cfg.AvailableSettings;
 
@@ -67,24 +68,33 @@ class QuarkusLikeORMUnitTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	void hhh123Test(SessionFactoryScope scope) {
-		var entity = new MyEntity();
-		entity.setAnId( new MyEntityId( 1L ) );
-		entity.setData( "initial" );
-		var entityAfterFirstMerge = scope.fromTransaction( session -> {
-			return session.merge( entity );
-		} );
+	void hhh19212Test(SessionFactoryScope scope) {
 
-		// This is unnecessary, but should be harmless... Unfortunately it causes dirty checking to misbehave.
-		entityAfterFirstMerge.setAnId( new MyEntityId( 1L ) );
+		scope.inTransaction(session -> {
+			// Step 1: 엔티티 저장
+			var entity = new MyEntity();
+			entity.setAnId(new MyEntityId(1L, "A"));
+			entity.setData("initial");
+			session.persist(entity);
+		});
 
-		scope.inTransaction( session -> {
-			entityAfterFirstMerge.setData( "updated" );
-			session.merge( entityAfterFirstMerge );
-		} );
-		scope.inTransaction( session -> {
-			var entityFromDb = session.find( MyEntity.class, new MyEntityId( 1L ) );
-			assertThat( entityFromDb.getData() ).isEqualTo( "updated" );
-		} );
+		scope.inTransaction(session -> {
+			var entity = session.find(MyEntity.class, new MyEntityId(1L, "A"));
+			assertNotNull(entity);
+
+			entity.getAnId().setSubId("B");
+			entity.setData("updated");
+
+//			boolean isDirty = session.isDirty();
+//			assertTrue(isDirty,
+//				"Dirty checking should detect changes in @EmbeddedId.subId, but it does not.");
+		});
+
+		scope.inTransaction(session -> {
+			var entity = session.find(MyEntity.class, new MyEntityId(1L, "B"));
+			assertNotNull(entity);
+			assertEquals("updated", entity.getData(),
+				"Update should be persisted in the database.");
+		});
 	}
 }
