@@ -50,3 +50,5 @@ updates:
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.elasticsearch.*:*"
         update-types: [ "version-update:semver-major" ]
+      - dependency-name: "org.junit*:*"
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
