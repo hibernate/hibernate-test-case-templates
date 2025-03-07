@@ -1,8 +1,8 @@
 package org.hibernate.search.bugs;
 
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.DocumentId;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import jakarta.persistence.Transient;
+import org.hibernate.search.engine.backend.types.ObjectStructure;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.*;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,12 +18,18 @@ public class YourAnnotatedEntity {
 	@FullTextField(analyzer = "nameAnalyzer")
 	private String name;
 
+	@Transient
+	@IndexedEmbedded(structure = ObjectStructure.NESTED)
+	@IndexingDependency(derivedFrom = @ObjectPath(@PropertyValue(propertyName = "name")))
+	private Height height;
+
 	protected YourAnnotatedEntity() {
 	}
 
-	public YourAnnotatedEntity(Long id, String name) {
+	public YourAnnotatedEntity(Long id, String name, Long heightValue) {
 		this.id = id;
 		this.name = name;
+		this.height = new Height(heightValue);
 	}
 
 	public Long getId() {
@@ -38,4 +44,7 @@ public class YourAnnotatedEntity {
 		this.name = name;
 	}
 
+	public Height getHeight() {
+		return height;
+	}
 }
