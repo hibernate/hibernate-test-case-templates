@@ -21,8 +21,8 @@ public class YourIT extends SearchTestBase {
 	@Test
 	public void testYourBug() {
 		try ( Session s = getSessionFactory().openSession() ) {
-			YourAnnotatedEntity yourEntity1 = new YourAnnotatedEntity( 1L, "Jane Smith" );
-			YourAnnotatedEntity yourEntity2 = new YourAnnotatedEntity( 2L, "John Doe" );
+			YourAnnotatedEntity yourEntity1 = new YourAnnotatedEntity( 1L, "Jane Smith", null );
+			YourAnnotatedEntity yourEntity2 = new YourAnnotatedEntity( 2L, "John Smith", 100L );
 
 			Transaction tx = s.beginTransaction();
 			s.persist( yourEntity1 );
@@ -35,7 +35,8 @@ public class YourIT extends SearchTestBase {
 
 			List<YourAnnotatedEntity> hits = searchSession.search( YourAnnotatedEntity.class )
 					.where( f -> f.match().field( "name" ).matching( "smith" ) )
-					.fetchHits( 20 );
+					.sort(s -> s.field("height.value").asc().missing().lowest())
+					.fetchHits( 0, 1);
 
 			assertThat( hits )
 					.hasSize( 1 )
