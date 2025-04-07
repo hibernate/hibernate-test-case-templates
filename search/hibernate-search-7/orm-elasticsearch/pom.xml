@@ -9,7 +9,7 @@
 
 	<properties>
 		<version.org.hibernate.search>7.2.3.Final</version.org.hibernate.search>
-		<version.org.hibernate.orm>6.6.12.Final</version.org.hibernate.orm>
+		<version.org.hibernate.orm>6.6.13.Final</version.org.hibernate.orm>
 		<!-- Once ORM upgrade JBoss Logging to 3.6+ this can be removed -->
 		<version.jboss-logging>3.6.1.Final</version.jboss-logging>
 
