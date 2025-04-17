@@ -55,6 +55,7 @@ import org.junit.jupiter.api.Test;
 				@Setting(name = AvailableSettings.DEFAULT_NULL_ORDERING, value = "none"),
 				@Setting(name = AvailableSettings.IN_CLAUSE_PARAMETER_PADDING, value = "true"),
 				@Setting(name = AvailableSettings.SEQUENCE_INCREMENT_SIZE_MISMATCH_STRATEGY, value = "none"),
+				@Setting(name = AvailableSettings.ORDER_UPDATES, value = "true"),
 
 				// Add your own settings that are a part of your quarkus configuration:
 				// @Setting( name = AvailableSettings.SOME_CONFIGURATION_PROPERTY, value = "SOME_VALUE" ),
