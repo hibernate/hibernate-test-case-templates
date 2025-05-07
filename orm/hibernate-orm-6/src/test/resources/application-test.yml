@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:tests;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    hikari:
+      poolName: HikariPool-default
+    driver-class-name: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+      jakarta.persistence.schema-generation.database.action: drop-and-create
+    generate-ddl: true
+    hibernate:
+    # ignored due to two connection pools, replaced by spring.jpa.properties.jakarta.persistence.schema-generation.database.action
+    # ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  main:
+    allow-bean-definition-overriding: true
+
