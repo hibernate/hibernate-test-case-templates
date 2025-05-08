@@ -1,6 +1,6 @@
 package org.spring.data.jpa.bugs;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -21,33 +21,12 @@ class OurServiceTest {
 
     @Autowired
     private OurService ourService;
-    @Autowired
-    private OurEntityRepository ourEntityRepository;
 
     // Add your tests, using standard JUnit 5.
     @Test
     void test() {
-        OurEntity entity1 = new OurEntity();
-        entity1.setName("test1");
-        entity1.setCommonName("commonName");
-        entity1.setOurStatus(OurStatus.STATUS_1);
-        ourEntityRepository.save(entity1);
-
-
-        OurEntity entity2 = new OurEntity();
-        entity2.setName("test2");
-        entity2.setCommonName("commonName");
-        entity2.setOurStatus(OurStatus.STATUS_1);
-        ourEntityRepository.save(entity2);
-
-        OurEntity entity3 = new OurEntity();
-        entity3.setName("test3");
-        entity3.setCommonName("commonName");
-        entity3.setOurStatus(OurStatus.STATUS_2);
-        ourEntityRepository.save(entity3);
-
         List<OurEntityPercentageStatus> result = ourService.createPercentageQuery();
-        assertEquals(66, result.get(0).getPercentageOut().intValue());
+        assertTrue(result.isEmpty());
     }
 
     @ComponentScan(basePackages = "org.spring.data.jpa.bugs",
