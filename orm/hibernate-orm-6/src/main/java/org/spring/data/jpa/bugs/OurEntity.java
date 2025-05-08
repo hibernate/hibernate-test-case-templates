@@ -2,6 +2,8 @@ package org.spring.data.jpa.bugs;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +21,7 @@ public class OurEntity {
 
     @Column(name = "common_name")
     private String commonName;
+    @Enumerated( EnumType.ORDINAL )
     @Column(name = "our_status")
     private OurStatus ourStatus;
 
