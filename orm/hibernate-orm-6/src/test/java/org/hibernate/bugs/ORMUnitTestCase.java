@@ -70,7 +70,7 @@ class ORMUnitTestCase {
 
 	// Add your tests, using standard JUnit 5.
 	@Test
-	void hhh123Test(SessionFactoryScope scope) throws Exception {
+	void hhh19457Test(SessionFactoryScope scope) throws Exception {
 		scope.inTransaction( s -> {
 			// Do stuff...
 			EntityRelation entityRelation = new EntityRelation();
