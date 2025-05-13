@@ -16,7 +16,7 @@
 package org.hibernate.bugs;
 
 import org.hibernate.bugs.entities.EntityChildOne;
-import org.hibernate.bugs.entities.EntityChildTwoSameDiscriminator;
+import org.hibernate.bugs.entities.EntityChildTwoSameTable;
 import org.hibernate.bugs.entities.EntityParent;
 import org.hibernate.bugs.entities.EntityRelation;
 import org.hibernate.cfg.AvailableSettings;
@@ -41,7 +41,7 @@ import org.junit.jupiter.api.Test;
 @DomainModel(
 	annotatedClasses = {
 		// Add your entities here.
-		EntityChildTwoSameDiscriminator.class,
+		EntityChildTwoSameTable.class,
 		EntityParent.class,
 		EntityChildOne.class,
 		EntityRelation.class
@@ -83,7 +83,7 @@ class ORMUnitTestCase {
 			entityChildOne.setIdRelation("idRelation1");
 			s.save(entityChildOne);
 
-			EntityChildTwoSameDiscriminator entityChildTwo = new EntityChildTwoSameDiscriminator();
+			EntityChildTwoSameTable entityChildTwo = new EntityChildTwoSameTable();
 			entityChildTwo.setId("idChild2");
 			entityChildTwo.setChildTwoName("nameChild2");
 			entityChildTwo.setIdRelation("idRelation1");

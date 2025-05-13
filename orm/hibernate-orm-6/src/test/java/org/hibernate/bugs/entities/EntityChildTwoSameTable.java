@@ -1,14 +1,15 @@
+
 package org.hibernate.bugs.entities;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "CHILD")
 @DiscriminatorValue("24")
-public class EntityChildTwoSameDiscriminator extends EntityParent {
+public class EntityChildTwoSameTable extends EntityParent {
 
     @Column(name = "child_two_name")
     private String childTwoName;
