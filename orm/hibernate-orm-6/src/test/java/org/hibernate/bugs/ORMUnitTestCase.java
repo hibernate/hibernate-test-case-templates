@@ -35,9 +35,7 @@ import org.junit.jupiter.api.Test;
  */
 @DomainModel(
 		annotatedClasses = {
-				// Add your entities here.
-				// Foo.class,
-				// Bar.class
+				Person.class
 		},
 		// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
 		xmlMappings = {
@@ -63,7 +61,8 @@ class ORMUnitTestCase {
 	// Add your tests, using standard JUnit 5.
 	@Test
 	void hhh123Test(SessionFactoryScope scope) throws Exception {
-		scope.inTransaction( session -> {
+		scope.inStatelessTransaction( session -> {
+			var repo = new PersonRepository_( session );
 			// Do stuff...
 		} );
 	}

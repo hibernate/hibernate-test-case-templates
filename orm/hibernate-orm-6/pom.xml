@@ -43,7 +43,11 @@
 			<artifactId>h2</artifactId>
 			<version>${version.com.h2database}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>jakarta.data</groupId>
+			<artifactId>jakarta.data-api</artifactId>
+			<version>1.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-testing</artifactId>
@@ -80,6 +84,13 @@
 				<version>3.14.0</version>
 				<configuration>
 					<release>11</release>
+					<parameters>true</parameters>
+					<annotationProcessorPaths>
+						<annotationProcessorPath>
+							<groupId>org.hibernate.orm</groupId>
+							<artifactId>hibernate-jpamodelgen</artifactId>
+						</annotationProcessorPath>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 			<plugin>
