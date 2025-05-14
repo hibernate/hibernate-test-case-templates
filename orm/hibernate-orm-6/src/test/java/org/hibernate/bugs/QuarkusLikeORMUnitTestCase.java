@@ -50,7 +50,6 @@ import org.junit.jupiter.api.Test;
 				// Other settings that will make your test case run under similar configuration that Quarkus is using by default:
 				@Setting(name = AvailableSettings.PREFERRED_POOLED_OPTIMIZER, value = "pooled-lo"),
 				@Setting(name = AvailableSettings.DEFAULT_BATCH_FETCH_SIZE, value = "16"),
-				@Setting(name = AvailableSettings.BATCH_FETCH_STYLE, value = "PADDED"),
 				@Setting(name = AvailableSettings.QUERY_PLAN_CACHE_MAX_SIZE, value = "2048"),
 				@Setting(name = AvailableSettings.DEFAULT_NULL_ORDERING, value = "none"),
 				@Setting(name = AvailableSettings.IN_CLAUSE_PARAMETER_PADDING, value = "true"),
