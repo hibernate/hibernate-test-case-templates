@@ -13,7 +13,7 @@
 		<version.org.hibernate.validator>6.2.5.Final</version.org.hibernate.validator>
 		<version.javax.el>3.0.1-b12</version.javax.el>
 		<version.log4j>2.24.3</version.log4j>
-		<version.junit-jupiter>5.11.4</version.junit-jupiter>
+		<version.junit-jupiter>5.12.2</version.junit-jupiter>
 	</properties>
 
 	<dependencyManagement>
