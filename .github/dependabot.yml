@@ -21,6 +21,12 @@ updates:
       reactive:
         patterns:
           - "org.hibernate.reactive:*"
+      reactive-dependencies-jdbc:
+        patterns:
+          - "com.mysql:mysql-connector-j"
+          - "org.mariadb.jdbc:mariadb-java-client"
+          - "com.ibm.db2:jcc"
+          - "com.microsoft.sqlserver:mssql-jdbc"
       maven-plugins:
         patterns:
           - "*maven*plugin*"
@@ -49,4 +55,7 @@ updates:
       - dependency-name: "org.elasticsearch:*"
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.elasticsearch.*:*"
+        update-types: [ "version-update:semver-major" ]
+      # Major versions of vertx will (most likely) require a new version of Reactive, so will be updated "manually":
+      - dependency-name: "io.vertx:*"
         update-types: [ "version-update:semver-major" ]
