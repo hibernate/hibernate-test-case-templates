@@ -23,5 +23,7 @@
     <module>validator/validator-8</module>
     <module>validator/validator-9</module>
     <module>reactive/hibernate-reactive-2</module>
+    <module>reactive/hibernate-reactive-3</module>
+    <module>reactive/hibernate-reactive-4</module>
   </modules>
 </project>
