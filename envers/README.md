@@ -6,5 +6,5 @@ This repo contains test case templates, useful for reporting bugs against Hibern
 that is required is your entities, logic, and any necessary settings.  Since we nearly always include a regression
 test with bug fixes, providing your reproducer using this class simplifies that process.  We can then directly add
 it, without having to mold it into our existing framework.  You're also welcomed to fork hibernate-orm itself, add
-your test case direectly to the Enver's module test cases (using the template class), then submit it as a pull 
+your test case directly to the Enver's module test cases (using the template class), then submit it as a pull 
 request.
