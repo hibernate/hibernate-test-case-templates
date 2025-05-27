@@ -11,8 +11,10 @@
   <modules>
     <module>orm/hibernate-orm-5</module>
     <module>orm/hibernate-orm-6</module>
+    <module>orm/hibernate-orm-7</module>
     <module>envers/envers-5</module>
     <module>envers/envers-6</module>
+    <module>envers/envers-7</module>
     <module>search/hibernate-search-5/elasticsearch-5</module>
     <module>search/hibernate-search-5/lucene</module>
     <module>search/hibernate-search-6/orm-elasticsearch</module>
