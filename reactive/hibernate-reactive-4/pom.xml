@@ -8,7 +8,7 @@
     <name>Hibernate Reactive 4 Test Case Template</name>
 
     <properties>
-        <version.junit-jupiter>5.11.4</version.junit-jupiter>
+        <version.junit-jupiter>5.13.0</version.junit-jupiter>
         <version.org.hibernate.reactive>4.0.0.Beta1</version.org.hibernate.reactive>
         <version.org.assertj.assertj-core>3.27.3</version.org.assertj.assertj-core>
         <version.io.vertx.vertx-sql-client>5.0.0</version.io.vertx.vertx-sql-client>
