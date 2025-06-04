@@ -89,12 +89,16 @@
 				<executions>
 					<execution>
 						<configuration>
-							<base>${project.build.testOutputDirectory}</base>
-							<dir>${project.build.testOutputDirectory}</dir>
+							<!-- Adjust the default configuration to your needs: -->
 							<enableAssociationManagement>false</enableAssociationManagement>
-							<enableDirtyTracking>false</enableDirtyTracking>
 							<enableExtendedEnhancement>false</enableExtendedEnhancement>
+							<enableDirtyTracking>false</enableDirtyTracking>
 							<enableLazyInitialization>false</enableLazyInitialization>
+							<fileSets>
+								<fileSet>
+									<directory>${project.build.testOutputDirectory}</directory>
+								</fileSet>
+							</fileSets>
 						</configuration>
 						<phase>test-compile</phase>
 						<goals>
