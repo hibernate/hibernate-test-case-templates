@@ -15,6 +15,7 @@
  */
 package org.hibernate.bugs;
 
+import org.hibernate.bugs.domain.model.Instrument;
 import org.hibernate.cfg.AvailableSettings;
 
 import org.hibernate.testing.orm.junit.DomainModel;
@@ -23,6 +24,8 @@ import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -36,8 +39,7 @@ import org.junit.jupiter.api.Test;
 @DomainModel(
 		annotatedClasses = {
 				// Add your entities here.
-				// Foo.class,
-				// Bar.class
+				Instrument.class
 		},
 		// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
 		xmlMappings = {
@@ -62,9 +64,10 @@ class ORMUnitTestCase {
 
 	// Add your tests, using standard JUnit 5.
 	@Test
-	void hhh123Test(SessionFactoryScope scope) throws Exception {
+	void hhh19542Test(SessionFactoryScope scope) throws Exception {
 		scope.inTransaction( session -> {
-			// Do stuff...
+			List<Instrument> instruments = session.createQuery("from Instrument ").list();
+			System.out.println(instruments);
 		} );
 	}
 }
