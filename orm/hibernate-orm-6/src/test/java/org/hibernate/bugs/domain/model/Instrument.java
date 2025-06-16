@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "INSTRUMENT")
+@DiscriminatorColumn(name = "INSTRUMENT_TYPE")
 @SecondaryTable(name = "INSTRUMENT_CREDIT_DERIVATIVE", pkJoinColumns = @PrimaryKeyJoinColumn(name = "INSTRUMENT_ID", referencedColumnName = "ID"))
 public abstract class Instrument {
 
@@ -30,4 +31,14 @@ public abstract class Instrument {
     @CollectionTable(name = "INSTRUMENT_LINE", joinColumns = @JoinColumn(name = "INSTRUMENT_ID", referencedColumnName = "ID"))
     private List<InstrumentLine> instrumentLines;
 
+    protected Instrument(final InstrumentCode instrumentCode, final String category, final String description, final List<InstrumentLine> instrumentLines) {
+        this.instrumentCode = instrumentCode;
+        this.category = category;
+        this.description = description;
+        this.instrumentLines = instrumentLines;
+    }
+
+    protected Instrument() {
+
+    }
 }

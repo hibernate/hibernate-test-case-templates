@@ -6,11 +6,11 @@ public record InstrumentData(
         String code,
         String category,
         String description,
-        List<InstrumentLine> lineKeys) {
+        List<LineKeyData> lineKeys) {
 
-    record InstrumentLine(
+    public record LineKeyData(
             String id,
-            String countryCode,
+            String currencyCode,
             String description) {
 
     }

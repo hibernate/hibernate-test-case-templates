@@ -12,15 +12,9 @@ import java.util.List;
 
 public class InstrumentQueryService {
 
-    private final Session session;
-
-    public InstrumentQueryService(final Session session) {
-        this.session = session;
-    }
-
     @Transactional
-    public List<Instrument> allInstruments() {
-        return this.session.createQuery("""
+    public List<InstrumentData> allInstruments(final Session session) {
+        return session.createQuery("""
             select instrument.instrumentCode.id as code,
                    instrument.category as category,
                    instrument.description as description,
