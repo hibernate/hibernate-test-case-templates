@@ -9,7 +9,7 @@
 
 	<properties>
 		<version.org.hibernate.search>8.0.0.Final</version.org.hibernate.search>
-		<version.org.hibernate.orm>7.0.2.Final</version.org.hibernate.orm>
+		<version.org.hibernate.orm7>7.0.2.Final</version.org.hibernate.orm7>
 
 		<version.com.h2database>2.3.232</version.com.h2database>
 		<version.junit-jupiter>5.12.2</version.junit-jupiter>
@@ -46,7 +46,7 @@
 			<dependency>
 				<groupId>org.hibernate.orm</groupId>
 				<artifactId>hibernate-platform</artifactId>
-				<version>${version.org.hibernate.orm}</version>
+				<version>${version.org.hibernate.orm7}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
