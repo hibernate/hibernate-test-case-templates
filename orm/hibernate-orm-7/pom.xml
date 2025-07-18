@@ -38,6 +38,14 @@
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
+		<!--
+			Need to have a dependency on scanner if we want to rely on automatic entity discovery in tests,
+			JPAUnitTestCase in particular:
+		 -->
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-scan-jandex</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
