@@ -10,7 +10,8 @@
     <properties>
         <version.com.h2database>2.3.232</version.com.h2database>
         <version.junit>4.13.2</version.junit>
-        <version.org.hibernate.orm7>7.0.6.Final</version.org.hibernate.orm7>
+        <version.org.hibernate.orm7>7.0.8.Final</version.org.hibernate.orm7>
+        <version.junit-jupiter>5.13.4</version.junit-jupiter>
     </properties>
 
     <dependencyManagement>
@@ -19,6 +20,13 @@
                 <groupId>org.hibernate.orm</groupId>
                 <artifactId>hibernate-platform</artifactId>
                 <version>${version.org.hibernate.orm7}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${version.junit-jupiter}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
