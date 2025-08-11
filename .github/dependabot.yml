@@ -5,10 +5,6 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      quarkus:
-        patterns:
-          - "io.quarkus*"
-          - "io.quarkiverse*"
       orm:
         patterns:
           - "org.hibernate.orm*:*"
