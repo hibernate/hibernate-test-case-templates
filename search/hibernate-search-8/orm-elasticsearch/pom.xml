@@ -8,7 +8,7 @@
 	<name>Hibernate Search 8 with Hibernate ORM and Elasticsearch Test Case Template</name>
 
 	<properties>
-		<version.org.hibernate.search>8.0.0.Final</version.org.hibernate.search>
+		<version.org.hibernate.search8>8.0.0.Final</version.org.hibernate.search8>
 		<version.org.hibernate.orm7>7.1.0.Final</version.org.hibernate.orm7>
 
 		<version.com.h2database>2.3.232</version.com.h2database>
@@ -39,7 +39,7 @@
 			<dependency>
 				<groupId>org.hibernate.search</groupId>
 				<artifactId>hibernate-search-bom</artifactId>
-				<version>${version.org.hibernate.search}</version>
+				<version>${version.org.hibernate.search8}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

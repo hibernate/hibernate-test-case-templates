@@ -10,7 +10,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<version.org.hibernate.validator>9.0.0.Final</version.org.hibernate.validator>
+		<version.org.hibernate.validator9>9.0.0.Final</version.org.hibernate.validator9>
 		<version.org.glassfish.expressly>6.0.0</version.org.glassfish.expressly>
 		<version.log4j>2.25.1</version.log4j>
 		<version.assertj-core>3.27.4</version.assertj-core>
@@ -33,12 +33,12 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>${version.org.hibernate.validator}</version>
+			<version>${version.org.hibernate.validator9}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator-test-utils</artifactId>
-			<version>${version.org.hibernate.validator}</version>
+			<version>${version.org.hibernate.validator9}</version>
 		</dependency>
 
 		<dependency>
