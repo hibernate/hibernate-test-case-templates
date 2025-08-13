@@ -11,7 +11,7 @@ class SearchBackendContainer implements Closeable {
 
 	private static final DockerImageName ELASTICSEARCH_IMAGE_NAME =
 			DockerImageName.parse( "docker.elastic.co/elasticsearch/elasticsearch" )
-					.withTag( "8.11.0" );
+					.withTag( "9.1.2" );
 
 	private ElasticsearchContainer elasticsearchContainer;
 
