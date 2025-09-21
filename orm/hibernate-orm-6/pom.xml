@@ -39,11 +39,10 @@
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>${version.com.h2database}</version>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.6.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-testing</artifactId>

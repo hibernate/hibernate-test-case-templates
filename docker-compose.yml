@@ -1,0 +1,29 @@
+services:
+
+    postgres2:
+        container_name: postgres2
+        hostname: postgres2
+        image: postgres:15.4
+        environment:
+            POSTGRES_PASSWORD: 'password'
+            POSTGRES_USER: 'db_user'
+            POSTGRES_DB: 'database'
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres2:/var/lib/postgresql/data
+        restart: always
+
+    migrations:
+        image: flyway/flyway:9.16-alpine
+        platform: linux/amd64
+        container_name: migrations
+        hostname: migrations
+        command: -url=jdbc:postgresql://postgres2:5432/database -user=db_user -password=password migrate
+        depends_on:
+            - postgres2
+        volumes:
+            - ./migrations/:/flyway/sql/
+
+volumes:
+    postgres2:
