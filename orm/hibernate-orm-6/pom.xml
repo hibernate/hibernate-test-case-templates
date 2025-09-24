@@ -8,7 +8,7 @@
 	<name>Hibernate ORM 6 Test Case Template</name>
 
 	<properties>
-		<version.com.h2database>2.3.232</version.com.h2database>
+		<version.com.h2database>2.4.240</version.com.h2database>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 		<version.org.hibernate.orm>6.6.29.Final</version.org.hibernate.orm>
 		<version.org.assertj.assertj-core>3.27.6</version.org.assertj.assertj-core>

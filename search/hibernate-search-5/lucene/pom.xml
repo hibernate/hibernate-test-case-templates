@@ -11,7 +11,7 @@
 		<version.org.hibernate.search>5.11.12.Final</version.org.hibernate.search>
 		<version.org.hibernate>5.4.33</version.org.hibernate>
 
-		<version.com.h2database>2.3.232</version.com.h2database>
+		<version.com.h2database>2.4.240</version.com.h2database>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 		<version.org.assertj.assertj-core>3.27.6</version.org.assertj.assertj-core>
 
