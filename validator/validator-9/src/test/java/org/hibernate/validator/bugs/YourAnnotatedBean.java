@@ -1,32 +1,10 @@
 package org.hibernate.validator.bugs;
 
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
+import org.hibernate.validator.group.GroupSequenceProvider;
 
-public class YourAnnotatedBean {
-
-	@NotNull
-	private Long id;
-
-	private String name;
-
-	protected YourAnnotatedBean() {
-	}
-
-	public YourAnnotatedBean(Long id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+@GroupSequenceProvider(value = YourAnnotatedBeanGroupSequenceProvider.class)
+public record YourAnnotatedBean(@NotNull(groups = Enabled.class) Long id, boolean enabled, @NotNull(groups = Enabled.class) List<String> labels) {
 
 }
