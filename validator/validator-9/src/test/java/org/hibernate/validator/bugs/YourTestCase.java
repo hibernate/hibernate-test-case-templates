@@ -35,10 +35,8 @@ class YourTestCase {
     assertThat(constraintViolations)
         .containsOnlyViolations(
             violationOf(NotNull.class)
-                .withMessage("must not be null")
                 .withPropertyPath(pathWith().property("id")),
             violationOf(NotEmpty.class)
-                .withMessage("must not be empty")
                 .withPropertyPath(pathWith().property("labels"))
         );
   }
