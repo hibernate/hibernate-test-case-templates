@@ -13,26 +13,27 @@ import jakarta.persistence.Persistence;
  */
 class JPAUnitTestCase {
 
-	private EntityManagerFactory entityManagerFactory;
+    private EntityManagerFactory entityManagerFactory;
 
-	@BeforeEach
-	void init() {
-		entityManagerFactory = Persistence.createEntityManagerFactory( "templatePU" );
-	}
+    @BeforeEach
+    void init() {
+        entityManagerFactory = Persistence.createEntityManagerFactory("templatePU");
+    }
 
-	@AfterEach
-	void destroy() {
-		entityManagerFactory.close();
-	}
+    @AfterEach
+    void destroy() {
+        entityManagerFactory.close();
+    }
 
-	// Entities are auto-discovered, so just add them anywhere on class-path
-	// Add your tests, using standard JUnit.
-	@Test
-	void hhh123Test() throws Exception {
-		EntityManager entityManager = entityManagerFactory.createEntityManager();
-		entityManager.getTransaction().begin();
-		// Do stuff...
-		entityManager.getTransaction().commit();
-		entityManager.close();
-	}
+    // Entities are auto-discovered, so just add them anywhere on class-path
+    // Add your tests, using standard JUnit.
+    @Test
+    void hhh123Test() throws Exception {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        // Do stuff...
+        A a = entityManager.find(A.class, 1L);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
 }
