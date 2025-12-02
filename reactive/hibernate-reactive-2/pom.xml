@@ -12,7 +12,7 @@
         <version.org.hibernate.reactive>2.4.8.Final</version.org.hibernate.reactive>
         <version.org.assertj.assertj-core>3.27.6</version.org.assertj.assertj-core>
         <version.io.vertx.vertx-sql-client>4.5.22</version.io.vertx.vertx-sql-client>
-        <version.org.testcontainers>2.0.1</version.org.testcontainers>
+        <version.org.testcontainers>2.0.2</version.org.testcontainers>
     </properties>
 
     <dependencyManagement>
