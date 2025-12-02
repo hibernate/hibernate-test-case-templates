@@ -16,7 +16,7 @@
 		<version.com.h2database>2.4.240</version.com.h2database>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 		<version.org.assertj.assertj-core>3.27.6</version.org.assertj.assertj-core>
-		<version.org.testcontainers>2.0.1</version.org.testcontainers>
+		<version.org.testcontainers>2.0.2</version.org.testcontainers>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
