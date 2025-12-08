@@ -31,8 +31,29 @@ class JPAUnitTestCase {
 	void hhh123Test() throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
-		// Do stuff...
-		entityManager.getTransaction().commit();
-		entityManager.close();
-	}
+
+    Parent parent = new Parent();
+    entityManager.persist(parent);
+
+    Child child = new Child().setParent(parent);
+    entityManager.persist(child);
+
+    entityManager.getTransaction().commit();
+    entityManager.close();
+
+    // LOAD ------------------------------------------------------------------
+    EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+    entityManager2.getTransaction().begin();
+
+    Child loaded = entityManager2.find(Child.class, child.getId());
+
+    System.out.println();
+
+    Parent loadedParent = loaded.getParent();
+    System.out.println(loadedParent.getId());
+
+    entityManager2.getTransaction().commit();
+
+    entityManager2.close();
+  }
 }
