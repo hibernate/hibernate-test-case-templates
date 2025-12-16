@@ -9,7 +9,7 @@
 
 	<properties>
 		<version.com.h2database>2.4.240</version.com.h2database>
-		<version.junit-jupiter>5.12.2</version.junit-jupiter>
+		<version.junit-jupiter>6.0.1</version.junit-jupiter>
 		<version.org.hibernate.orm7>7.2.0.Final</version.org.hibernate.orm7>
 		<version.org.assertj.assertj-core>3.27.6</version.org.assertj.assertj-core>
 	</properties>
@@ -115,6 +115,26 @@
 					</execution>
 				</executions>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.4</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <hibernate.testing.bytecode.enhancement.extension.engine.enabled>true</hibernate.testing.bytecode.enhancement.extension.engine.enabled>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.5.4</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <hibernate.testing.bytecode.enhancement.extension.engine.enabled>true</hibernate.testing.bytecode.enhancement.extension.engine.enabled>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 </project>
