@@ -12,7 +12,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<version.org.hibernate.validator8>8.0.3.Final</version.org.hibernate.validator8>
 		<version.org.glassfish.expressly>5.0.0</version.org.glassfish.expressly>
-		<version.log4j>2.25.2</version.log4j>
+		<version.log4j>2.25.3</version.log4j>
 		<version.junit-jupiter>5.13.4</version.junit-jupiter>
 	</properties>
 
