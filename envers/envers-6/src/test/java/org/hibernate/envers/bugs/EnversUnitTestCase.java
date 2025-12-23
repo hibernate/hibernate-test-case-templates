@@ -6,9 +6,13 @@
  */
 package org.hibernate.envers.bugs;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.envers.AuditReader;
+
+import com.example.domain.Pet;
 import org.junit.Test;
 
 /**
@@ -21,23 +25,8 @@ public class EnversUnitTestCase extends AbstractEnversTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+			    Pet.class,
 		};
-	}
-
-	// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
-	@Override
-	protected String[] getMappings() {
-		return new String[] {
-//				"Foo.hbm.xml",
-//				"Bar.hbm.xml"
-		};
-	}
-	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
-	@Override
-	protected String getBaseForMappings() {
-		return "org/hibernate/test/";
 	}
 
 	// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
@@ -52,8 +41,18 @@ public class EnversUnitTestCase extends AbstractEnversTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
-		AuditReader reader = getAuditReader();
-		// Do stuff...
+	public void hhh17484Test() throws Exception {
+		Session s = openSession();
+		Transaction tx = s.beginTransaction();
+
+		final Pet pet = new Pet();
+		pet.setDescription("Meet Whiskers, the enigmatic feline wizard with emerald eyes and a sleek obsidian coat " +
+			"adorned with silver constellations. This magical cat enchants with a purr that sparkles like stardust, " +
+			"whisking you away to whimsical realms where dreams and reality entwine in a symphony of enchantment.");
+
+		s.persist( pet );
+
+		tx.commit();
+		s.close();
 	}
 }
