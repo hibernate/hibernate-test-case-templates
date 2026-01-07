@@ -11,7 +11,7 @@
         <version.junit-jupiter>5.11.4</version.junit-jupiter>
         <version.org.hibernate.reactive>2.4.8.Final</version.org.hibernate.reactive>
         <version.org.assertj.assertj-core>3.27.6</version.org.assertj.assertj-core>
-        <version.io.vertx.vertx-sql-client>4.5.22</version.io.vertx.vertx-sql-client>
+        <version.io.vertx.vertx-sql-client>4.5.23</version.io.vertx.vertx-sql-client>
         <version.org.testcontainers>2.0.3</version.org.testcontainers>
     </properties>
 
