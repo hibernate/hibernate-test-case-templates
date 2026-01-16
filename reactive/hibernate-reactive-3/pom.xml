@@ -9,7 +9,7 @@
 
     <properties>
         <version.junit-jupiter>5.11.4</version.junit-jupiter>
-        <version.org.hibernate.reactive>3.0.0.Final</version.org.hibernate.reactive>
+        <version.org.hibernate.reactive3>3.2.1.Final</version.org.hibernate.reactive3>
         <version.org.assertj.assertj-core>3.27.6</version.org.assertj.assertj-core>
         <version.io.vertx.vertx-sql-client>4.5.22</version.io.vertx.vertx-sql-client>
         <version.org.testcontainers>2.0.3</version.org.testcontainers>
@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.hibernate.reactive</groupId>
             <artifactId>hibernate-reactive-core</artifactId>
-            <version>${version.org.hibernate.reactive}</version>
+            <version>${version.org.hibernate.reactive3}</version>
         </dependency>
 
         <!-- PostgreSQL -->
