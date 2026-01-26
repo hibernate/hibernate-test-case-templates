@@ -11,7 +11,7 @@
 		<version.org.hibernate.search7>7.2.5.Final</version.org.hibernate.search7>
 		<version.org.hibernate.orm>6.6.41.Final</version.org.hibernate.orm>
 		<!-- Once ORM upgrade JBoss Logging to 3.6+ this can be removed -->
-		<version.jboss-logging>3.6.1.Final</version.jboss-logging>
+		<version.jboss-logging>3.6.2.Final</version.jboss-logging>
 
 		<version.com.h2database>2.4.240</version.com.h2database>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
