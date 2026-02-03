@@ -9,7 +9,7 @@
 
 	<properties>
 		<version.org.hibernate.search8>8.2.0.Final</version.org.hibernate.search8>
-		<version.org.hibernate.orm7>7.2.2.Final</version.org.hibernate.orm7>
+		<version.org.hibernate.orm7>7.2.3.Final</version.org.hibernate.orm7>
 
 		<version.com.h2database>2.4.240</version.com.h2database>
 		<version.junit-jupiter>6.0.1</version.junit-jupiter>
