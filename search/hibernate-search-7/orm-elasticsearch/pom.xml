@@ -8,7 +8,7 @@
 	<name>Hibernate Search 7 with Hibernate ORM and Elasticsearch Test Case Template</name>
 
 	<properties>
-		<version.org.hibernate.search7>7.2.5.Final</version.org.hibernate.search7>
+		<version.org.hibernate.search7>7.2.6.Final</version.org.hibernate.search7>
 		<version.org.hibernate.orm>6.6.42.Final</version.org.hibernate.orm>
 		<!-- Once ORM upgrade JBoss Logging to 3.6+ this can be removed -->
 		<version.jboss-logging>3.6.2.Final</version.jboss-logging>
