@@ -8,7 +8,7 @@
 	<name>Hibernate Search 6 with Hibernate ORM and Elasticsearch Test Case Template</name>
 
 	<properties>
-		<version.org.hibernate.search>6.2.4.Final</version.org.hibernate.search>
+		<version.org.hibernate.search>6.2.5.Final</version.org.hibernate.search>
 		<version.org.hibernate>5.6.15.Final</version.org.hibernate>
 
 		<version.com.h2database>2.4.240</version.com.h2database>
