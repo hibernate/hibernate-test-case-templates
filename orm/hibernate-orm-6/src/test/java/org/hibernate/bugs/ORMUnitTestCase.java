@@ -15,13 +15,12 @@
  */
 package org.hibernate.bugs;
 
-import org.hibernate.cfg.AvailableSettings;
 
-import org.hibernate.testing.orm.junit.DomainModel;
-import org.hibernate.testing.orm.junit.ServiceRegistry;
-import org.hibernate.testing.orm.junit.SessionFactory;
-import org.hibernate.testing.orm.junit.SessionFactoryScope;
-import org.hibernate.testing.orm.junit.Setting;
+import org.hibernate.bugs.modal.AppEntity;
+import org.hibernate.bugs.modal.AppGroupAssociationEntity;
+import org.hibernate.bugs.modal.AppGroupEntity;
+import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.testing.orm.junit.*;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -35,9 +34,9 @@ import org.junit.jupiter.api.Test;
  */
 @DomainModel(
 		annotatedClasses = {
-				// Add your entities here.
-				// Foo.class,
-				// Bar.class
+				AppEntity.class,
+				AppGroupAssociationEntity.class,
+				AppGroupEntity.class
 		},
 		// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
 		xmlMappings = {
@@ -62,9 +61,13 @@ class ORMUnitTestCase {
 
 	// Add your tests, using standard JUnit 5.
 	@Test
-	void hhh123Test(SessionFactoryScope scope) throws Exception {
-		scope.inTransaction( session -> {
+     void hhh19053Test(SessionFactoryScope scope) throws Exception {
+		scope.inTransaction(session -> {
 			// Do stuff...
-		} );
+			session.createQuery("DELETE FROM AppGroupAssociationEntity ass WHERE ass.groupId = :groupId and ass.app.id = :appId")
+					.setParameter("groupId", 1L)
+					.setParameter("appId", 1L)
+					.executeUpdate();
+		});
 	}
 }
