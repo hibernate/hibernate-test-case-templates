@@ -11,7 +11,7 @@
         <version.junit-jupiter>5.11.4</version.junit-jupiter>
         <version.org.hibernate.reactive2>2.4.11.Final</version.org.hibernate.reactive2>
         <version.org.assertj.assertj-core>3.27.7</version.org.assertj.assertj-core>
-        <version.io.vertx.vertx-sql-client>4.5.22</version.io.vertx.vertx-sql-client>
+        <version.io.vertx.vertx-sql-client>4.5.25</version.io.vertx.vertx-sql-client>
         <version.org.testcontainers>2.0.3</version.org.testcontainers>
     </properties>
 
@@ -50,8 +50,8 @@
         <!-- Allow authentication to PostgreSQL using SCRAM -->
         <dependency>
             <groupId>com.ongres.scram</groupId>
-            <artifactId>client</artifactId>
-            <version>2.1</version>
+            <artifactId>scram-client</artifactId>
+            <version>3.2</version>
         </dependency>
 
         <!-- MySQL -->
