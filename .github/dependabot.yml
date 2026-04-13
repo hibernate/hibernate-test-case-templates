@@ -5,10 +5,18 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      # We don't use groups for Hibernate projects,
-      # because groups require that all modules use the same version of any dependency in that group,
-      # and here we need e.g. reactive/hibernate-reactive-2 to use a different version of Hibernate Reactive
-      # than reactive/hibernate-reactive-3.
+      orm:
+        patterns:
+          - "org.hibernate.orm*:*"
+      search:
+        patterns:
+          - "org.hibernate.search:*"
+      validator:
+        patterns:
+          - "org.hibernate.validator:*"
+      reactive:
+        patterns:
+          - "org.hibernate.reactive:*"
       reactive-dependencies-jdbc:
         patterns:
           - "com.mysql:mysql-connector-j"
