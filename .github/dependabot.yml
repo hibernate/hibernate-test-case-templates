@@ -1,7 +1,14 @@
 version: 2
 updates:
   - package-ecosystem: "maven"
-    directory: "/"
+    # We want each directory to be handled as a separate unit, with its own version of dependencies.
+    # This is why we list each directory instead of using the root.
+    directories:
+      - "envers/**/*"
+      - "orm/**/*"
+      - "reactive/**/*"
+      - "search/**/*"
+      - "validator/**/*"
     schedule:
       interval: "daily"
     groups:
