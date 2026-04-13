@@ -9,9 +9,9 @@
 
     <properties>
         <version.junit-jupiter>5.11.4</version.junit-jupiter>
-        <version.org.hibernate.reactive4>4.3.1.Final</version.org.hibernate.reactive4>
+        <version.org.hibernate.reactive>4.3.1.Final</version.org.hibernate.reactive>
         <version.org.assertj.assertj-core>3.27.7</version.org.assertj.assertj-core>
-        <version.io.vertx.vertx-sql-client5>5.0.10</version.io.vertx.vertx-sql-client5>
+        <version.io.vertx.vertx-sql-client>5.0.10</version.io.vertx.vertx-sql-client>
         <version.org.testcontainers>2.0.4</version.org.testcontainers>
     </properties>
 
@@ -38,14 +38,14 @@
         <dependency>
             <groupId>org.hibernate.reactive</groupId>
             <artifactId>hibernate-reactive-core</artifactId>
-            <version>${version.org.hibernate.reactive4}</version>
+            <version>${version.org.hibernate.reactive}</version>
         </dependency>
 
         <!-- PostgreSQL -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-pg-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client5}</version>
+            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
         <!-- Allow authentication to PostgreSQL using SCRAM -->
         <dependency>
@@ -58,28 +58,28 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-mysql-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client5}</version>
+            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
 
         <!-- DB2 -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-db2-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client5}</version>
+            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
 
         <!-- MSSQL -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-mssql-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client5}</version>
+            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
 
         <!-- Oracle -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-oracle-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client5}</version>
+            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
 
         <dependency>
@@ -106,7 +106,7 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-junit5</artifactId>
-            <version>${version.io.vertx.vertx-sql-client5}</version>
+            <version>${version.io.vertx.vertx-sql-client}</version>
             <scope>test</scope>
         </dependency>
         <!-- Testcontainers -->
