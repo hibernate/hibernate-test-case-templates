@@ -45,6 +45,7 @@ updates:
           - "org.assertj:*"
     ignore:
       - dependency-name: "org.hibernate.orm.tooling:hibernate-enhance-maven-plugin"
+      - dependency-name: "org.hibernate.orm.tooling:hibernate-testing"
       - dependency-name: "org.hibernate:hibernate-core"
         update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
       - dependency-name: "org.hibernate:*"
