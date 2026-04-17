@@ -9,7 +9,6 @@
 
 	<properties>
 		<version.org.hibernate.search>6.2.5.Final</version.org.hibernate.search>
-		<version.org.hibernate>5.6.15.Final</version.org.hibernate>
 
 		<version.com.h2database>2.4.240</version.com.h2database>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
@@ -52,23 +51,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${version.org.hibernate}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${version.com.h2database}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-testing</artifactId>
-			<version>${version.org.hibernate}</version>
-			<scope>test</scope>
-		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
