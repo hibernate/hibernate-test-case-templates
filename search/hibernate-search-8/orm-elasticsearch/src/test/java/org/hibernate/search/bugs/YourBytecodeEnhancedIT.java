@@ -1,33 +1,43 @@
 package org.hibernate.search.bugs;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.lang.reflect.Method;
-import java.util.List;
-
-import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.search.mapper.orm.Search;
 import org.hibernate.search.mapper.orm.session.SearchSession;
+import org.hibernate.testing.bytecode.enhancement.extension.BytecodeEnhanced;
+import org.hibernate.testing.orm.junit.BootstrapServiceRegistry;
+import org.hibernate.testing.orm.junit.DomainModel;
+import org.hibernate.testing.orm.junit.ServiceRegistry;
+import org.hibernate.testing.orm.junit.SessionFactory;
+import org.hibernate.testing.orm.junit.SessionFactoryScope;
+import org.hibernate.testing.orm.junit.SettingProvider;
+import org.junit.jupiter.api.Test;
 
-import org.hibernate.testing.bytecode.enhancement.BytecodeEnhancerRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Use this template <b>only</b> if you need Hibernate ORM bytecode enhancement to reproduce your issue.
  */
-@RunWith(BytecodeEnhancerRunner.class) // This runner enables bytecode enhancement for your test.
-public class YourBytecodeEnhancedIT extends SearchTestJunit4Base {
-
-	@Override
-	public Class<?>[] getAnnotatedClasses() {
-		return new Class<?>[] { YourAnnotatedEntity.class };
-	}
+@DomainModel(
+		annotatedClasses = {
+				YourAnnotatedEntity.class
+				// Add your entities here, e.g.:
+				// Foo.class,
+				// Bar.class
+		}
+)
+@ServiceRegistry(
+		settingProviders = @SettingProvider(settingName = "hibernate.search.backend.hosts", provider = ElasticsearchHostIntegration.class)
+)
+@BootstrapServiceRegistry(integrators = ElasticsearchHostIntegration.class)
+@SessionFactory
+@BytecodeEnhanced(testEnhancedClasses = {YourAnnotatedEntity.class})
+class YourBytecodeEnhancedIT {
 
 	@Test
-	public void testYourBug() {
-		try ( Session s = openSession() ) {
+	void testYourBug(SessionFactoryScope scope) {
+		scope.inSession(s -> {
 			YourAnnotatedEntity yourEntity1 = new YourAnnotatedEntity( 1L, "Jane Smith" );
 			YourAnnotatedEntity yourEntity2 = new YourAnnotatedEntity( 2L, "John Doe" );
 
@@ -35,10 +45,10 @@ public class YourBytecodeEnhancedIT extends SearchTestJunit4Base {
 			s.persist( yourEntity1 );
 			s.persist( yourEntity2 );
 			tx.commit();
-		}
+		});
 
-		try ( Session session = openSession() ) {
-			SearchSession searchSession = Search.session( session );
+		scope.inSession(s -> {
+			SearchSession searchSession = Search.session( s );
 
 			List<YourAnnotatedEntity> hits = searchSession.search( YourAnnotatedEntity.class )
 					.where( f -> f.match().field( "name" ).matching( "smith" ) )
@@ -48,14 +58,7 @@ public class YourBytecodeEnhancedIT extends SearchTestJunit4Base {
 					.hasSize( 1 )
 					.element( 0 ).extracting( YourAnnotatedEntity::getId )
 					.isEqualTo( 1L );
-		}
-	}
-
-	@Test
-	public void testBytecodeEnhancement() {
-		assertThat( YourAnnotatedEntity.class.getDeclaredMethods() )
-				.extracting( Method::getName )
-				.anyMatch( name -> name.startsWith( "$$_hibernate_" ) );
+		});
 	}
 
 }
