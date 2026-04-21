@@ -43,6 +43,7 @@ updates:
           - "org.apache.logging*"
           - "com.h2database:*"
           - "org.assertj:*"
+          - "org.testcontainers:*"
     ignore:
       - dependency-name: "org.hibernate.orm.tooling:hibernate-enhance-maven-plugin"
       - dependency-name: "org.hibernate.orm.tooling:hibernate-testing"
