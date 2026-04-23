@@ -10,7 +10,7 @@ updates:
       - "search/**/*"
       - "validator/**/*"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     groups:
       orm:
         patterns:
