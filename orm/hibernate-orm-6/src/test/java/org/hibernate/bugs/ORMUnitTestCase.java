@@ -15,8 +15,8 @@
  */
 package org.hibernate.bugs;
 
+import jakarta.persistence.LockModeType;
 import org.hibernate.cfg.AvailableSettings;
-
 import org.hibernate.testing.orm.junit.DomainModel;
 import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
@@ -35,9 +35,9 @@ import org.junit.jupiter.api.Test;
  */
 @DomainModel(
 		annotatedClasses = {
-				// Add your entities here.
-				// Foo.class,
-				// Bar.class
+				Entity1.class,
+				Entity2.class,
+				Entity3.class
 		},
 		// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
 		xmlMappings = {
@@ -64,7 +64,39 @@ class ORMUnitTestCase {
 	@Test
 	void hhh123Test(SessionFactoryScope scope) throws Exception {
 		scope.inTransaction( session -> {
-			// Do stuff...
+			Entity3 entity3 = new Entity3();
+			entity3.setName("test");
+			entity3.setSurname("tester");
+			session.persist(entity3);
+			Entity1 entity1 = new Entity1();
+			entity1.setEntity3(entity3);
+			session.persist(entity1);
+			session.flush();
+			session.clear();
+			Long id = entity1.getId(); // or Long, depending on your ID type
+			Entity1 entity1fromDb =  session.find(Entity1.class, id, LockModeType.PESSIMISTIC_WRITE);
+			/*
+			Hibernate:
+				select
+					e1_0.id,
+					e2_0.id,
+					e2_0.name,
+					e2_0.surname,
+					e1_0.name
+				from
+					Entity1 e1_0 with (updlock, holdlock, rowlock) -- this is fine it is not subselect
+				left join
+					(select
+						*
+					from
+						Entity2 t
+					where
+						t.DTYPE='Entity3') e2_0 with (updlock, holdlock, rowlock)  -- here is the problem that fails on real MSSQL database
+						on e2_0.id=e1_0.entity3_id
+				where
+					e1_0.id=?
+			 */
+			System.out.println("Gotcha!" + entity1fromDb.toString());
 		} );
 	}
 }
