@@ -8,7 +8,7 @@
 	<name>Hibernate Search 8 with Hibernate ORM and Elasticsearch Test Case Template</name>
 
 	<properties>
-		<version.org.hibernate.search>8.3.0.Final</version.org.hibernate.search>
+		<version.org.hibernate.search>8.3.1.Final</version.org.hibernate.search>
 
 		<version.com.h2database>2.4.240</version.com.h2database>
 		<version.junit-jupiter>6.0.3</version.junit-jupiter>
