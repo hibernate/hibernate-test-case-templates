@@ -13,9 +13,14 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm"/>
 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <!--
+                Using OracleDialect with H2 in Oracle compatibility mode.
+                OracleDialect uses emulateQueryPartTableReferenceColumnAliasing which
+                exposes the bug: the @Formula template text is used as a column alias.
+            -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:mem:db1;MODE=Oracle;DB_CLOSE_DELAY=-1"/>
             <property name="hibernate.connection.username" value="sa"/>
 
             <property name="hibernate.connection.pool_size" value="5"/>
@@ -29,6 +34,9 @@
             <property name="hibernate.cache.region_prefix" value="hibernate.test"/>
             <property name="hibernate.cache.region.factory_class"
                       value="org.hibernate.testing.cache.CachingRegionFactory"/>
+
+            <property name="hibernate.session_factory.statement_inspector"
+                      value="org.hibernate.bugs.FormulaWithCollectionFetchPaginationTest$SqlCapture"/>
 
             <!--NOTE: hibernate.jdbc.batch_versioned_data should be set to false when testing with Oracle-->
             <property name="hibernate.jdbc.batch_versioned_data" value="true"/>
