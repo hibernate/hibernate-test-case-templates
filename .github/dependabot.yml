@@ -24,8 +24,8 @@ updates:
       reactive:
         patterns:
           - "org.hibernate.reactive:*"
-      reactive-dependencies-jdbc:
-        patterns:
+          - "io.vertx:*"
+          # JDBC dependencies in Reactive test case templates
           - "com.mysql:mysql-connector-j"
           - "org.mariadb.jdbc:mariadb-java-client"
           - "com.ibm.db2:jcc"
