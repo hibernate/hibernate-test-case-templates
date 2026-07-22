@@ -15,6 +15,7 @@
  */
 package org.hibernate.bugs;
 
+import jakarta.persistence.*;
 import org.hibernate.cfg.AvailableSettings;
 
 import org.hibernate.testing.orm.junit.DomainModel;
@@ -22,7 +23,9 @@ import org.hibernate.testing.orm.junit.ServiceRegistry;
 import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
+import java.math.*;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -34,37 +37,44 @@ import org.junit.jupiter.api.Test;
  * submit it as a PR!
  */
 @DomainModel(
-		annotatedClasses = {
-				// Add your entities here.
-				// Foo.class,
-				// Bar.class
-		},
-		// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
-		xmlMappings = {
-				// "org/hibernate/test/Foo.hbm.xml",
-				// "org/hibernate/test/Bar.hbm.xml"
-		}
+        annotatedClasses = {
+                // Add your entities here.
+                ORMUnitTestCase.Foo.class,
+                // Bar.class
+        },
+        // If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
+        xmlMappings = {
+                // "org/hibernate/test/Foo.hbm.xml",
+                // "org/hibernate/test/Bar.hbm.xml"
+        }
 )
 @ServiceRegistry(
-		// Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
-		settings = {
-				// For your own convenience to see generated queries:
-				@Setting(name = AvailableSettings.SHOW_SQL, value = "true"),
-				@Setting(name = AvailableSettings.FORMAT_SQL, value = "true"),
-				// @Setting( name = AvailableSettings.GENERATE_STATISTICS, value = "true" ),
+        // Add in any settings that are specific to your test.  See resources/hibernate.properties for the defaults.
+        settings = {
+                // For your own convenience to see generated queries:
+                @Setting(name = AvailableSettings.SHOW_SQL, value = "true"),
+                @Setting(name = AvailableSettings.FORMAT_SQL, value = "true"),
+                // @Setting( name = AvailableSettings.GENERATE_STATISTICS, value = "true" ),
 
-				// Add your own settings that are a part of your quarkus configuration:
-				// @Setting( name = AvailableSettings.SOME_CONFIGURATION_PROPERTY, value = "SOME_VALUE" ),
-		}
+                // Add your own settings that are a part of your quarkus configuration:
+                @Setting( name = AvailableSettings.CONNECTION_PROVIDER, value = "org.hibernate.bugs.MyConnectionProvider"),
+        }
 )
 @SessionFactory
 class ORMUnitTestCase {
 
-	// Add your tests, using standard JUnit 5.
-	@Test
-	void hhh123Test(SessionFactoryScope scope) throws Exception {
-		scope.inTransaction( session -> {
-			// Do stuff...
-		} );
-	}
+    // Add your tests, using standard JUnit 5.
+    @Test
+    void hhh123Test(SessionFactoryScope scope) throws Exception {
+        scope.inTransaction(session -> {
+            session.persist(new Foo());
+        });
+    }
+
+    @Entity
+    static class Foo {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private long id;
+    }
 }
