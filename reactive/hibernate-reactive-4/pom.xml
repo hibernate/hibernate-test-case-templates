@@ -9,7 +9,7 @@
 
     <properties>
         <version.junit-jupiter>5.11.4</version.junit-jupiter>
-        <version.org.hibernate.reactive>4.5.1.Final</version.org.hibernate.reactive>
+        <version.org.hibernate.reactive>4.5.2.Final</version.org.hibernate.reactive>
         <version.org.assertj.assertj-core>3.27.7</version.org.assertj.assertj-core>
         <version.io.vertx.vertx-sql-client>5.1.5</version.io.vertx.vertx-sql-client>
         <version.org.testcontainers>2.0.5</version.org.testcontainers>
@@ -124,7 +124,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>9.7.0</version>
+            <version>26.7.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
