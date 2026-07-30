@@ -98,6 +98,7 @@
 					<execution>
 						<configuration>
 							<!-- Adjust the default configuration to your needs: -->
+							<classesDirectory>${project.build.testOutputDirectory}</classesDirectory>
 							<enableAssociationManagement>false</enableAssociationManagement>
 							<enableExtendedEnhancement>false</enableExtendedEnhancement>
 							<enableDirtyTracking>false</enableDirtyTracking>
