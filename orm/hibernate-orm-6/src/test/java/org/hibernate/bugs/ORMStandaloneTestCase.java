@@ -1,5 +1,6 @@
 package org.hibernate.bugs;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -25,8 +26,7 @@ class ORMStandaloneTestCase {
 				.applySetting( "hibernate.hbm2ddl.auto", "update" );
 
 		Metadata metadata = new MetadataSources( srb.build() )
-				// Add your entities here.
-				//	.addAnnotatedClass( Foo.class )
+				.addAnnotatedClass(DirtyCheckEntity.class)
 				.buildMetadata();
 
 		sf = metadata.buildSessionFactory();
@@ -35,6 +35,12 @@ class ORMStandaloneTestCase {
 	// Add your tests, using standard JUnit 5:
 	@Test
 	void hhh123Test() throws Exception {
-
+		Session session = sf.openSession();
+		session.beginTransaction();
+		DirtyCheckEntity entity = new DirtyCheckEntity();
+		entity.setCode("test");
+		session.persist(entity);
+		session.getTransaction().commit();
+		session.close();
 	}
 }

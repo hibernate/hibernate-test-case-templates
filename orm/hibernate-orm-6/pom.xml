@@ -12,6 +12,7 @@
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 		<version.org.hibernate.orm>6.6.54.Final</version.org.hibernate.orm>
 		<version.org.assertj.assertj-core>3.27.7</version.org.assertj.assertj-core>
+		<hibernate.enhance.enableDirtyTracking>true</hibernate.enhance.enableDirtyTracking>
 	</properties>
 
 	<dependencyManagement>
@@ -92,7 +93,7 @@
 							<base>${project.build.testOutputDirectory}</base>
 							<dir>${project.build.testOutputDirectory}</dir>
 							<enableAssociationManagement>false</enableAssociationManagement>
-							<enableDirtyTracking>false</enableDirtyTracking>
+							<enableDirtyTracking>${hibernate.enhance.enableDirtyTracking}</enableDirtyTracking>
 							<enableExtendedEnhancement>false</enableExtendedEnhancement>
 							<enableLazyInitialization>false</enableLazyInitialization>
 						</configuration>
