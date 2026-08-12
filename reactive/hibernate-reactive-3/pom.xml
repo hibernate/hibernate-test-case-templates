@@ -11,7 +11,7 @@
         <version.junit-jupiter>5.11.4</version.junit-jupiter>
         <version.org.hibernate.reactive>3.4.2.Final</version.org.hibernate.reactive>
         <version.org.assertj.assertj-core>3.27.7</version.org.assertj.assertj-core>
-        <version.io.vertx.vertx-sql-client>4.5.31</version.io.vertx.vertx-sql-client>
+        <version.io.vertx.vertx-sql-client>4.5.32</version.io.vertx.vertx-sql-client>
         <version.org.testcontainers>2.0.5</version.org.testcontainers>
     </properties>
 
@@ -136,7 +136,7 @@
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>3.5.9</version>
+            <version>3.5.10</version>
             <scope>test</scope>
         </dependency>
         <dependency>
