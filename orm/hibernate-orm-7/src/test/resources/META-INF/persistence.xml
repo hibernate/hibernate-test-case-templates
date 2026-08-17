@@ -26,6 +26,10 @@
 
             <property name="hibernate.max_fetch_depth" value="5"/>
 
+            <property name="hibernate.session_factory.statement_inspector"
+                      value="org.hibernate.bugs.FormulaJoinChainCollectionFetchPaginationTest$SqlCapture"/>
+            <property name="hibernate.query.fail_on_pagination_over_collection_fetch" value="true"/>
+
             <property name="hibernate.cache.region_prefix" value="hibernate.test"/>
             <property name="hibernate.cache.region.factory_class"
                       value="org.hibernate.testing.cache.CachingRegionFactory"/>
