@@ -10,7 +10,7 @@
 	<properties>
 		<version.org.hibernate.search>5.11.12.Final</version.org.hibernate.search>
 
-		<version.com.h2database>2.4.240</version.com.h2database>
+		<version.com.h2database>2.5.250</version.com.h2database>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
 		<version.org.assertj.assertj-core>3.27.7</version.org.assertj.assertj-core>
 		<version.org.testcontainers>2.0.5</version.org.testcontainers>

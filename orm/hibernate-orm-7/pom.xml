@@ -8,7 +8,7 @@
 	<name>Hibernate ORM 7 Test Case Template</name>
 
 	<properties>
-		<version.com.h2database>2.4.240</version.com.h2database>
+		<version.com.h2database>2.5.250</version.com.h2database>
 		<version.junit-jupiter>6.0.3</version.junit-jupiter>
 		<version.org.hibernate.orm>7.4.7.Final</version.org.hibernate.orm>
 		<version.org.assertj.assertj-core>3.27.7</version.org.assertj.assertj-core>
