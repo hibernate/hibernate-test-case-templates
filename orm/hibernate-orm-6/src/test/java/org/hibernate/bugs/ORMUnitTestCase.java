@@ -15,6 +15,11 @@
  */
 package org.hibernate.bugs;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import org.assertj.core.api.Assertions;
+import org.hibernate.bugs.application.InstrumentData;
+import org.hibernate.bugs.application.InstrumentQueryService;
+import org.hibernate.bugs.domain.model.*;
 import org.hibernate.cfg.AvailableSettings;
 
 import org.hibernate.testing.orm.junit.DomainModel;
@@ -23,6 +28,11 @@ import org.hibernate.testing.orm.junit.SessionFactory;
 import org.hibernate.testing.orm.junit.SessionFactoryScope;
 import org.hibernate.testing.orm.junit.Setting;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This template demonstrates how to develop a test case for Hibernate ORM, using its built-in unit test framework.
@@ -36,8 +46,8 @@ import org.junit.jupiter.api.Test;
 @DomainModel(
 		annotatedClasses = {
 				// Add your entities here.
-				// Foo.class,
-				// Bar.class
+				Instrument.class,
+				OrdinaryShare.class
 		},
 		// If you use *.hbm.xml mappings, instead of annotations, add the mappings here.
 		xmlMappings = {
@@ -62,9 +72,45 @@ class ORMUnitTestCase {
 
 	// Add your tests, using standard JUnit 5.
 	@Test
-	void hhh123Test(SessionFactoryScope scope) throws Exception {
+	void hhh19542Test(SessionFactoryScope scope) throws Exception {
 		scope.inTransaction( session -> {
-			// Do stuff...
+			List<Instrument> instruments = session.createQuery("from Instrument ").list();
+			System.out.println(instruments);
 		} );
+	}
+
+	@Test
+	void hhh19543Test(SessionFactoryScope scope) throws Exception {
+		final InstrumentQueryService instrumentQueryService = new InstrumentQueryService();
+
+		scope.inTransaction( session -> {
+			Instrument instrument = new OrdinaryShare(
+					new InstrumentCode("AVGO"),
+					"Equity",
+					"Broadcom",
+					Arrays.asList(
+							new InstrumentLine(
+									new InstrumentLineKey("AVGO:XPAR"),
+									new CurrencyCode("EUR"),
+									"Broadcom Equity Paris"),
+							new InstrumentLine(
+									new InstrumentLineKey("AVGO:XMIL"),
+									new CurrencyCode("EUR"),
+									"Broadcom Equity Milan"),
+							new InstrumentLine(
+									new InstrumentLineKey("AVGO:NYSE"),
+									new CurrencyCode("USD"),
+									"Broadcom Equity New York Stock Exchange")));
+
+			// Add any instruments you want here, purpose is to show aggregation by "code" (JoinOn)
+
+			session.persist(instrument);
+
+			List<InstrumentData> instruments = instrumentQueryService.allInstruments(session);
+
+			assertThat( instruments ).isNotEmpty();
+			assertThat( instruments.getFirst().lineKeys() ).isNotEmpty();
+			assertThat( instruments.getFirst().lineKeys().size() == 3 ).isTrue();
+		});
 	}
 }
