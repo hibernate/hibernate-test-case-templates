@@ -61,9 +61,9 @@ updates:
         update-types: [ "version-update:semver-major" ]
       - dependency-name: "org.elasticsearch.*:*"
         update-types: [ "version-update:semver-major" ]
-      # Major versions of vertx will (most likely) require a new version of Reactive, so will be updated "manually":
+      # Major/minor versions of vertx will (most likely) require a new version of Reactive, so will be updated "manually":
       - dependency-name: "io.vertx:*"
-        update-types: [ "version-update:semver-major" ]
+        update-types: [ "version-update:semver-major", "version-update:semver-minor" ]
       # Upgrading JUnit may break the ORM's bytecodeenhancement engine, hence major/minor updates are manual,
       # when we perform an update to a new major/minor version of ORM.
       - dependency-name: "org.junit:junit-bom"
