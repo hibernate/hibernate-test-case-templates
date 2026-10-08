@@ -1,14 +1,15 @@
 package org.hibernate.reactive.util;
 
 import java.util.function.Supplier;
-import org.testcontainers.containers.CockroachContainer;
-import org.testcontainers.containers.Db2Container;
+
+import org.testcontainers.cockroachdb.CockroachContainer;
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MSSQLServerContainer;
-import org.testcontainers.containers.MariaDBContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.OracleContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.db2.Db2Container;
+import org.testcontainers.mariadb.MariaDBContainer;
+import org.testcontainers.mssqlserver.MSSQLServerContainer;
+import org.testcontainers.mysql.MySQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 
 import static org.hibernate.reactive.util.DockerImage.imageName;
 
@@ -19,9 +20,9 @@ import static org.hibernate.reactive.util.DockerImage.imageName;
  * It's a wrapper around the testcontainers classes.
  */
 public enum Database {
-	POSTGRESQL( () -> new PostgreSQLContainer<>( imageName( "postgres", "16.3" ) ) ),
-	MYSQL( () -> new MySQLContainer<>( imageName( "mysql", "8.4.0" ) ) ),
-	MARIADB( () -> new MariaDBContainer<>( imageName( "mariadb", "11.4.2" ) ) ),
+	POSTGRESQL( () -> new PostgreSQLContainer( imageName( "postgres", "18.6" ) ) ),
+	MYSQL( () -> new MySQLContainer( imageName( "container-registry.oracle.com", "mysql/community-server", "26.7.1" ) ) ),
+	MARIADB( () -> new MariaDBContainer( imageName( "mariadb", "11.4.2" ) ) ),
 	DB2( () -> new Db2Container( imageName( "icr.io", "db2_community/db2", "12.1.0.0" ) ).acceptLicense() ),
 	COCKROACHDB( () -> new CockroachContainer( imageName( "cockroachdb/cockroach", "v24.1.0" ) ) ),
 	ORACLE( Database::newOracleContainer ),
@@ -54,8 +55,8 @@ public enum Database {
 		return jdbcDatabaseContainer;
 	}
 
-	private static MSSQLServerContainer<?> newMSSqlServer() {
-		return new MSSQLServerContainer<>( imageName( "mcr.microsoft.com", "mssql/server", "2022-latest" ) )
+	private static MSSQLServerContainer newMSSqlServer() {
+		return new MSSQLServerContainer( imageName( "mcr.microsoft.com", "mssql/server", "2025-latest" ) )
 				.acceptLicense();
 	}
 
