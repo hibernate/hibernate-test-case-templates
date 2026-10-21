@@ -10,7 +10,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<version.org.hibernate.validator>6.2.5.Final</version.org.hibernate.validator>
+		<version.org.hibernate.validator>6.2.6.Final</version.org.hibernate.validator>
 		<version.javax.el>3.0.1-b12</version.javax.el>
 		<version.log4j>2.26.1</version.log4j>
 		<version.junit-jupiter>5.11.4</version.junit-jupiter>
