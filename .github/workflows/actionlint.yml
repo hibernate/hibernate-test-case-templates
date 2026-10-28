@@ -1,0 +1,12 @@
+name: GitHub Actions linter
+
+on:
+  pull_request:
+
+permissions: {}
+
+jobs:
+  actionlint:
+    uses: hibernate/.github/.github/workflows/actionlint.yml@main
+    permissions:
+      pull-requests: read
