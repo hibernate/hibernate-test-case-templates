@@ -9,14 +9,21 @@
 
     <properties>
         <version.junit-jupiter>5.11.4</version.junit-jupiter>
-        <version.org.hibernate.reactive>5.0.0.Beta2</version.org.hibernate.reactive>
+        <version.org.hibernate.reactive>5.1.0.Beta1</version.org.hibernate.reactive>
         <version.org.assertj.assertj-core>3.27.7</version.org.assertj.assertj-core>
-        <version.io.vertx.vertx-sql-client>5.1.10</version.io.vertx.vertx-sql-client>
+        <version.io.vertx>5.2.2</version.io.vertx>
         <version.org.testcontainers>2.0.5</version.org.testcontainers>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.hibernate.reactive</groupId>
+                <artifactId>hibernate-reactive-platform</artifactId>
+                <version>${version.org.hibernate.reactive}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -38,48 +45,41 @@
         <dependency>
             <groupId>org.hibernate.reactive</groupId>
             <artifactId>hibernate-reactive-core</artifactId>
-            <version>${version.org.hibernate.reactive}</version>
         </dependency>
 
         <!-- PostgreSQL -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-pg-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
         <!-- Allow authentication to PostgreSQL using SCRAM -->
         <dependency>
             <groupId>com.ongres.scram</groupId>
             <artifactId>scram-client</artifactId>
-            <version>3.4</version>
         </dependency>
 
         <!-- MySQL -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-mysql-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
 
         <!-- DB2 -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-db2-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
 
         <!-- MSSQL -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-mssql-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
 
         <!-- Oracle -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-oracle-client</artifactId>
-            <version>${version.io.vertx.vertx-sql-client}</version>
         </dependency>
 
         <dependency>
@@ -106,7 +106,7 @@
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-junit5</artifactId>
-            <version>${version.io.vertx.vertx-sql-client}</version>
+            <version>${version.io.vertx}</version>
             <scope>test</scope>
         </dependency>
         <!-- Testcontainers -->
