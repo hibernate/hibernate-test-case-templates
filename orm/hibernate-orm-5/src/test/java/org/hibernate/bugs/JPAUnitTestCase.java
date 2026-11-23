@@ -31,7 +31,28 @@ public class JPAUnitTestCase {
 	public void hhh123Test() throws Exception {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
-		// Do stuff...
+		// Do stuff..laimantEntity clmt = new Claim
+		
+		//Parent Entity persist
+		ClaimantEntity clmt = new ClaimantEntity();
+		ClaimantFolderPK pk = new ClaimantFolderPK();
+		ClaimFolderPK clmPk = new ClaimFolderPK();
+		clmPk.setClaimNumber("1111");
+		clmPk.setPartitionNumber("11");
+		clmPk.setProductionOrTrainingCode("T");
+		pk.setClmSubNbr("123");
+		pk.setClaimFolderPK(clmPk);
+		clmt.setId(pk);
+		entityManager.perist(clmt);
+		
+		//association  of parent entity of same table
+		//claimant to Injury OneToOne relation
+		InjuryEntity inj = new InjuryEntity ();
+		inj.setId(pk);
+		inj.setInjuryName("injname");
+		clmt.setInjury(inj);
+		entityManager.merge(clmt); // issue is here while merging, it's fetchinh claimantEntity joining with injury and party entity..so on if any associations
+		
 		entityManager.getTransaction().commit();
 		entityManager.close();
 	}
