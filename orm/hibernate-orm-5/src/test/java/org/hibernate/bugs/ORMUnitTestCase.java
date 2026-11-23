@@ -17,9 +17,14 @@ package org.hibernate.bugs;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.bugs.entities.EntityChildTwoSameTable;
+import org.hibernate.bugs.entities.EntityParent;
+import org.hibernate.bugs.entities.EntityChildOne;
+import org.hibernate.bugs.entities.EntityRelation;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -37,8 +42,12 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected Class[] getAnnotatedClasses() {
 		return new Class[] {
-//				Foo.class,
-//				Bar.class
+			EntityChildTwoSameTable.class,
+			EntityParent.class,
+			EntityChildOne.class,
+			EntityRelation.class
+			//				Foo.class,
+			//				Bar.class
 		};
 	}
 
@@ -46,8 +55,8 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 	@Override
 	protected String[] getMappings() {
 		return new String[] {
-//				"Foo.hbm.xml",
-//				"Bar.hbm.xml"
+			//				"Foo.hbm.xml",
+			//				"Bar.hbm.xml"
 		};
 	}
 	// If those mappings reside somewhere other than resources/org/hibernate/test, change this.
@@ -68,11 +77,34 @@ public class ORMUnitTestCase extends BaseCoreFunctionalTestCase {
 
 	// Add your tests, using standard JUnit.
 	@Test
-	public void hhh123Test() throws Exception {
+	public void hhh19457Test() throws Exception {
 		// BaseCoreFunctionalTestCase automatically creates the SessionFactory and provides the Session.
 		Session s = openSession();
 		Transaction tx = s.beginTransaction();
+
+		EntityRelation entityRelation = new EntityRelation();
+		entityRelation.setId("idRelation1");
+		s.save(entityRelation);
+
+		EntityChildOne entityChildOne = new EntityChildOne();
+		entityChildOne.setId("idChild1");
+		entityChildOne.setName("nameChild1");
+		entityChildOne.setIdRelation("idRelation1");
+		s.save(entityChildOne);
+
+		EntityChildTwoSameTable entityChildTwo = new EntityChildTwoSameTable();
+		entityChildTwo.setId("idChild2");
+		entityChildTwo.setChildTwoName("nameChild2");
+		entityChildTwo.setIdRelation("idRelation1");
+		s.save(entityChildTwo);
 		// Do stuff...
+		tx.commit();
+		s.close();
+
+		s = openSession();
+		tx = s.beginTransaction();
+		EntityRelation relation = s.get(EntityRelation.class, "idRelation1");
+		Assert.assertEquals("must have 2 parents", 2, relation.getParents().size());
 		tx.commit();
 		s.close();
 	}
