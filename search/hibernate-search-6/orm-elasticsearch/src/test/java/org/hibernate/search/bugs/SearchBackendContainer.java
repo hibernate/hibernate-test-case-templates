@@ -24,6 +24,9 @@ class SearchBackendContainer implements Closeable {
 				.withEnv( "logger.level", "WARN" )
 				.withEnv( "discovery.type", "single-node" )
 				.withEnv( "xpack.security.enabled", "false" )
+				// The bundled JDK 17.0.1 can crash reading cgroup v2 metrics in the JVM options parser.
+				// JDK_JAVA_OPTIONS reaches the parser before ES_JAVA_OPTS is applied.
+				.withEnv( "JDK_JAVA_OPTIONS", "-XX:-UseContainerSupport" )
 				.withEnv( "ES_JAVA_OPTS", "-Xms1g -Xmx1g" )
 				.withEnv( "cluster.routing.allocation.disk.threshold_enabled", "false" );
 		elasticsearchContainer.start();
