@@ -10,8 +10,8 @@ import org.testcontainers.utility.DockerImageName;
 class SearchBackendContainer implements Closeable {
 
 	private static final DockerImageName ELASTICSEARCH_IMAGE_NAME =
-			DockerImageName.parse( "docker.elastic.co/elasticsearch/elasticsearch" )
-					.withTag( "9.1.2" );
+			DockerImageName.parse( "docker.io/elastic/elasticsearch:9.1.2" )
+					.asCompatibleSubstituteFor( "docker.elastic.co/elasticsearch/elasticsearch" );
 
 	private ElasticsearchContainer elasticsearchContainer;
 
